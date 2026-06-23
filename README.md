@@ -82,13 +82,7 @@ Seuls `title` et `sections` sont obligatoires. La documentation complète du for
 
 ## Installation
 
-Aucune. Cloner ou télécharger le dépôt et ouvrir le fichier HTML dans un navigateur récent.
-
-```bash
-git clone https://github.com/KilianGir/atelier-formations.git
-```
-
-Pour une mise en ligne, n'importe quel hébergement statique (GitHub Pages, etc.) suffit.
+Aucune. Ouvrir https://kiliangir.github.io/atelier-formations/ sur votre navigateur.
 
 ---
 
