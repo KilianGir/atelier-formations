@@ -1,0 +1,201 @@
+{
+  "title": "Gérer ses outils HTML avec GitHub (100% navigateur)",
+  "category": "Outils & Méthode",
+  "author": "Formation atelier",
+  "color": "#2052bb",
+  "description": "Arrêter d'accumuler outil(1).html, outil(2).html… et versionner proprement les fichiers HTML générés avec Claude, sans droits administrateur, depuis le navigateur.",
+  "lead": "Un seul fichier, un historique complet, une URL pour tester en ligne : GitHub remplace votre dossier Téléchargements en désordre.",
+
+  "terms": [
+    {"key":"repo","label":"dépôt","color":"#2052bb","summary":"Le dossier de projet hébergé sur GitHub. Il contient vos fichiers ET tout leur historique de versions."},
+    {"key":"commit","label":"commit","color":"#0a7d4a","summary":"Un instantané daté et nommé de l'état du projet. Chaque enregistrement crée un commit : c'est l'unité de base du versionnage."},
+    {"key":"pages","label":"GitHub Pages","color":"#b4540a","summary":"Service gratuit qui transforme un dépôt en site web. Idéal pour exécuter et partager un outil HTML via une simple URL."},
+    {"key":"branch","label":"branche","color":"#7a3fb0","summary":"Une ligne de développement. Par défaut elle s'appelle 'main'. Pour un usage solo, vous travaillerez presque toujours sur main."},
+    {"key":"readme","label":"README","color":"#9c5a00","summary":"Fichier de présentation (README.md) affiché automatiquement sur la page d'accueil du dépôt. Sert de mode d'emploi."},
+    {"key":"release","label":"release","color":"#c0392b","summary":"Une version étiquetée (ex. v1.0) que l'on peut télécharger d'un bloc. Sert à figer les versions stables."},
+    {"key":"raw","label":"fichier brut","color":"#5d6d7e","summary":"La version source du fichier, sans l'habillage GitHub. Un .html en mode brut s'affiche en code, il ne s'exécute pas."},
+    {"key":"ghdev","label":"github.dev","color":"#16877a","summary":"Un éditeur de code complet dans le navigateur (VS Code en ligne). On y colle le code de Claude et on enregistre directement, sans rien télécharger."},
+    {"key":"diff","label":"diff","color":"#8e44ad","summary":"L'affichage des différences entre deux versions : lignes ajoutées en vert, supprimées en rouge."}
+  ],
+
+  "sections": [
+    {
+      "title": "1. Le problème, et ce que GitHub règle",
+      "blocks": [
+        {"type":"paragraph","text":"Chaque fois que Claude génère un outil, le navigateur l'enregistre. Au bout de quelques itérations, votre dossier ressemble à : **triage-photos.html**, **triage-photos(1).html**, **triage-photos(2).html**… Impossible de savoir laquelle est la bonne, ce qui a changé entre deux, ou de revenir en arrière proprement."},
+        {"type":"paragraph","text":"Un [[repo]] résout exactement ça. Vous gardez **un seul** fichier au **même nom**, et chaque mise à jour est enregistrée comme un [[commit]] : un instantané daté avec un petit message. L'historique complet est conservé sans encombrer votre dossier.","spaced":true},
+        {"type":"compare","title":"Avant / Après",
+          "left":{"title":"Dossier Téléchargements","items":["outil(1).html, outil(2).html, outil_final.html, outil_final_v2.html","Aucune trace de ce qui a changé","Retour arrière = ouvrir les fichiers un par un au hasard","Partage = envoyer un fichier par e-mail"]},
+          "right":{"title":"Dépôt GitHub","items":["Un seul outil.html, toujours à jour","Chaque version porte un message clair","Retour arrière en un clic sur n'importe quel commit","Partage = une URL qui exécute l'outil en ligne"]}},
+        {"type":"callout","variant":"note","title":"Bonne nouvelle pour un poste verrouillé","text":"Tout ce cours se fait **dans le navigateur**. Aucune installation, aucun droit administrateur requis. Git en ligne de commande et GitHub Desktop existent, mais on s'en passe entièrement ici."}
+      ],
+      "sources":[
+        {"author":"GitHub Docs","text":"About repositories","url":"https://docs.github.com/en/repositories/creating-and-managing-repositories/about-repositories"}
+      ]
+    },
+
+    {
+      "title": "2. Les cinq mots à connaître",
+      "blocks": [
+        {"type":"paragraph","text":"Le vocabulaire fait peur de loin. En pratique, cinq notions suffisent pour tout votre usage."},
+        {"type":"heading","text":"Dépôt"},
+        {"type":"paragraph","text":"Le [[repo|dépôt]] est le dossier de votre projet sur GitHub. Il contient vos fichiers **et** leur historique. Vous pouvez en avoir un par outil, ou un seul dépôt « boîte à outils » avec des sous-dossiers."},
+        {"type":"heading","text":"Commit"},
+        {"type":"paragraph","text":"Un [[commit]] est un enregistrement. Quand vous remplacez votre HTML par une nouvelle version, GitHub crée un commit avec la date, l'auteur et un message que vous écrivez (ex. *« ajout export PDF »*). C'est ce qui rend chaque version retrouvable."},
+        {"type":"heading","text":"Branche"},
+        {"type":"paragraph","text":"Une [[branch|branche]] est une ligne de travail. Par défaut elle s'appelle **main**. En solo, vous resterez sur main : pas besoin de vous compliquer la vie avec plusieurs branches."},
+        {"type":"heading","text":"README"},
+        {"type":"paragraph","text":"Le [[readme|README]] est une fiche de présentation affichée d'office sur la page d'accueil du dépôt. Idéal pour noter à quoi sert chaque outil et comment l'ouvrir."},
+        {"type":"heading","text":"GitHub Pages"},
+        {"type":"paragraph","text":"[[pages|GitHub Pages]] publie votre dépôt comme un vrai site web. Un outil HTML standalone devient alors accessible par une URL, exécutable par n'importe qui sans rien installer. On y revient en détail à la section 6."},
+        {"type":"callout","variant":"tip","title":"Repère mental","text":"Dépôt = le classeur. Commit = une photocopie datée d'un document. Branche = un onglet du classeur. Pages = la version vitrine accessible au public."}
+      ],
+      "sources":[
+        {"author":"GitHub Docs","text":"GitHub glossary","url":"https://docs.github.com/en/get-started/learning-about-github/github-glossary"}
+      ]
+    },
+
+    {
+      "title": "3. Démarrer sans rien installer",
+      "blocks": [
+        {"type":"paragraph","text":"Trois étapes, toutes dans le navigateur."},
+        {"type":"heading","text":"a) Créer le compte"},
+        {"type":"paragraph","text":"Allez sur **github.com**, cliquez sur *Sign up*. Compte gratuit, suffisant pour tout ce qui suit. Choisissez un nom d'utilisateur court et propre : il apparaîtra dans toutes vos URL (ex. `kilian`)."},
+        {"type":"heading","text":"b) Créer le premier dépôt"},
+        {"type":"paragraph","text":"Bouton **New** (ou *+* en haut à droite → *New repository*). Renseignez :"},
+        {"type":"paragraph","text":"• **Repository name** : un nom stable en minuscules, sans espaces ni accents, ex. `outils-atelier` ou `triage-photos`.\n• **Public** ou **Private** : voir l'encadré ci-dessous.\n• Cochez **Add a README file** : ça initialise le dépôt et vous évite un écran vide.\nPuis **Create repository**.","spaced":true},
+        {"type":"callout","variant":"warn","title":"Public ou privé ?","text":"**Privé** = visible de vous seul. **Public** = visible de tous (le code, pas vos fichiers locaux). [[pages|GitHub Pages]] gratuit nécessite un dépôt **public**. Règle simple : public pour les outils sans donnée sensible ; privé dès qu'il y a quoi que ce soit de confidentiel (données labo, mesures clients…)."},
+        {"type":"callout","variant":"trap","title":"Le piège du dépôt public","text":"Ne mettez **jamais** dans un dépôt public : données de mesure réelles, noms de clients, clés ou mots de passe codés en dur dans le HTML. Un outil HTML peut être public ; les données qu'il traite restent sur votre machine et n'ont rien à y faire."},
+        {"type":"exercise","exercise":"qcm","question":"Vous voulez tester un outil en ligne gratuitement via GitHub Pages. Quel réglage faut-il pour le dépôt ?",
+          "multiple":false,
+          "options":[
+            {"text":"Le dépôt doit être public","correct":true},
+            {"text":"Le dépôt doit être privé","correct":false},
+            {"text":"Peu importe, Pages marche dans les deux cas gratuitement","correct":false}
+          ],
+          "explanation":"GitHub Pages sur un dépôt privé requiert un abonnement payant. En gratuit, le dépôt doit être public — d'où l'importance de n'y mettre aucune donnée sensible."}
+      ],
+      "sources":[
+        {"author":"GitHub Docs","text":"Create a repo","url":"https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository"}
+      ]
+    },
+
+    {
+      "title": "4. Uploader les fichiers de Claude — la procédure idéale",
+      "blocks": [
+        {"type":"paragraph","text":"Deux méthodes. La première (glisser-déposer) est la plus simple ; la seconde ([[ghdev|github.dev]]) supprime carrément l'étape de téléchargement."},
+        {"type":"heading","text":"Méthode A — Glisser-déposer le fichier"},
+        {"type":"paragraph","text":"1. Dans Claude, téléchargez le fichier généré (ex. `triage-photos.html`).\n2. Sur la page du dépôt : **Add file** → **Upload files**.\n3. Glissez le `.html` dans la zone, ou cliquez pour le sélectionner.\n4. En bas, écrivez un **message de commit** clair (voir section 5).\n5. **Commit changes**.","spaced":true},
+        {"type":"callout","variant":"tip","title":"LE réflexe anti-doublons","text":"Gardez **toujours le même nom de fichier**. Si vous re-uploadez `triage-photos.html`, GitHub **écrase** l'ancien et crée un nouveau [[commit]] — l'ancienne version reste dans l'historique. C'est exactement ça qui fait disparaître les `(1)`, `(2)`, `(3)`. Ne créez jamais `triage-photos-v2.html`."},
+        {"type":"heading","text":"Méthode B — github.dev (sans télécharger)"},
+        {"type":"paragraph","text":"Encore plus fluide pour vos itérations rapides avec Claude :"},
+        {"type":"paragraph","text":"1. Sur le dépôt, appuyez sur la touche **`.`** (point) — ou remplacez `github.com` par `github.dev` dans l'URL.\n2. Un éditeur de code complet s'ouvre dans le navigateur.\n3. Ouvrez votre fichier `.html`, sélectionnez tout (Ctrl+A), supprimez, **collez** le nouveau code que Claude vous a donné.\n4. Volet **Source Control** (l'icône de branche à gauche) → tapez un message → **Commit & Push**.","spaced":true},
+        {"type":"callout","variant":"note","title":"Pourquoi B est souvent meilleur pour vous","text":"Comme Claude vous livre le code dans le chat, [[ghdev|github.dev]] vous évite le cycle « télécharger → retrouver le fichier → ré-uploader ». Vous copiez-collez, vous enregistrez. Pour quelqu'un qui itère beaucoup sur un même outil, c'est un vrai gain."},
+        {"type":"timeline","title":"Le cycle de travail type avec Claude",
+          "items":[
+            {"when":"1","what":"Claude génère / modifie","desc":"Vous obtenez outil.html (ou son code) dans le chat."},
+            {"when":"2","what":"Enregistrer sur GitHub","desc":"Glisser-déposer (même nom) OU coller dans github.dev."},
+            {"when":"3","what":"Message de commit","desc":"Une phrase qui dit ce qui a changé."},
+            {"when":"4","what":"Tester en ligne","desc":"Pages se met à jour tout seul → vous rechargez l'URL."},
+            {"when":"5","what":"Itérer","desc":"Retour à l'étape 1 ; l'historique s'empile proprement."}
+          ],
+          "caption":"Le même fichier traverse tout le cycle : aucun doublon ne se crée."},
+        {"type":"callout","variant":"warn","title":"Limites de l'upload navigateur","text":"L'interface web accepte des fichiers jusqu'à **25 Mo** chacun, et jusqu'à **100 fichiers** par glisser-déposer. Un outil HTML standalone fait quelques centaines de Ko à quelques Mo : aucun souci. Attention seulement si vous embarquez beaucoup d'images en base64 dans le HTML, qui peuvent le faire gonfler."}
+      ],
+      "sources":[
+        {"author":"GitHub Docs","text":"Adding a file to a repository","url":"https://docs.github.com/en/repositories/working-with-files/managing-files/adding-a-file-to-a-repository"},
+        {"author":"GitHub Docs","text":"The github.dev web-based editor","url":"https://docs.github.com/en/codespaces/the-githubdev-web-based-editor"}
+      ]
+    },
+
+    {
+      "title": "5. Gérer les versions proprement",
+      "blocks": [
+        {"type":"paragraph","text":"Le versionnage ne vaut que par la qualité de vos **messages de commit** et votre capacité à **revenir en arrière**."},
+        {"type":"heading","text":"Écrire de bons messages"},
+        {"type":"paragraph","text":"Un bon message dit **ce qui change**, pas « modif » ni « update ». Quelques exemples utiles dans votre contexte :"},
+        {"type":"paragraph","text":"• `ajout export PDF du rapport`\n• `correction arrondi ARRONDI (parité Excel)`\n• `tri clavier garder/rejeter dans le triage photos`\n• `fix : aperçus EXIF qui ne s'affichaient pas`","spaced":true},
+        {"type":"heading","text":"Consulter l'historique"},
+        {"type":"paragraph","text":"Onglet **Commits** (ou l'icône horloge/historique sur un fichier) : vous voyez la liste datée. Cliquez un [[commit]] pour voir le [[diff]] — vert = ajouté, rouge = supprimé — et comprendre exactement ce qui a bougé."},
+        {"type":"heading","text":"Récupérer une ancienne version"},
+        {"type":"paragraph","text":"Ouvrez un commit ancien → **Browse files** (ou *View file*) → vous êtes sur l'état du projet à cette date. Vous pouvez alors **télécharger** ce vieux `.html` via le bouton de fichier [[raw|brut]], ou simplement re-commit cet état pour annuler une régression."},
+        {"type":"heading","text":"Figer une version stable : les releases"},
+        {"type":"paragraph","text":"Quand un outil atteint un état « bon pour l'atelier », créez une [[release]]. Onglet **Releases** (à droite de la page du dépôt) → **Draft a new release** → créez un tag comme `v1.0` → **Publish**. GitHub génère un **.zip** téléchargeable de cette version exacte. Pratique pour distribuer une version validée aux apprentis sans qu'ils subissent vos modifications du lendemain."},
+        {"type":"callout","variant":"tip","title":"Numérotation simple","text":"`v1.0` pour la première version stable, `v1.1` pour un ajout mineur, `v2.0` pour une refonte. Pas besoin de plus sophistiqué pour des outils internes."},
+        {"type":"exercise","exercise":"cloze","question":"Complétez les concepts du versionnage :",
+          "text":"Chaque enregistrement s'appelle un {0}. Pour figer une version stable téléchargeable, on crée une {1}. L'affichage des lignes ajoutées/supprimées entre deux versions s'appelle un {2}.",
+          "answers":["commit","release","diff"],
+          "explanation":"Commit = l'instantané daté ; release = la version stable étiquetée (ex. v1.0) avec un zip ; diff = la comparaison visuelle des changements."}
+      ],
+      "sources":[
+        {"author":"GitHub Docs","text":"Managing releases in a repository","url":"https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository"}
+      ]
+    },
+
+    {
+      "title": "6. Héberger et tester avec GitHub Pages",
+      "blocks": [
+        {"type":"paragraph","text":"C'est la fonction la plus utile pour vos outils HTML standalone : transformer le dépôt en site, et exécuter l'outil depuis une URL — sans rien installer, ni pour vous ni pour ceux à qui vous l'envoyez."},
+        {"type":"heading","text":"Activer Pages"},
+        {"type":"paragraph","text":"Dans le dépôt : **Settings** → **Pages** (menu de gauche) → sous *Source*, choisissez la branche **main** et le dossier **/ (root)** → **Save**. Après une à deux minutes, votre site est en ligne."},
+        {"type":"heading","text":"Trouver l'URL de votre outil"},
+        {"type":"paragraph","text":"Le schéma est :\n`https://VOTRE-NOM.github.io/NOM-DU-DEPOT/FICHIER.html`\nExemple : `https://kilian.github.io/outils-atelier/triage-photos.html`. Mettez-la en favori : à chaque nouveau commit, la même URL sert automatiquement la dernière version.","spaced":true},
+        {"type":"callout","variant":"trap","title":"Le piège du lien 'brut' (raw)","text":"Si vous partagez le bouton **Raw** d'un fichier, le `.html` s'affiche en **code source**, il ne s'exécute pas : GitHub sert le brut en texte par sécurité. Pour que l'outil **fonctionne**, il faut passer par [[pages|GitHub Pages]], pas par le lien [[raw|brut]]."},
+        {"type":"callout","variant":"note","title":"Parfait pour vos outils, justement","text":"Vos outils sont 100% côté client (analyse EXIF, tri photos, calculs en JavaScript dans le navigateur). Ils n'ont besoin d'aucun serveur : c'est exactement ce que GitHub Pages sait faire. En revanche, les fichiers que l'utilisateur charge dans l'outil restent sur **sa** machine — rien n'est envoyé à GitHub. C'est une bonne chose pour la confidentialité."},
+        {"type":"callout","variant":"tip","title":"Alternative si le dépôt doit rester privé","text":"Pages gratuit exige un dépôt public. Si l'outil doit rester confidentiel, gardez-le privé et ouvrez-le simplement en local : téléchargez le `.html` et double-cliquez dessus (il s'ouvre dans le navigateur, sans installation). Vous perdez l'URL partagée, mais vous gardez le versionnage."},
+        {"type":"exercise","exercise":"qcm","question":"Vous envoyez à un collègue le lien 'Raw' de votre outil HTML. Que voit-il ?",
+          "multiple":false,
+          "options":[
+            {"text":"L'outil qui s'exécute normalement","correct":false},
+            {"text":"Le code source affiché en texte, l'outil ne tourne pas","correct":true},
+            {"text":"Une erreur 404","correct":false}
+          ],
+          "explanation":"Le mode brut sert le fichier en texte (par sécurité). Pour que l'outil s'exécute, partagez l'URL GitHub Pages, pas le lien Raw."}
+      ],
+      "sources":[
+        {"author":"GitHub Docs","text":"Getting started with GitHub Pages","url":"https://docs.github.com/en/pages/getting-started-with-github-pages"}
+      ]
+    },
+
+    {
+      "title": "7. Bonnes pratiques & organisation",
+      "blocks": [
+        {"type":"heading","text":"Nommage des fichiers"},
+        {"type":"paragraph","text":"Minuscules, tirets, **pas d'espaces ni d'accents** : `triage-photos.html`, `banc-focal-pro.html`, `meal-builder.html`. Les accents et espaces cassent les URL et compliquent les liens Pages. Et surtout : **un nom stable dans le temps** — c'est lui qui vous évite les doublons."},
+        {"type":"heading","text":"Structurer le dépôt"},
+        {"type":"paragraph","text":"Deux stratégies valables :\n• **Un dépôt par outil** : simple, chaque outil a sa propre URL Pages courte.\n• **Un dépôt « boîte à outils »** avec des sous-dossiers (`/triage-photos/`, `/banc-focal/`…) : tout au même endroit, un seul README qui liste tout. Pratique quand vous avez beaucoup de petits outils.","spaced":true},
+        {"type":"heading","text":"Soigner le README"},
+        {"type":"paragraph","text":"Dans le [[readme|README]], notez pour chaque outil : à quoi il sert, le lien Pages pour l'ouvrir, et éventuellement le format de données attendu. Votre vous-du-futur (et vos collègues) vous remercieront. Il s'édite directement dans le navigateur via l'icône crayon."},
+        {"type":"heading","text":"Rythme de commit"},
+        {"type":"paragraph","text":"Committez à chaque version qui marche, même imparfaite. Mieux vaut beaucoup de petits commits clairs qu'un gros commit fourre-tout : c'est ce qui rend les retours en arrière précis et indolores."},
+        {"type":"compare","title":"Réflexes à garder / à éviter",
+          "left":{"title":"À garder","items":["Même nom de fichier, toujours","Messages de commit qui décrivent le changement","Une release pour chaque version stable","Données sensibles → dépôt privé ou pas sur GitHub"]},
+          "right":{"title":"À éviter","items":["outil-v2.html, outil-final.html, outil-vraiment-final.html","Messages 'update', 'modif', 'test'","Partager le lien Raw en croyant que l'outil tournera","Mettre des mesures clients dans un dépôt public"]}},
+        {"type":"callout","variant":"tip","title":"Astuce édition rapide","text":"Pour une petite correction (un libellé, une couleur), pas besoin de repasser par Claude : cliquez le fichier sur GitHub → icône **crayon** → modifiez → **Commit**. Pour les vraies modifications de logique, laissez Claude générer le code et collez-le via [[ghdev|github.dev]]."},
+        {"type":"exercise","exercise":"open","question":"Décrivez en quelques mots votre futur flux de travail : de la génération d'un outil par Claude jusqu'à sa mise en ligne testable.",
+          "keywords":["claude","commit","github.dev","upload","pages","url","tester","même nom","release"],
+          "explanation":"Flux modèle : Claude génère le code → vous l'enregistrez sur GitHub (glisser-déposer ou github.dev) en gardant le MÊME nom → message de commit clair → GitHub Pages sert la nouvelle version sur la même URL → vous rechargez l'URL pour tester. Quand une version est stable, vous créez une release pour la figer."}
+      ],
+      "sources":[
+        {"author":"GitHub Docs","text":"About READMEs","url":"https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-readmes"}
+      ]
+    },
+
+    {
+      "title": "8. Récapitulatif express",
+      "blocks": [
+        {"type":"callout","variant":"note","title":"L'essentiel en six points","text":"1) Un [[repo|dépôt]] par outil (ou un dépôt boîte à outils). 2) Toujours **le même nom de fichier**. 3) Chaque mise à jour = un [[commit]] au message clair. 4) [[ghdev|github.dev]] (touche `.`) pour coller le code sans télécharger. 5) [[pages|GitHub Pages]] pour une URL qui exécute l'outil. 6) Une [[release]] pour figer les versions stables."},
+        {"type":"paragraph","text":"Tout cela, **sans aucune installation et sans droits administrateur**. Votre dossier Téléchargements peut enfin oublier le suffixe `(1)`.","spaced":true},
+        {"type":"exercise","exercise":"qcm","question":"Quel est le seul vrai réflexe qui fait disparaître les outil(1).html, outil(2).html… ?",
+          "multiple":false,
+          "options":[
+            {"text":"Renommer chaque version avec un numéro","correct":false},
+            {"text":"Ré-uploader / réenregistrer toujours sous le même nom de fichier","correct":true},
+            {"text":"Supprimer les anciennes versions à la main","correct":false},
+            {"text":"Créer un nouveau dépôt à chaque modification","correct":false}
+          ],
+          "explanation":"Garder le même nom laisse GitHub écraser le fichier tout en archivant l'ancienne version dans l'historique des commits. C'est le geste central de tout le cours."}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,336 @@
+{
+  "title": "🧲 Magnétisme Appliqué à l'Horlogerie & Norme ISO 764",
+  "category": "Technique & Horlogerie",
+  "author": "Expertise Horlogère",
+  "color": "#6300bf",
+  "description": "Une immersion scientifique et technique dans les effets des champs magnétiques sur les garde-temps. Maîtrisez les équations de Maxwell, la distinction clé entre B et H, la perméabilité des matériaux, ainsi que les exigences strictes de la norme ISO 764.",
+  "lead": "Ce cours approfondi est conçu pour vous préparer à des échanges de haut niveau avec des ingénieurs et experts du secteur horloger. Il pose les bases mathématiques et métallurgiques indispensables pour comprendre et contrer le magnétisme.",
+  "terms": [
+    {
+      "key": "champ_B",
+      "label": "Champ B (Induction magnétique)",
+      "color": "#2052bb",
+      "summary": "Mesuré en Tesla (T). Représente la réponse totale du milieu (champ total), incluant l'aimantation propre de la matière."
+    },
+    {
+      "key": "champ_H",
+      "label": "Champ H (Excitation magnétique)",
+      "color": "#1f7a4d",
+      "summary": "Mesuré en Ampère par mètre (A/m). Représente le champ externe appliqué, généré uniquement par les courants électriques libres."
+    },
+    {
+      "key": "permeabilite",
+      "label": "Perméabilité magnétique (μ)",
+      "color": "#b4540a",
+      "summary": "Capacité d'un matériau à canaliser les lignes de flux magnétique. Produit de la perméabilité du vide (μ₀) et de la perméabilité relative (μ_r)."
+    },
+    {
+      "key": "ferromagnetique",
+      "label": "Ferromagnétisme",
+      "color": "#cc0000",
+      "summary": "Propriété de certains matériaux (Fer, Nickel, Cobalt) de s'aimanter fortement sous l'effet d'un champ extérieur et de conserver une aimantation rémanente."
+    }
+  ],
+  "sections": [
+    {
+      "title": "1 · Fondations Physiques : La Distinction Fondamentale entre B et H",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Pour échanger avec un ingénieur horloger, la plus grande erreur est de confondre l'**excitation magnétique** et l'**induction magnétique**. Ces deux grandeurs décrivent des réalités physiques différentes mais interconnectées au sein des équations de Maxwell{{1}}.",
+          "spaced": true
+        },
+        {
+          "type": "heading",
+          "text": "L'excitation magnétique (Champ H)"
+        },
+        {
+          "type": "paragraph",
+          "text": "Le [[champ_H]] représente la cause externe. Il est produit exclusivement par la circulation de courants électriques libres (loi d'Ampère) ou par des aimants permanents modélisés. Son unité dans le Système International (SI) est l'**Ampère par mètre (A/m)**."
+        },
+        {
+          "type": "heading",
+          "text": "L'induction magnétique (Champ B)"
+        },
+        {
+          "type": "paragraph",
+          "text": "Le [[champ_B]] est l'effet global résultant. C'est le champ réel qui agit sur les charges en mouvement (force de Lorentz) et qui traverse les composants de la montre. Son unité est le **Tesla (T)**. Il englobe à la fois l'excitation externe H et la réaction de la matière (l'aimantation M){{2}}."
+        },
+        {
+          "type": "callout",
+          "variant": "note",
+          "text": "**Équation constitutive fondamentale :** Dans un milieu linéaire, isotrope et homogène, la relation mathématique s'écrit : **B = μ · H**. De manière plus générale, en incluant le vecteur aimantation M, on a : **B = μ₀ · (H + M)**."
+        },
+        {
+          "type": "heading",
+          "text": "Comprendre la Perméabilité Magnétique (μ)"
+        },
+        {
+          "type": "paragraph",
+          "text": "La [[permeabilite]] détermine la facilité avec laquelle un matériau se laisse traverser par les lignes de champ. Elle se décompose ainsi : **μ = μ₀ · μ_r**."
+        },
+        {
+          "type": "paragraph",
+          "text": "* **μ₀ (Perméabilité du vide) :** Une constante physique universelle égale à exactement **4π × 10⁻⁷ H/m** (ou T·m/A).\n* **μ_r (Perméabilité relative) :** Un facteur adimensionnel. Si μ_r ≈ 1 (vide, air, titane), le milieu ne réagit presque pas. Si μ_r ≫ 1 (matériaux ferromagnétiques comme l'acier doux où μ_r peut atteindre 5000), le matériau agit comme un véritable « aspirateur » à lignes de flux."
+        },
+        {
+          "type": "callout",
+          "variant": "trap",
+          "title": "Le piège de la non-linéarité",
+          "text": "**Attention :** Pour les matériaux ferromagnétiques, μ_r n'est pas une constante ! Elle dépend de l'historique du matériau (phénomène d'hystérésis) et de l'intensité du champ H appliqué. Elle s'effondre lorsque le matériau atteint sa **saturation magnétique**."
+        }
+      ],
+      "sources": [
+        {
+          "author": "Jackson, J. D.",
+          "text": "Électrodynamique classique : Cours et exercices",
+          "year": "2001"
+        },
+        "Relations constitutives des milieux continus en magnétostatique, Dunod."
+      ]
+    },
+    {
+      "title": "2 · L'Art des Conversions : Maîtriser les Ordres de Grandeur",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Dans la pratique industrielle, les horlogers utilisent fréquemment le **Tesla** (ou le Gauss dans le système CGS, où 1 G = 10⁻⁴ T) pour quantifier l'exposition subie, tandis que les normes internationales s'expriment souvent en **A/m**. Passer de l'un à l'autre requiert une rigueur absolue quant au milieu traversé.",
+          "spaced": true
+        },
+        {
+          "type": "heading",
+          "text": "Règle de conversion dans l'air ou le vide"
+        },
+        {
+          "type": "paragraph",
+          "text": "Puisque dans l'air ou le vide μ_r = 1, la relation devient simplement **B = μ₀ · H**. Pour convertir un champ d'excitation H (A/m) en une induction B (Tesla), on multiplie par 4π × 10⁻⁷. À l'inverse, pour obtenir H à partir de B : **H = B / μ₀**."
+        },
+        {
+          "type": "callout",
+          "variant": "tip",
+          "text": "**Formule mathématique simplifiée dans l'air :** En inversant la constante, on obtient l'approximation très utile suivante : **1 mT (milliTesla) ≈ 795,77 A/m** (souvent arrondi à **800 A/m** par les praticiens)."
+        },
+        {
+          "type": "heading",
+          "text": "Ordres de grandeur clés en horlogerie"
+        },
+        {
+          "type": "paragraph",
+          "text": "Le graphique ci-dessous illustre l'écart abyssal entre l'environnement standard d'une montre, les exigences minimales et les performances des pièces de haute technologie d'aujourd'hui."
+        },
+        {
+          "type": "chart",
+          "chart": "bar",
+          "title": "Intensité des champs magnétiques (en A/m, équivalent dans l'air)",
+          "data": [
+            {
+              "label": "Champ terrestre",
+              "value": 40
+            },
+            {
+              "label": "Aimant de frigo",
+              "value": 4000,
+              "color": "#1f7a4d"
+            },
+            {
+              "label": "Norme ISO 764 (Seuil)",
+              "value": 4800,
+              "color": "#6300bf"
+            },
+            {
+              "label": "Smartphone / Écouteur",
+              "value": 30000
+            },
+            {
+              "label": "Technologie Silicium (Omega Master Chronometer)",
+              "value": 1200000,
+              "color": "#cc0000"
+            }
+          ],
+          "caption": "Comparatif des expositions en A/m. Notez que les aimants néodyme modernes des smartphones et fermoirs de sacs dépassent de très loin le seuil historique de la norme ISO."
+        }
+      ]
+    },
+    {
+      "title": "3 · Métallurgie Horlogère : Impacts sur les Matériaux et Composants",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Une montre mécanique est un assemblage micro-mécanique complexe. L'introduction d'un champ magnétique externe perturbe les composants selon la nature de leur matrice métallurgique. Les effets induits varient de la simple déviation de marche à l'arrêt total.",
+          "spaced": true
+        },
+        {
+          "type": "heading",
+          "text": "Classification du comportement des composants"
+        },
+        {
+          "type": "paragraph",
+          "text": "Le tableau comparatif ci-dessous synthétise la vulnérabilité des principaux éléments d'un calibre traditionnel face aux agressions magnétiques :"
+        },
+        {
+          "type": "compare",
+          "title": "Sensibilité magnétique des composants",
+          "left": {
+            "title": "Composants Ferromagnétiques (Critiques)",
+            "items": [
+              "**Spiral traditionnel (Acier/Nivarox) :** Les spires s'aimantent, s'attirent mutuellement, ce qui raccourcit la longueur active du ressort et provoque une avance massive (parfois plusieurs heures par jour).",
+              "**Axe de balancier :** Fabriqué en acier dur pour résister aux pivots, il accumule une aimantation rémanente persistante qui perturbe l'isochronisme.",
+              "**Ancre & Roue d'échappement :** Le flux magnétique crée des forces d'attraction parasites qui augmentent les frictions et altèrent la transmission de l'énergie."
+            ]
+          },
+          "right": {
+            "title": "Composants Amagnétiques ou Paramagnétiques (Solutions)",
+            "items": [
+              "**Éléments en Silicium (SiO₂ c-Si) :** Totalement insensible aux champs magnétiques (μ_r = 1). Aucune aimantation induite possible.",
+              "**Alliages complexes (Nivachron, Parachrom) :** Bases de Nb-Zr (Niobium-Zirconium) ou de Titane. Très faible susceptibilité magnétique.",
+              "**Balancier en Glucydur :** Alliage de Cuivre, Béryllium et Fer optimisé pour être insensible aux variations thermiques et peu sensible au magnétisme."
+            ]
+          },
+          "caption": "Analyse comparative de l'impact du magnétisme sur la cinématique du mouvement mécanique."
+        },
+        {
+          "type": "heading",
+          "text": "La parade par le blindage : La cage en fer doux"
+        },
+        {
+          "type": "paragraph",
+          "text": "Avant l'avènement des composants amagnétiques, l'unique solution était d'isoler le mouvement. En utilisant un écran périphérique en **fer doux** (haute perméabilité relative μ_r et faible aimantation rémanente), on crée une **cage de Faraday magnétique**. Le flux extérieur préfère emprunter ce chemin hautement perméable plutôt que de traverser l'air interne de la montre. Le mouvement est ainsi préservé du flux."
+        }
+      ]
+    },
+    {
+      "title": "4 · La Norme ISO 764 : Le Cadre Légal et ses Limites",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "La norme internationale **ISO 764** (déclinée en Suisse sous le label NIHS 90-10) définit précisément les critères méthodologiques pour qu'une montre puisse être qualifiée de « **magnéto-résistante** » ou d'« **anti-magnétique** ».",
+          "spaced": true
+        },
+        {
+          "type": "heading",
+          "text": "Le protocole de test officiel"
+        },
+        {
+          "type": "timeline",
+          "title": "Les étapes de qualification selon l'ISO 764",
+          "items": [
+            {
+              "when": "Étape 1 : Mesure initiale",
+              "what": "Stabilisation de la montre",
+              "desc": "La marche diurne de la montre est mesurée avec précision dans des conditions de référence sur plusieurs jours afin d'établir la dérive initiale (marche témoin)."
+            },
+            {
+              "when": "Étape 2 : L'agression",
+              "what": "Exposition au champ homogène",
+              "desc": "La montre est soumise à un champ magnétique continu de **4 800 A/m** (exactement **6 milliTesla** dans l'air). L'exposition dure 1 minute selon 3 axes distincts : perpendiculaire au cadran, parallèlement au cadran du 12h au 6h, puis du 9h au 3h."
+            },
+            {
+              "when": "Étape 3 : Tolérance",
+              "what": "Mesure résiduelle après exposition",
+              "desc": "Le champ est coupé. Pour les montres mécaniques courantes, la dérive résiduelle après l'épreuve ne doit pas excéder **30 secondes par jour** (±30 s/j) pour valider le test."
+            }
+          ],
+          "caption": "Processus séquentiel de validation standardisé."
+        },
+        {
+          "type": "callout",
+          "variant": "warn",
+          "text": "**La limite critique de l'ISO 764 :** Cette norme a été pensée pour l'environnement industriel du XXe siècle (haut-parleurs basiques, dynamos). Aujourd'hui, un simple aimant en néodyme présent dans la fermeture d'un étui de tablette ou d'un sac à main génère un champ local de l'ordre de **60 000 A/m à 100 000 A/m**. Une montre simplement certifiée ISO 764 sera instantanément magnétisée et hors tolérance dans la vie moderne."
+        },
+        {
+          "type": "sourcebox",
+          "title": "Références normatives pour l'entretien avec l'expert",
+          "sources": [
+            {
+              "author": "ISO Org",
+              "text": "ISO 764:2020 - Horlogerie — Montres de poche et montres-bracelets résistant au magnétisme",
+              "url": "https://www.iso.org/fr/standard/74640.html"
+            },
+            {
+              "author": "METAS",
+              "text": "Exigences d'homologation Master Chronometer (Certification supérieure jusqu'à 15 000 gauss soit 1,2 MA/m)",
+              "year": "2015"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "5 · Exercices d'Intégration et de Validation",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Validez vos connaissances mathématiques, physiques et normatives avant votre rencontre avec l'expert.",
+          "spaced": true
+        },
+        {
+          "type": "exercise",
+          "exercise": "qcm",
+          "question": "Un ingénieur vous affirme qu'il a mesuré une excitation magnétique H de 1,2 Tesla dans un entrefer. Pourquoi sa formulation est-elle physiquement incorrecte ?",
+          "multiple": false,
+          "options": [
+            {
+              "text": "Parce que l'excitation H s'exprime en Ampère par mètre (A/m) et non en Tesla.",
+              "correct": true
+            },
+            {
+              "text": "Parce que le Tesla est exclusivement réservé au champ de pesanteur terrestre.",
+              "correct": false
+            },
+            {
+              "text": "Parce que le champ H ne peut exister que dans les matériaux ferromagnétiques.",
+              "correct": false
+            }
+          ],
+          "explanation": "Le **Tesla** est l'unité de l'induction magnétique (**B**). L'excitation magnétique (**H**) s'exprime obligatoirement en **A/m** (Ampère par mètre) dans le Système International. Confondre les unités montre une méconnaissance des équations de base du magnétostatisme."
+        },
+        {
+          "type": "exercise",
+          "exercise": "cloze",
+          "question": "Complétez le texte mathématique de conversion dans l'air :",
+          "text": "Dans l'air, la perméabilité relative vaut approximativement {0}. Pour obtenir une approximation rapide, une induction magnétique B de 6 mT (milliTesla) correspond à une excitation externe H d'environ {1} A/m, ce qui correspond précisément à l'intensité définie par la norme ISO 764.",
+          "answers": [
+            "1",
+            "4800"
+          ],
+          "explanation": "La relation fondamentale dans l'air est H = B / μ₀. Avec μ₀ = 4π × 10⁻⁷, une induction de 0,006 T divisée par μ₀ donne exactement 4774,6 A/m, arrondi réglementairement à **4800 A/m** dans le texte de la norme ISO 764."
+        },
+        {
+          "type": "exercise",
+          "exercise": "qcm",
+          "question": "Sélectionnez TOUTES les affirmations vraies concernant le comportement des matériaux au sein du mouvement :",
+          "multiple": true,
+          "options": [
+            {
+              "text": "Le silicium possède une perméabilité relative proche de 1 et ne conserve aucune aimantation rémanente.",
+              "correct": true
+            },
+            {
+              "text": "Une cage en fer doux bloque le magnétisme en absorbant l'énergie pour la transformer en électricité.",
+              "correct": false
+            },
+            {
+              "text": "Les spiraux en acier au carbone classiques s'aimantent car le fer possède une structure ferromagnétique sujette à l'hystérésis.",
+              "correct": true
+            }
+          ],
+          "explanation": "Le silicium est amagnétique (μ_r ≈ 1) et ne souffre d'aucune aimantation résiduelle. Les métaux ferromagnétiques classiques s'aimantent durablement à cause des moments magnétiques de leurs domaines (nuages d'atomes alignés). Quant à la cage en fer doux, elle ne transforme rien : elle dévie simplement les lignes de flux grâce à sa perméabilité élevée (principe du blindage magnétique)."
+        },
+        {
+          "type": "exercise",
+          "exercise": "open",
+          "question": "Pourquoi une montre validée conforme à la norme ISO 764 peut-elle malgré tout s'arrêter dans un environnement quotidien moderne au contact d'un ordinateur ou d'un sac ?",
+          "keywords": [
+            "limite",
+            "4800",
+            "néodyme",
+            "supérieur",
+            "aimant",
+            "moderne"
+          ],
+          "explanation": "La norme ISO 764 teste la résistance à un niveau de **4800 A/m** (6 mT). Or, les objets du quotidien modernes (aimants au néodyme des fermoirs de sacs, haut-parleurs de smartphones ou d'ordinateurs) génèrent des champs locaux considérablement **supérieurs**, pouvant atteindre 60 000 à 100 000 A/m. La norme est donc devenue insuffisante face aux expositions réelles du XXIe siècle, ce qui pousse les manufactures à tester leurs pièces à des seuils bien plus élevés (comme le protocole METAS à 15 000 gauss)."
+        }
+      ]
+    }
+  ]
+}

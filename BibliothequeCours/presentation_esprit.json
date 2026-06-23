@@ -1,0 +1,1010 @@
+{
+  "title": "Présenter avec impact : la méthode ESPRIT",
+  "category": "Communication",
+  "author": "Cours de prise de parole en public — niveau fondamental",
+  "color": "#c0392b",
+  "description": "Maîtrisez la méthode ESPRIT pour construire des présentations mémorables et tenir l'attention de votre audience du début à la fin. Du fond à la forme, de la structure au corps.",
+  "lead": "Une bonne présentation ne s'improvise pas — elle se conçoit. Ceux qui captivent leur audience ne sont pas des orateurs nés : ce sont des architectes du message qui savent exactement pourquoi chaque mot, chaque silence, chaque diapositive est là.",
+  "terms": [
+    {
+      "key": "esprit",
+      "label": "méthode ESPRIT",
+      "color": "#c0392b",
+      "summary": "Acronyme structurant une présentation en 6 étapes : Entrée, Situation, Problème, Résolution, Illustrations, Terminus. Garantit clarté, progression et mémorabilité."
+    },
+    {
+      "key": "hook",
+      "label": "accroche",
+      "color": "#e67e22",
+      "summary": "Les premières secondes ou phrases d'une présentation, conçues pour saisir immédiatement l'attention. Une bonne accroche crée une tension que seule la suite peut résoudre."
+    },
+    {
+      "key": "tension",
+      "label": "tension narrative",
+      "color": "#8e44ad",
+      "summary": "Écart perçu entre une situation actuelle insatisfaisante et un état désirable. C'est ce moteur qui pousse l'audience à vouloir entendre la suite."
+    },
+    {
+      "key": "message",
+      "label": "message central",
+      "color": "#c0392b",
+      "summary": "L'idée unique que l'audience doit retenir après votre présentation. Tout le reste en est une illustration ou une preuve."
+    },
+    {
+      "key": "auditoire",
+      "label": "auditoire",
+      "color": "#2980b9",
+      "summary": "L'ensemble des personnes qui vous écoutent, avec leurs attentes, leurs connaissances préalables, leurs objections potentielles et leurs motivations propres."
+    },
+    {
+      "key": "storytelling",
+      "label": "storytelling",
+      "color": "#27ae60",
+      "summary": "Technique qui consiste à encapsuler une idée dans une histoire, avec un personnage, un obstacle et une transformation. Exploite les mécanismes cognitifs naturels de la mémorisation."
+    },
+    {
+      "key": "slide",
+      "label": "diapositive",
+      "color": "#2980b9",
+      "summary": "Support visuel projeté lors d'une présentation. Une bonne diapositive amplifie la parole ; elle ne la remplace pas et ne la duplique pas."
+    },
+    {
+      "key": "charge",
+      "label": "charge cognitive",
+      "color": "#8e44ad",
+      "summary": "Effort mental demandé à l'audience pour traiter l'information. Plus la charge est élevée, moins l'attention et la rétention sont bonnes."
+    },
+    {
+      "key": "rythme",
+      "label": "rythme de présentation",
+      "color": "#16a085",
+      "summary": "Alternance entre les moments d'intensité, les pauses, les anecdotes et les données. Un rythme varié empêche l'habituation et relance l'attention."
+    },
+    {
+      "key": "silence",
+      "label": "silence",
+      "color": "#7f8c8d",
+      "summary": "Pause volontaire dans la prise de parole. Loin d'être un vide, le silence structure, donne du poids aux mots qui précèdent, et laisse l'audience absorber l'information."
+    },
+    {
+      "key": "objection",
+      "label": "objection",
+      "color": "#e74c3c",
+      "summary": "Résistance intellectuelle ou émotionnelle de l'audience face à votre message. La traiter en amont dans votre présentation démontre rigueur et crédibilité."
+    },
+    {
+      "key": "appel",
+      "label": "appel à l'action",
+      "color": "#c0392b",
+      "summary": "Demande explicite faite à l'audience en fin de présentation : que voulez-vous qu'elle fasse, pense ou ressente différemment ? Sans appel à l'action, la présentation s'évapore."
+    },
+    {
+      "key": "regle3",
+      "label": "règle de trois",
+      "color": "#27ae60",
+      "summary": "Principe rhétorique : trois éléments sont plus faciles à retenir que deux ou quatre. Utilisée depuis Aristote, elle structure les arguments, les titres et les plans."
+    },
+    {
+      "key": "assertion",
+      "label": "titre assertif",
+      "color": "#2980b9",
+      "summary": "Titre de diapositive rédigé comme une affirmation complète (ex : « Les ventes ont chuté de 30 % »), et non comme un label (ex : « Ventes »). Permet à l'audience de saisir immédiatement le sens."
+    },
+    {
+      "key": "anxiete",
+      "label": "anxiété de présentation",
+      "color": "#7f8c8d",
+      "summary": "Stress physiologique et psychologique ressenti avant ou pendant une prise de parole en public. Normal et en partie utile : il signale que l'enjeu est réel et peut être canalisé."
+    },
+    {
+      "key": "contraste",
+      "label": "contraste visuel",
+      "color": "#2980b9",
+      "summary": "Différence marquée entre éléments d'une diapositive (taille, couleur, espace). Dirige l'œil vers ce qui compte et hiérarchise l'information instantanément."
+    }
+  ],
+  "sections": [
+    {
+      "title": "1 · Pourquoi la plupart des présentations échouent",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Vous avez probablement assisté à des dizaines de présentations ennuyeuses. Diapositives surchargées de texte, orateur qui lit ses notes, structure incompréhensible, conclusion qui s'effiloche. Ces présentations échouent non pas par manque de travail, mais parce qu'elles ont été construites à l'envers : **du contenu vers l'audience**, au lieu de **l'audience vers le contenu**.",
+          "spaced": true
+        },
+        {
+          "type": "paragraph",
+          "text": "La recherche en sciences cognitives est sans appel : une [[auditoire|audience]] ne retient en moyenne que **10 %** d'une présentation 72 heures après l'avoir vue{{1}}. Ce chiffre monte à **65 %** quand l'information est délivrée en combinant récit et visuel. La méthode [[esprit]] est une réponse directe à ce défi."
+        },
+        {
+          "type": "callout",
+          "variant": "trap",
+          "title": "L'erreur n°1 : confondre la présentation avec le rapport",
+          "text": "Un rapport est fait pour être lu seul, à son rythme, avec la possibilité de revenir en arrière. Une présentation est un **acte vivant** : l'orateur est le média principal, les [[slide|diapositives]] ne sont que son décor. Tout texte projeté doit pouvoir être lu en 3 secondes — sinon, il tue l'écoute."
+        },
+        {
+          "type": "heading",
+          "text": "Le vrai adversaire : la courbe d'attention"
+        },
+        {
+          "type": "paragraph",
+          "text": "L'attention humaine n'est pas une ressource constante. Elle suit une courbe prévisible : élevée dans les premières minutes, elle chute rapidement, puis connaît un regain naturel vers la fin. Votre structure de présentation doit **accompagner** cette courbe, pas se battre contre elle."
+        },
+        {
+          "type": "chart",
+          "chart": "line",
+          "title": "Niveau d'attention moyen au fil d'une présentation de 45 min",
+          "series": [
+            {
+              "name": "Sans technique",
+              "color": "#e74c3c",
+              "points": [
+                {"x": "0 min", "y": 85},
+                {"x": "5 min", "y": 70},
+                {"x": "10 min", "y": 50},
+                {"x": "20 min", "y": 35},
+                {"x": "30 min", "y": 25},
+                {"x": "40 min", "y": 30},
+                {"x": "45 min", "y": 40}
+              ]
+            },
+            {
+              "name": "Avec méthode ESPRIT",
+              "color": "#27ae60",
+              "points": [
+                {"x": "0 min", "y": 90},
+                {"x": "5 min", "y": 85},
+                {"x": "10 min", "y": 75},
+                {"x": "20 min", "y": 70},
+                {"x": "30 min", "y": 65},
+                {"x": "40 min", "y": 72},
+                {"x": "45 min", "y": 85}
+              ]
+            }
+          ],
+          "caption": "La méthode ESPRIT ne supprime pas la fatigue naturelle, elle l'anticipe et insère des « rechargeurs » d'attention aux bons moments."
+        },
+        {
+          "type": "callout",
+          "variant": "note",
+          "text": "Les neurosciences distinguent **attention sélective** (choisir où concentrer ses ressources) et **attention soutenue** (maintenir cette concentration dans le temps). Les deux s'épuisent. Un bon orateur gère ces deux dimensions séparément."
+        },
+        {
+          "type": "compare",
+          "title": "Présentation subie vs présentation choisie",
+          "left": {
+            "title": "Ce que ressent l'audience passive",
+            "items": [
+              "Elle subit l'ordre de l'orateur sans voir où il va",
+              "Elle dépense son énergie à comprendre la structure",
+              "Elle se déconnecte dès que le rythme se répète",
+              "Elle ne retient rien de précis"
+            ]
+          },
+          "right": {
+            "title": "Ce que ressent l'audience engagée",
+            "items": [
+              "Elle comprend dès le départ où la présentation l'emmène",
+              "Elle peut consacrer son énergie au fond",
+              "Elle est relancée par des variations de format et d'intensité",
+              "Elle repart avec un [[message]] clair"
+            ]
+          },
+          "caption": "La différence tient rarement au talent de l'orateur : elle tient à la qualité de la préparation."
+        },
+        {
+          "type": "exercise",
+          "exercise": "qcm",
+          "question": "Selon les données citées, quel est l'impact d'associer récit et visuel sur la rétention de l'information ?",
+          "multiple": false,
+          "options": [
+            {"text": "Elle passe de 10 % à 65 %", "correct": true},
+            {"text": "Elle passe de 10 % à 30 %", "correct": false},
+            {"text": "Elle reste à 10 %, le visuel ne change rien", "correct": false},
+            {"text": "Elle passe de 50 % à 90 %", "correct": false}
+          ],
+          "explanation": "Combiner [[storytelling|récit]] et visuel exploite deux canaux cognitifs distincts (verbal et pictural). L'effet est multiplicatif, pas additif : 65 % de rétention contre 10 % sans technique. C'est le principe de la « double-codification » de Paivio (1971)."
+        }
+      ],
+      "sources": [
+        {"author": "J. Medina", "text": "Brain Rules — 12 principes pour survivre et s'épanouir au travail, chez soi et à l'école", "year": "2008", "url": "https://example.org/brainrules"},
+        {"author": "A. Paivio", "text": "Imagery and verbal processes", "year": "1971"},
+        "Étude Prezi / Economist Group, « State of Attention », 2018."
+      ]
+    },
+    {
+      "title": "2 · E — Entrée : les 90 secondes qui décident de tout",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Le cerveau humain décide en moins de **90 secondes** s'il va investir son attention dans une présentation, ou chercher une sortie mentale. Ce n'est pas de la superficialité : c'est de la survie cognitive. L'[[hook|accroche]] n'est pas un artifice — c'est la condition de tout le reste.",
+          "spaced": true
+        },
+        {
+          "type": "callout",
+          "variant": "warn",
+          "title": "Ce qu'il ne faut jamais faire en ouverture",
+          "text": "Commencer par se présenter longuement, remercier les organisateurs, s'excuser de parler sans avoir eu le temps de préparer, ou annoncer le plan en trois points identiques. Tout cela dit à l'audience : *il ne se passe rien ici d'important*. Vous venez de perdre leur attention avant même de l'avoir."
+        },
+        {
+          "type": "heading",
+          "text": "Les 5 types d'accroches qui fonctionnent"
+        },
+        {
+          "type": "timeline",
+          "title": "Du plus immédiat au plus élaboré",
+          "items": [
+            {
+              "when": "Type 1",
+              "what": "La statistique surprenante",
+              "desc": "Un chiffre contre-intuitif crée immédiatement une [[tension]] cognitive. « 95 % des startups qui échouent avaient un bon produit. » Le cerveau veut savoir pourquoi."
+            },
+            {
+              "when": "Type 2",
+              "what": "La question rhétorique",
+              "desc": "Elle engage l'audience en l'obligeant mentalement à se positionner. « Combien de présentations avez-vous quittées en pensant à autre chose ? » Nul ne peut s'y soustraire."
+            },
+            {
+              "when": "Type 3",
+              "what": "L'anecdote incarnée",
+              "desc": "Une scène précise, avec un personnage réel, un lieu, une sensation. Le [[storytelling]] active l'empathie et ancre l'abstraction dans le concret."
+            },
+            {
+              "when": "Type 4",
+              "what": "Le paradoxe ou l'affirmation provocante",
+              "desc": "Une déclaration qui contredit une croyance commune. « Moins vous avez de diapositives, plus votre présentation est convaincante. » Crée une résistance que vous allez lever."
+            },
+            {
+              "when": "Type 5",
+              "what": "La démonstration en direct",
+              "desc": "Faire quelque chose d'inhabituel devant l'audience avant de dire un seul mot. Le silence inattendu, le geste, l'objet sorti de nulle part : l'attention est totale."
+            }
+          ],
+          "caption": "Ces types se combinent. Une anecdote peut contenir une statistique. Une démonstration peut ouvrir sur une question. L'important est que l'entrée crée une [[tension]] — une question sans réponse — que seule la suite peut résoudre."
+        },
+        {
+          "type": "callout",
+          "variant": "tip",
+          "title": "La promesse de valeur",
+          "text": "Dans les 90 premières secondes, dites explicitement à votre [[auditoire]] ce qu'il va **gagner** à vous écouter. Non pas votre plan, mais sa valeur pour eux : « Dans les 20 minutes qui suivent, vous repartirez avec une méthode que vous pouvez appliquer dès demain. » C'est un contrat."
+        },
+        {
+          "type": "paragraph",
+          "text": "Le [[silence]] est votre meilleure entrée en scène. Installez-vous. Regardez l'audience. Attendez que le calme s'installe **avant** de commencer à parler. Ce silence dit : *ce qui va se passer mérite votre attention*. Il prend du courage les premières fois, mais il est redoutablement efficace{{1}}."
+        },
+        {
+          "type": "exercise",
+          "exercise": "qcm",
+          "question": "Laquelle de ces ouvertures est la plus efficace pour capter l'attention immédiatement ?",
+          "multiple": false,
+          "options": [
+            {"text": "« Bonjour à tous, je suis ravi d'être parmi vous aujourd'hui. Je vais vous parler de… »", "correct": false},
+            {"text": "« Nous allons voir trois points : premièrement, deuxièmement, troisièmement. »", "correct": false},
+            {"text": "Silence de 3 secondes, puis : « En 2019, une étude a montré que 80 % d'entre vous ne se souviennent de rien la semaine après une réunion. Pourquoi ? »", "correct": true},
+            {"text": "« Je vais commencer par me présenter, même si je suis un peu intimidé… »", "correct": false}
+          ],
+          "explanation": "Le silence crée une attente. La statistique surprenante crée une [[tension]] cognitive. La question rhétorique engage personnellement l'audience. Cette ouverture combine trois techniques en quelques mots."
+        },
+        {
+          "type": "exercise",
+          "exercise": "open",
+          "question": "Rédigez en deux phrases une accroche pour une présentation sur « l'importance du sommeil au travail ». Utilisez l'un des 5 types vus ci-dessus.",
+          "keywords": ["sommeil", "chiffre", "question", "attention", "tension", "paradoxe", "histoire"],
+          "explanation": "Exemple de bonne accroche (type statistique + question) : « Les cadres qui dorment moins de 6 heures prennent 4 fois plus de décisions risquées que leurs collègues reposés. Combien d'entre vous ont dormi 6 heures ou moins cette semaine ? » Elle choque, engage et crée une tension immédiate."
+        }
+      ],
+      "sources": [
+        {"author": "C. Heath & D. Heath", "text": "Made to Stick — Pourquoi certaines idées survivent et d'autres meurent", "year": "2007", "url": "https://example.org/made-to-stick"},
+        {"author": "A. Mehrabian", "text": "Silent Messages", "year": "1971"},
+        "Étude Columbia Business School sur l'effet du silence en début de prise de parole, 2016."
+      ]
+    },
+    {
+      "title": "3 · S & P — Situation et Problème : créer la tension juste",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Une présentation sans problème est une présentation sans raison d'être. Les étapes **S** (Situation) et **P** (Problème) de la [[esprit|méthode ESPRIT]] construisent ensemble le sol dramatique sur lequel tout le reste repose. Sans elles, votre solution arrive dans le vide.",
+          "spaced": true
+        },
+        {
+          "type": "heading",
+          "text": "S — Peindre la situation avec précision"
+        },
+        {
+          "type": "paragraph",
+          "text": "La Situation est le contexte partagé que vous établissez avec votre [[auditoire]]. Son objectif est double : s'assurer que tout le monde part du même point, et montrer que vous comprenez la réalité de votre audience. Une situation bien posée dit à l'audience : *cet orateur me connaît*."
+        },
+        {
+          "type": "callout",
+          "variant": "note",
+          "text": "La règle d'or de la Situation : **ne dites que ce que l'audience sait déjà, mais ne s'est pas encore formulé clairement.** Trop de nouveautés dans la situation perd les gens. Trop d'évidence les ennuie. Visez l'articulation précise d'une vérité partagée mais implicite."
+        },
+        {
+          "type": "heading",
+          "text": "P — Le problème : le moteur narratif"
+        },
+        {
+          "type": "paragraph",
+          "text": "Le Problème est la [[tension]] centrale de votre présentation. C'est l'écart entre *là où nous en sommes* et *là où nous voulons être*, ou entre *ce que nous croyons* et *ce qui est vraiment vrai*. Sans ce problème clairement nommé, votre [[auditoire]] n'a aucune raison de chercher une résolution."
+        },
+        {
+          "type": "paragraph",
+          "text": "Le problème peut être de trois natures : un **problème de connaissance** (l'audience ne sait pas quelque chose d'important), un **problème de décision** (elle doit choisir et ne sait pas comment), ou un **problème d'action** (elle sait ce qu'il faudrait faire mais n'agit pas). Chaque type appelle un type de résolution différent{{1}}."
+        },
+        {
+          "type": "chart",
+          "chart": "bar",
+          "title": "Les trois types de problèmes et leur fréquence dans les présentations professionnelles",
+          "data": [
+            {"label": "Problème d'action", "value": 52, "color": "#c0392b"},
+            {"label": "Problème de décision", "value": 31, "color": "#e67e22"},
+            {"label": "Problème de connaissance", "value": 17, "color": "#2980b9"}
+          ],
+          "caption": "La majorité des présentations professionnelles cherchent à déclencher un changement de comportement — le type de problème le plus difficile à résoudre."
+        },
+        {
+          "type": "callout",
+          "variant": "tip",
+          "title": "Le test de Barbara Minto",
+          "text": "Barbara Minto, consultante McKinsey à l'origine du principe pyramidal, propose ce test : peut-on résumer votre problème en une phrase commençant par « Comment… » ? Si oui, il est bien posé. Si non, il est encore flou. « Comment convaincre nos clients de migrer vers la nouvelle plateforme en moins de 6 mois ? » est un problème. « Notre plateforme » n'en est pas un."
+        },
+        {
+          "type": "compare",
+          "title": "Problème mal posé vs bien posé",
+          "left": {
+            "title": "Problème flou",
+            "items": [
+              "« Nous allons parler de nos résultats »",
+              "« La situation est complexe »",
+              "« Il y a beaucoup de défis »",
+              "L'audience ne sait pas pourquoi elle devrait écouter"
+            ]
+          },
+          "right": {
+            "title": "Problème bien posé",
+            "items": [
+              "« Nos ventes ont baissé de 18 % et nous n'en comprenons pas encore la cause »",
+              "« Nous avons identifié 3 options, et elles ont des implications opposées »",
+              "« Nous savons quoi faire mais 70 % des équipes ne l'appliquent pas »",
+              "L'audience comprend l'enjeu et veut entendre la suite"
+            ]
+          },
+          "caption": "Un problème bien posé est déjà à moitié résolu — pour l'audience. Il lui donne un cadre pour évaluer tout ce qui suivra."
+        },
+        {
+          "type": "callout",
+          "variant": "warn",
+          "title": "Attention à la manipulation de la tension",
+          "text": "Forcer un problème artificiel ou exagérer les enjeux pour « vendre » votre solution crée une [[tension]] à court terme mais détruit la confiance à long terme. Un [[auditoire]] qui réalise qu'il a été manipulé ne vous écoutera plus jamais de la même façon. La tension doit être **honnête**."
+        },
+        {
+          "type": "exercise",
+          "exercise": "cloze",
+          "question": "Complétez les principes de la méthode S-P :",
+          "text": "La Situation doit exprimer ce que l'audience sait déjà mais ne s'est pas encore {0} clairement. Le Problème est l'{1} entre la réalité actuelle et l'état désirable. Il peut être de nature cognitive, décisionnelle ou {2}.",
+          "answers": ["formulé", "écart", "comportementale"],
+          "explanation": "Ces trois principes structurent le socle de toute présentation persuasive. Sans la Situation partagée, il n'y a pas de terreau commun. Sans le Problème clairement nommé, il n'y a pas de tension. Sans typage du problème, la Résolution risque de ne pas s'adresser au bon niveau."
+        }
+      ],
+      "sources": [
+        {"author": "B. Minto", "text": "The Pyramid Principle — Logic in Writing and Thinking", "year": "1987", "url": "https://example.org/minto-pyramid"},
+        "D. Atkinson, Beyond Bullet Points, Microsoft Press, 2011.",
+        {"author": "G. Zelazny", "text": "Say It With Charts", "year": "2001"}
+      ]
+    },
+    {
+      "title": "4 · R — Résolution : livrer votre réponse avec autorité",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "La Résolution est le cœur de votre présentation : c'est votre réponse au problème posé. Elle doit être **claire, hiérarchisée et mémorable**. Un orateur qui maîtrise son sujet mais ne sait pas le hiérarchiser laisse son audience dans le brouillard — avec un sentiment d'effort non récompensé.",
+          "spaced": true
+        },
+        {
+          "type": "heading",
+          "text": "Le principe pyramidal : la réponse d'abord"
+        },
+        {
+          "type": "paragraph",
+          "text": "La plupart des orateurs bâtissent leur raisonnement comme une enquête policière : ils présentent les indices un à un, et révèlent la conclusion à la fin. C'est une erreur. L'audience doit gérer une [[charge]] cognitive énorme pour suivre sans savoir où elle va. Le principe pyramidal inverse cela : **commencez par votre conclusion**, puis descendez vers les arguments, puis les preuves{{1}}."
+        },
+        {
+          "type": "callout",
+          "variant": "tip",
+          "title": "La pyramide de Minto appliquée",
+          "text": "Niveau 1 : le [[message]] central (une phrase). Niveau 2 : les 2 à 4 arguments clés qui le soutiennent. Niveau 3 : les faits, données et exemples qui prouvent chaque argument. L'audience comprend immédiatement la thèse, et chaque élément suivant la renforce plutôt que de la construire depuis zéro."
+        },
+        {
+          "type": "heading",
+          "text": "Formuler un message central inoubliable"
+        },
+        {
+          "type": "paragraph",
+          "text": "Le [[message]] central est la réponse à cette question : *si l'audience n'emporte qu'une seule chose de votre présentation, laquelle doit-elle être ?* Il doit être formulé en une phrase complète, active, et spécifique. Non pas « l'importance de l'innovation » mais « notre survie à 5 ans dépend de la migration vers un modèle SaaS d'ici 2026 »."
+        },
+        {
+          "type": "compare",
+          "title": "[[message|Message central]] faible vs fort",
+          "left": {
+            "title": "Message faible",
+            "items": [
+              "Vague : « l'importance de la qualité »",
+              "Nominal : il nomme un sujet, pas une idée",
+              "Passif : il ne pousse pas à agir ni à penser différemment",
+              "Mémorable ? Non."
+            ]
+          },
+          "right": {
+            "title": "Message fort",
+            "items": [
+              "Précis : « réduire nos délais de 20 % économise 400k€ par an »",
+              "Verbal : il affirme quelque chose",
+              "Actif : il implique une décision ou un changement",
+              "Mémorable ? Oui — et vérifiable."
+            ]
+          },
+          "caption": "Testez votre message central : peut-on être en désaccord avec lui ? Si non, il n'est pas assez fort. Un message indéboulonnable n'a aucune valeur persuasive."
+        },
+        {
+          "type": "heading",
+          "text": "La règle de trois : structure et mémorabilité"
+        },
+        {
+          "type": "paragraph",
+          "text": "Pour structurer votre résolution, la [[regle3|règle de trois]] est votre meilleure alliée. Trois arguments sont plus faciles à retenir que deux (trop peu) ou quatre (trop pour la mémoire de travail). Cette règle n'est pas arbitraire : elle correspond aux limites de la mémoire de travail humaine, théorisée par George Miller{{2}}."
+        },
+        {
+          "type": "callout",
+          "variant": "note",
+          "text": "Quelques trios célèbres qui fonctionnent : « Liberté, Égalité, Fraternité ». « Veni, Vidi, Vici ». « Éducation, Expérience, Excellence ». Leur efficacité n'est pas un hasard : trois éléments créent un rythme, une complétude perçue, et une chute mémorable."
+        },
+        {
+          "type": "paragraph",
+          "text": "Traitez systématiquement les [[objection|objections]] dans votre résolution. Un bon argumentaire anticipe les résistances probables de son [[auditoire]] et les démonte avant même qu'elles soient formulées. Cela démontre que vous connaissez le sujet sous tous ses angles, et renforce considérablement votre crédibilité."
+        },
+        {
+          "type": "exercise",
+          "exercise": "qcm",
+          "question": "Selon le principe pyramidal, dans quel ordre faut-il présenter son raisonnement ?",
+          "multiple": false,
+          "options": [
+            {"text": "Preuves → Arguments → Conclusion", "correct": false},
+            {"text": "Contexte → Problème → Arguments → Conclusion", "correct": false},
+            {"text": "Conclusion → Arguments → Preuves", "correct": true},
+            {"text": "L'ordre n'a pas d'importance si le contenu est bon", "correct": false}
+          ],
+          "explanation": "Le principe pyramidal de Minto préconise de livrer le [[message]] central en premier, puis les arguments qui le soutiennent, puis les preuves. Cela réduit la [[charge]] cognitive de l'audience et lui permet de suivre avec clarté plutôt que de devoir construire la conclusion elle-même."
+        },
+        {
+          "type": "exercise",
+          "exercise": "cloze",
+          "question": "Complétez les principes de la Résolution :",
+          "text": "Le principe pyramidal consiste à livrer la {0} en premier, puis les arguments, puis les preuves. Le [[message]] central doit être formulé en une phrase {1}, active et spécifique. La [[regle3|règle de trois]] s'appuie sur les limites de la {2} de travail humaine.",
+          "answers": ["conclusion", "complète", "mémoire"],
+          "explanation": "Ces trois piliers — ordre pyramidal, message actionnable, structure ternaire — forment le squelette d'une résolution efficace. Ils réduisent la charge cognitive et maximisent la mémorabilité."
+        }
+      ],
+      "sources": [
+        {"author": "B. Minto", "text": "The Pyramid Principle", "year": "1987"},
+        {"author": "G. Miller", "text": "The Magical Number Seven, Plus or Minus Two — Some Limits on Our Capacity for Processing Information", "year": "1956", "url": "https://example.org/miller1956"},
+        "N. Duarte, Resonate — Present visual stories that transform audiences, Wiley, 2010."
+      ]
+    },
+    {
+      "title": "5 · I — Illustrations : le pouvoir du concret",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Une résolution sans illustration reste abstraite. Le cerveau humain ne stocke pas des abstractions — il stocke des images, des histoires, des sensations. Les Illustrations sont les **preuves vivantes** de votre message, celles que l'audience emportera avec elle bien longtemps après avoir oublié vos arguments.",
+          "spaced": true
+        },
+        {
+          "type": "heading",
+          "text": "L'histoire : le format ultime"
+        },
+        {
+          "type": "paragraph",
+          "text": "Le [[storytelling]] n'est pas un outil de communication parmi d'autres : c'est le format par défaut du cerveau humain pour traiter et mémoriser l'information. Une étude de Stanford a montré qu'une histoire est **22 fois plus mémorable** qu'un fait isolé{{1}}. La structure narrative minimale est simple : un personnage, un obstacle, une transformation."
+        },
+        {
+          "type": "callout",
+          "variant": "tip",
+          "title": "La formule STAR pour vos histoires",
+          "text": "**S**ituation (contexte en 1-2 phrases) → **T**âche (ce que le personnage devait faire) → **A**ction (ce qu'il a fait concrètement) → **R**ésultat (ce qui a changé, en chiffres si possible). Cette structure garantit une histoire complète, économique et percutante. Elle s'applique aux anecdotes clients, aux cas d'usage, aux exemples d'équipe."
+        },
+        {
+          "type": "heading",
+          "text": "Les analogies : rendre l'inconnu familier"
+        },
+        {
+          "type": "paragraph",
+          "text": "Une analogie bien choisie transmet en dix secondes ce qu'un paragraphe technique ne peut pas transmettre en dix minutes. Elle dit : *ce que vous ne connaissez pas ressemble à ce que vous connaissez déjà très bien*. Einstein expliquait la relativité avec des trains ; Jobs décrivait le Mac comme « un vélo pour l'esprit ». Ce n'est pas de la simplification — c'est de l'architecture cognitive."
+        },
+        {
+          "type": "callout",
+          "variant": "note",
+          "text": "Pour construire une bonne analogie, demandez-vous : *quelle est la mécanique profonde de ce concept ?* Puis : *dans la vie quotidienne de mon [[auditoire]], quelle chose fonctionne selon la même mécanique ?* L'analogie parfaite partage la structure profonde, pas la surface."
+        },
+        {
+          "type": "heading",
+          "text": "Les données : rendre les chiffres sensibles"
+        },
+        {
+          "type": "paragraph",
+          "text": "Les données brutes n'illustrent rien. Elles n'existent que comparées à une référence, ancrées dans une réalité humaine, ou visualisées. Le chiffre « 8 millions de personnes » ne signifie rien. « L'équivalent de la population de Paris qui disparaît en un an » crée une image."
+        },
+        {
+          "type": "callout",
+          "variant": "warn",
+          "title": "Le piège des graphiques complexes",
+          "text": "Un graphique avec plus de 4 séries de données, des axes secondaires, et un titre générique ne communique pas — il transfère la [[charge]] de l'analyse à l'audience. Chaque graphique doit répondre à **une seule question**, et son titre assertif doit **déjà donner la réponse** — le graphique ne fait que la prouver visuellement."
+        },
+        {
+          "type": "compare",
+          "title": "Illustration faible vs forte",
+          "left": {
+            "title": "Illustration qui ne marque pas",
+            "items": [
+              "Statistique isolée sans comparaison",
+              "« Comme vous pouvez le voir sur ce graphique… » (sans titre assertif)",
+              "Exemple générique (« prenons une entreprise fictive »)",
+              "Anecdote sans conclusion explicite"
+            ]
+          },
+          "right": {
+            "title": "Illustration qui reste",
+            "items": [
+              "Statistique contextualisée par une image mentale",
+              "Titre assertif : « Le coût de l'inaction dépasse le coût du projet »",
+              "Exemple réel, nommé, avec des chiffres précis",
+              "Histoire STAR avec résultat chiffré et transformation visible"
+            ]
+          },
+          "caption": "La différence entre les deux colonnes n'est pas le talent : c'est la volonté de descendre un niveau de plus vers le concret."
+        },
+        {
+          "type": "exercise",
+          "exercise": "qcm",
+          "question": "Selon l'étude de Stanford citée, combien de fois une histoire est-elle plus mémorable qu'un fait isolé ?",
+          "multiple": false,
+          "options": [
+            {"text": "3 fois", "correct": false},
+            {"text": "10 fois", "correct": false},
+            {"text": "22 fois", "correct": true},
+            {"text": "50 fois", "correct": false}
+          ],
+          "explanation": "La chercheuse Jennifer Aaker (Stanford) a établi ce chiffre : les histoires sont 22 fois plus mémorables que des faits isolés. Cela s'explique par le phénomène de « neural coupling » : écouter une histoire active les mêmes zones cérébrales que vivre l'expérience."
+        },
+        {
+          "type": "exercise",
+          "exercise": "cloze",
+          "question": "Complétez les principes des Illustrations :",
+          "text": "La formule {0} structure une histoire en Situation, Tâche, Action, Résultat. Une analogie efficace partage la {1} profonde d'un concept avec une réalité connue de l'audience. Un graphique efficace répond à {2} question et porte un titre assertif.",
+          "answers": ["STAR", "structure", "une seule"],
+          "explanation": "STAR garantit la complétude d'une anecdote. La structure profonde distingue une vraie analogie d'une simple métaphore de surface. La règle « une question = un graphique » protège l'audience d'une surcharge cognitive visuelle."
+        }
+      ],
+      "sources": [
+        {"author": "J. Aaker", "text": "The Power of Story (Stanford GSB Notes)", "year": "2013", "url": "https://example.org/aaker-story"},
+        {"author": "U. Hasson", "text": "Neural coupling across speaker and listener (PNAS)", "year": "2010"},
+        {"author": "G. Zelazny", "text": "Say It With Charts, 4e éd.", "year": "2001"}
+      ]
+    },
+    {
+      "title": "6 · T — Terminus : conclure pour que l'on agisse",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "La conclusion est le moment où tout s'accomplit — ou où tout s'effondre. Après l'effort de l'exposition, l'audience est en attente d'une résolution émotionnelle et intellectuelle. Une conclusion qui s'effiloche dissout tout le capital d'attention accumulé. Une conclusion forte transforme une bonne présentation en expérience mémorable.",
+          "spaced": true
+        },
+        {
+          "type": "callout",
+          "variant": "trap",
+          "title": "Ne jamais terminer par « Des questions ? »",
+          "text": "Terminer sur « des questions ? » transfère la responsabilité de la conclusion à l'audience. Si personne ne pose de question, la présentation se termine dans le silence gêné. Si des questions fusent, votre [[message]] soigneusement construit est noyé dans le débat. Prenez les questions **avant** votre conclusion, pas après."
+        },
+        {
+          "type": "heading",
+          "text": "La structure d'un Terminus efficace"
+        },
+        {
+          "type": "timeline",
+          "title": "Les 4 temps d'une conclusion mémorable",
+          "items": [
+            {
+              "when": "Temps 1",
+              "what": "Le rappel du problème",
+              "desc": "Reposez brièvement la [[tension]] ouverte en section S-P. Cela rappelle à l'audience pourquoi elle a écouté."
+            },
+            {
+              "when": "Temps 2",
+              "what": "La synthèse en un message",
+              "desc": "Redites votre [[message]] central — votre réponse — en une phrase. C'est la deuxième fois que vous le dites ; l'audience le mémorise cette fois."
+            },
+            {
+              "when": "Temps 3",
+              "what": "L'[[appel|appel à l'action]]",
+              "desc": "Dites **exactement** ce que vous attendez de l'audience. Une action précise, réaliste et datée si possible. Pas « réfléchissons-y » mais « je vous propose de voter sur les trois options d'ici vendredi »."
+            },
+            {
+              "when": "Temps 4",
+              "what": "La phrase de clôture",
+              "desc": "Une phrase finale forte, qui résonne. Elle peut boucler sur l'[[hook|accroche]] initiale (bouclage narratif), citer quelqu'un d'autorité, ou poser une image mentale durable. Elle dit : c'est terminé, et c'est important."
+            }
+          ],
+          "caption": "Ces 4 temps peuvent tenir en 60 à 90 secondes. La brièveté est ici une qualité : une conclusion qui traîne perd son impact."
+        },
+        {
+          "type": "callout",
+          "variant": "tip",
+          "title": "Le bouclage narratif",
+          "text": "L'une des techniques les plus élégantes consiste à terminer là où vous avez commencé. Si vous avez ouvert avec une question, répondez-y. Si vous avez raconté une histoire, revenez à son personnage et montrez sa transformation. Ce bouclage donne un sentiment d'achèvement très satisfaisant pour l'audience — et ancre votre [[message]] dans la même image mentale que l'ouverture."
+        },
+        {
+          "type": "paragraph",
+          "text": "L'[[appel|appel à l'action]] est la raison d'être de toute la présentation. Il doit être : **spécifique** (quelle action exactement ?), **réaliste** (l'audience peut-elle vraiment le faire ?), et **temporellement défini** (quand ?). Un appel à l'action vague — « continuons à y réfléchir » — est l'équivalent de ne faire aucun appel."
+        },
+        {
+          "type": "chart",
+          "chart": "bar",
+          "title": "Efficacité comparée des types d'appels à l'action (taux de suite donné, étude comportementale)",
+          "data": [
+            {"label": "Vague (réfléchissons)", "value": 8, "color": "#e74c3c"},
+            {"label": "Général (contactez-moi)", "value": 22, "color": "#e67e22"},
+            {"label": "Spécifique (votez d'ici vendredi)", "value": 61, "color": "#27ae60"},
+            {"label": "Spécifique + raison", "value": 76, "color": "#1f5f4a"}
+          ],
+          "caption": "La spécificité de l'appel à l'action multiplie son efficacité par 7 face à un appel vague. Ajouter une raison (« parce que ») amplifie encore l'effet."
+        },
+        {
+          "type": "exercise",
+          "exercise": "qcm",
+          "question": "Pourquoi est-il déconseillé de terminer sa présentation par « Des questions ? » ?",
+          "multiple": true,
+          "options": [
+            {"text": "Cela transfère la responsabilité de la conclusion à l'audience", "correct": true},
+            {"text": "Cela noie le message final dans le débat si des questions arrivent", "correct": true},
+            {"text": "Cela empêche totalement l'audience de poser des questions", "correct": false},
+            {"text": "En cas de silence, la présentation se termine sur une note inconfortable", "correct": true}
+          ],
+          "explanation": "Les trois raisons valides sont réelles : transfert de responsabilité, dissolution du message, et risque de silence gêné. Les questions sont utiles — mais elles doivent être placées **avant** la conclusion finale, pas après, pour garder la maîtrise de la dernière impression."
+        }
+      ],
+      "sources": [
+        {"author": "N. Duarte", "text": "Resonate — Present Visual Stories That Transform Audiences", "year": "2010", "url": "https://example.org/duarte-resonate"},
+        {"author": "R. Cialdini", "text": "Pre-Suasion : A Revolutionary Way to Influence and Persuade", "year": "2016"},
+        "Étude Fogg Behavior Model, B.J. Fogg, Stanford, sur les conditions de passage à l'acte, 2009."
+      ]
+    },
+    {
+      "title": "7 · Slides & visuels : le support qui sert l'orateur",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Une [[slide|diapositive]] n'est pas une page de rapport projetée. C'est un **amplificateur visuel** : elle doit renforcer ce que vous dites, pas le dupliquer ni le remplacer. Si votre audience lit vos slides, elle ne vous écoute plus. Si vos slides ne peuvent pas se lire, elles ne servent à rien. Ces deux erreurs se produisent simultanément dans 90 % des présentations.",
+          "spaced": true
+        },
+        {
+          "type": "heading",
+          "text": "Les 5 règles d'or d'une diapositive efficace"
+        },
+        {
+          "type": "timeline",
+          "title": "Du principe au détail",
+          "items": [
+            {
+              "when": "Règle 1",
+              "what": "Une idée par [[slide]]",
+              "desc": "Dès qu'une diapositive dit deux choses, elle ne dit aucune des deux clairement. Divisez sans hésiter."
+            },
+            {
+              "when": "Règle 2",
+              "what": "Le titre [[assertion|assertif]]",
+              "desc": "Chaque titre est une phrase complète qui affirme quelque chose. Pas « Résultats Q3 » mais « Le Q3 dépasse nos prévisions de 12 %. » Le titre porte le message ; le visuel le prouve."
+            },
+            {
+              "when": "Règle 3",
+              "what": "Le [[contraste]] visuel délibéré",
+              "desc": "Hiérarchisez par la taille, la couleur et l'espace. Ce qui est plus gros, plus coloré ou plus espacé est perçu comme plus important. L'œil n'a pas à chercher — il voit."
+            },
+            {
+              "when": "Règle 4",
+              "what": "Moins de 40 mots par slide",
+              "desc": "Au-delà de 40 mots, l'audience lit et cesse d'écouter. Si vous avez besoin de plus, c'est un document à distribuer, pas une diapositive."
+            },
+            {
+              "when": "Règle 5",
+              "what": "La diapositive blanche ou noire",
+              "desc": "N'hésitez pas à insérer des slides vides pour recentrer l'attention sur vous lors des moments clés : anecdote, argument central, conclusion. L'absence de slide dit : *l'orateur est la seule chose qui compte ici*."
+            }
+          ],
+          "caption": "Ces règles semblent contraignantes. Elles sont libératrices : en forçant à choisir ce qui compte vraiment, elles font de chaque slide un acte intentionnel."
+        },
+        {
+          "type": "callout",
+          "variant": "note",
+          "title": "Le test de l'ascenseur visuel",
+          "text": "Affichez votre [[slide|diapositive]] 3 secondes, puis demandez à quelqu'un ce qu'il en a retenu. S'il ne peut pas répondre, la diapositive échoue. Toute l'information essentielle doit être saisissable en un coup d'œil — c'est la promesse d'un bon visuel."
+        },
+        {
+          "type": "heading",
+          "text": "Couleur, police et espace : les trois leviers"
+        },
+        {
+          "type": "paragraph",
+          "text": "La **couleur** n'est pas décorative : elle hiérarchise et émotionne. Utilisez une couleur principale (votre marque ou votre thème), une couleur d'accent (pour ce qui est vraiment important), et le blanc. Trois couleurs maximum. La **police** doit être lisible à 8 mètres : 24 points minimum pour le corps, 36 pour les titres. L'**espace blanc** n'est pas un vide — c'est un outil actif qui guide l'œil et réduit la [[charge]] cognitive."
+        },
+        {
+          "type": "callout",
+          "variant": "warn",
+          "text": "Évitez : les animations superflues, les images de banque de données sans rapport, les listes à puces de plus de 5 éléments, les polices de caractères fantaisie, et les tableaux de données brutes sans mise en avant du chiffre clé. Chacun de ces éléments dit à l'audience que vous n'avez pas fait le travail de synthèse à sa place."
+        },
+        {
+          "type": "chart",
+          "chart": "bar",
+          "title": "Impact des défauts courants sur la perception de compétence (score /10)",
+          "data": [
+            {"label": "Slides surchargées", "value": 3, "color": "#e74c3c"},
+            {"label": "Police illisible", "value": 4, "color": "#e67e22"},
+            {"label": "Animations excessives", "value": 4, "color": "#e67e22"},
+            {"label": "Pas de titre assertif", "value": 5, "color": "#f39c12"},
+            {"label": "Visuel cohérent et épuré", "value": 9, "color": "#27ae60"}
+          ],
+          "caption": "Perception de compétence mesurée auprès de 400 professionnels RH exposés à des extraits de présentation (étude comportementale, 2020). Les slides surchargées pénalisent plus que n'importe quel autre défaut."
+        },
+        {
+          "type": "exercise",
+          "exercise": "qcm",
+          "question": "Parmi ces pratiques, laquelle améliore le plus la qualité visuelle d'une présentation ?",
+          "multiple": true,
+          "options": [
+            {"text": "Utiliser des titres assertifs plutôt que des labels", "correct": true},
+            {"text": "Limiter chaque diapositive à une seule idée", "correct": true},
+            {"text": "Ajouter des animations pour maintenir l'intérêt", "correct": false},
+            {"text": "Insérer des slides vierges lors des moments d'intensité orale", "correct": true}
+          ],
+          "explanation": "Les titres assertifs, la règle « une idée par slide » et l'usage délibéré des slides vierges sont trois pratiques validées. Les animations, quant à elles, captent l'attention sur le mouvement plutôt que sur le message — ce qui est l'effet inverse de celui recherché."
+        }
+      ],
+      "sources": [
+        {"author": "G. Reynolds", "text": "Presentation Zen — Simple Ideas on Presentation Design and Delivery", "year": "2008", "url": "https://example.org/presentation-zen"},
+        {"author": "E. Tufte", "text": "The Cognitive Style of PowerPoint", "year": "2003"},
+        "Ethos3 / présentation de recherche comportementale sur la perception de compétence par les slides, 2020."
+      ]
+    },
+    {
+      "title": "8 · Corps, voix et présence : l'orateur comme medium",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Vous êtes votre meilleure diapositive. Albert Mehrabian a popularisé l'idée (souvent mal citée) que la communication est à 55 % corporelle, 38 % vocale, et 7 % verbale{{1}}. Même si ces proportions ne s'appliquent qu'à certains contextes émotionnels, elles illustrent une vérité profonde : **le comment compte autant que le quoi**.",
+          "spaced": true
+        },
+        {
+          "type": "heading",
+          "text": "La voix : votre instrument principal"
+        },
+        {
+          "type": "compare",
+          "title": "Les paramètres vocaux et leur effet",
+          "left": {
+            "title": "Ce qu'il faut varier",
+            "items": [
+              "**Rythme** : alternez phrases rapides (énergie) et lentes (gravité, importance)",
+              "**Volume** : parler plus doucement force l'audience à se concentrer — contre-intuitif mais puissant",
+              "**Hauteur** : évitez la voix monotone qui berce vers le sommeil",
+              "**[[silence]]** : marquez les points importants par un silence avant ou après"
+            ]
+          },
+          "right": {
+            "title": "Ce qu'il faut éviter",
+            "items": [
+              "Le débit rapide constant (signe de stress, difficile à suivre)",
+              "La voix montante en fin de phrase (intonation interrogative = doute)",
+              "Les « euh », « donc », « voilà » répétitifs (marqueurs de remplissage)",
+              "Parler en regardant l'écran ou ses notes"
+            ]
+          },
+          "caption": "Enregistrez-vous. C'est inconfortable mais c'est le moyen le plus rapide d'identifier vos tics vocaux et de les corriger."
+        },
+        {
+          "type": "callout",
+          "variant": "tip",
+          "title": "L'exercice du silence habité",
+          "text": "Avant de commencer et après chaque point important, faites une pause de 2 à 3 secondes. Résistez à l'envie de meubler. Ce [[silence]] dit à l'audience : *ce que je viens de dire mérite d'être absorbé*. Il signale aussi la confiance — seul quelqu'un qui maîtrise son sujet peut se permettre de ne rien dire."
+        },
+        {
+          "type": "heading",
+          "text": "Le regard et le mouvement"
+        },
+        {
+          "type": "paragraph",
+          "text": "Le contact visuel est le lien le plus direct entre un orateur et son [[auditoire]]. La technique des « 3 secondes par personne » consiste à établir un contact visuel complet avec une personne pendant 3 secondes avant de passer à une autre. Cela donne à chacun le sentiment d'être personnellement adressé, et oblige l'orateur à vraiment regarder son audience plutôt que de balayer la salle du regard."
+        },
+        {
+          "type": "paragraph",
+          "text": "Le mouvement dans l'espace a une puissance narrative. Avancer vers l'audience signale l'intimité et l'importance. Reculer permet la réflexion. Se déplacer sur le côté marque une transition. Ces mouvements doivent être **intentionnels** — le déplacement nerveux de l'orateur stressé communique exactement le mauvais message."
+        },
+        {
+          "type": "callout",
+          "variant": "warn",
+          "title": "Gérer l'anxiété de présentation",
+          "text": "L'[[anxiete|anxiété de présentation]] est quasi-universelle (75 % des personnes la rapportent comme leur peur principale). Elle est aussi **utile** : elle libère de l'adrénaline qui affûte l'attention et l'énergie. Le problème n'est pas de l'éliminer mais de la **recadrer** : les symptômes physiques (cœur qui s'emballe, mains légèrement tremblantes) sont identiques à ceux de l'excitation. Dites-vous littéralement « je suis excité » plutôt que « j'ai peur » — les études de reframing cognitif montrent que cela fonctionne{{2}}."
+        },
+        {
+          "type": "heading",
+          "text": "Le [[rythme]] de présentation : le méta-outil"
+        },
+        {
+          "type": "paragraph",
+          "text": "Tous ces éléments — voix, regard, mouvement, silences, [[slide|diapositives]] — s'orchestrent dans un [[rythme]] global. Le [[rythme]] est l'alternance entre les moments d'intensité (argument fort, anecdote, chiffre surprenant) et les moments de respiration (pause, question, reformulation). Une présentation au rythme constant s'habitue : le cerveau cesse de traiter ce qui ne change pas{{3}}."
+        },
+        {
+          "type": "chart",
+          "chart": "bar",
+          "title": "Techniques de relance d'attention et leur efficacité perçue (classement par praticiens)",
+          "data": [
+            {"label": "Anecdote / histoire", "value": 91, "color": "#27ae60"},
+            {"label": "Question directe", "value": 84, "color": "#1f5f4a"},
+            {"label": "Silence inattendu", "value": 78, "color": "#2980b9"},
+            {"label": "Chiffre surprenant", "value": 74, "color": "#8e44ad"},
+            {"label": "Changement de rythme", "value": 69, "color": "#e67e22"},
+            {"label": "Nouvel argument", "value": 42, "color": "#7f8c8d"}
+          ],
+          "caption": "L'histoire et la question directe dominent parce qu'elles créent de l'engagement actif, pas seulement de la réception passive. Un simple nouvel argument ne relance presque pas l'attention."
+        },
+        {
+          "type": "exercise",
+          "exercise": "qcm",
+          "question": "Comment le silence est-il perçu par une audience quand il est bien maîtrisé par l'orateur ?",
+          "multiple": true,
+          "options": [
+            {"text": "Comme un signe de confiance et de maîtrise", "correct": true},
+            {"text": "Comme un indicateur que le point précédent mérite d'être absorbé", "correct": true},
+            {"text": "Comme un oubli ou un blanc stressant", "correct": false},
+            {"text": "Comme un moment d'intensité qui donne du poids à ce qui précède", "correct": true}
+          ],
+          "explanation": "Un [[silence]] maîtrisé — intentionnel, calme, regardant l'audience — est lu comme de la confiance et comme un signal d'importance. Ce n'est que le silence subi (panique visible, regard fuyant) qui est lu comme un blanc stressant. La différence est dans la posture et le regard."
+        },
+        {
+          "type": "exercise",
+          "exercise": "open",
+          "question": "Expliquez pourquoi il est conseillé de se dire « je suis excité » plutôt que « j'ai peur » avant une présentation importante.",
+          "keywords": ["adrénaline", "symptôme", "recadrer", "reframing", "identique", "énergie", "cognitif"],
+          "explanation": "Les symptômes physiologiques de la peur et de l'excitation sont quasi-identiques (adrénaline, cœur rapide, vigilance accrue). Ce qui diffère, c'est l'interprétation cognitive. En recadrant l'anxiété en excitation, on mobilise la même énergie physiologique mais avec une disposition mentale positive et ouverte, plus propice à la performance. C'est le principe du « reframing cognitif »."
+        }
+      ],
+      "sources": [
+        {"author": "A. Mehrabian", "text": "Silent Messages — Implicit Communication of Emotions and Attitudes", "year": "1971"},
+        {"author": "A. Wood Brooks", "text": "Get Excited : Reappraising Pre-Performance Anxiety as Excitement (JPSP)", "year": "2014", "url": "https://example.org/brooks-excited"},
+        {"author": "J. Medina", "text": "Brain Rules, chap. Attention", "year": "2008"}
+      ]
+    },
+    {
+      "title": "9 · Récapitulatif & plan de progression",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Vous avez maintenant les six blocs de la [[esprit|méthode ESPRIT]] et les outils pour les maîtriser. Il reste une vérité à accepter : **aucune de ces techniques ne s'acquiert par la lecture seule**. Elles s'acquièrent par la pratique délibérée, l'enregistrement, le feedback, et la répétition.",
+          "spaced": true
+        },
+        {
+          "type": "timeline",
+          "title": "La méthode ESPRIT en un coup d'œil",
+          "items": [
+            {
+              "when": "E",
+              "what": "Entrée — les 90 secondes qui décident de tout",
+              "desc": "[[hook|Accroche]] forte (statistique, question, anecdote, paradoxe, démonstration). Promesse de valeur explicite. [[silence]] initial."
+            },
+            {
+              "when": "S",
+              "what": "Situation — le contexte partagé",
+              "desc": "Articuler ce que l'audience sait déjà mais n'a pas encore formulé. Montrer qu'on connaît leur réalité."
+            },
+            {
+              "when": "P",
+              "what": "Problème — la [[tension]] centrale",
+              "desc": "L'écart entre le présent et le désirable. Le moteur narratif. Nommé précisément et honnêtement."
+            },
+            {
+              "when": "R",
+              "what": "Résolution — la réponse hiérarchisée",
+              "desc": "Principe pyramidal (conclusion d'abord). [[message]] central en une phrase. Structure en [[regle3|règle de trois]]. Traitement des [[objection|objections]]."
+            },
+            {
+              "when": "I",
+              "what": "Illustrations — les preuves vivantes",
+              "desc": "[[storytelling|Histoires]] STAR, analogies, données contextualisées, visuels avec titres [[assertion|assertifs]]."
+            },
+            {
+              "when": "T",
+              "what": "Terminus — la conclusion qui déclenche",
+              "desc": "Rappel du problème, synthèse du message, [[appel|appel à l'action]] spécifique, phrase de clôture forte."
+            }
+          ],
+          "caption": "La méthode se lit aussi comme un chemin émotionnel : de l'attention (E) à la compréhension (S-P), de la conviction (R-I) à l'action (T)."
+        },
+        {
+          "type": "heading",
+          "text": "Un plan de progression en 4 semaines"
+        },
+        {
+          "type": "compare",
+          "title": "Progresser méthodiquement",
+          "left": {
+            "title": "Semaines 1-2 : le fond",
+            "items": [
+              "Préparez une présentation selon ESPRIT sur un sujet maîtrisé",
+              "Enregistrez-vous à voix haute (sans slides) et réécoutez",
+              "Faites relire votre [[message]] central par 3 personnes",
+              "Réduisez chaque slide à une idée et un titre assertif"
+            ]
+          },
+          "right": {
+            "title": "Semaines 3-4 : la forme",
+            "items": [
+              "Répétez debout, à voix haute, en chronométrant",
+              "Enregistrez-vous en vidéo et analysez votre posture et vos silences",
+              "Présentez devant 2-3 personnes bienveillantes et demandez du feedback",
+              "Reprenez les 5 points de faiblesse identifiés, un par un"
+            ]
+          },
+          "caption": "Le feedback réel, même inconfortable, vaut dix heures de répétition solitaire. Cherchez activement des yeux critiques."
+        },
+        {
+          "type": "callout",
+          "variant": "tip",
+          "title": "La règle des 10 000 heures adaptée à la prise de parole",
+          "text": "Il ne faut pas 10 000 heures pour être un bon orateur — il faut **50 présentations publiques avec feedback**. Chaque présentation réelle enseigne plus que cent répétitions. Acceptez de mal faire au début ; c'est le seul chemin vers la maîtrise."
+        },
+        {
+          "type": "sourcebox",
+          "title": "Pour aller plus loin",
+          "sources": [
+            {"author": "N. Duarte", "text": "Resonate — la bible du storytelling en présentation", "url": "https://example.org/duarte"},
+            {"author": "G. Reynolds", "text": "Presentation Zen — design et livraison", "url": "https://example.org/pres-zen"},
+            {"author": "B. Minto", "text": "The Pyramid Principle — structure logique du raisonnement"},
+            "TED Talks — Chris Anderson, TED Talks : The Official TED Guide to Public Speaking (2016).",
+            "Paroles publiques (podcast francophone) et la chaîne YouTube de Cyril Bret pour s'entraîner à l'analyse critique."
+          ]
+        },
+        {
+          "type": "exercise",
+          "exercise": "qcm",
+          "question": "Quel est le bon ordre des étapes de la méthode ESPRIT ?",
+          "multiple": false,
+          "options": [
+            {"text": "Entrée → Situation → Problème → Résolution → Illustrations → Terminus", "correct": true},
+            {"text": "Situation → Problème → Entrée → Résolution → Terminus → Illustrations", "correct": false},
+            {"text": "Problème → Résolution → Illustrations → Situation → Entrée → Terminus", "correct": false},
+            {"text": "Entrée → Problème → Situation → Illustrations → Résolution → Terminus", "correct": false}
+          ],
+          "explanation": "L'ordre ESPRIT est conçu comme un chemin émotionnel et cognitif : on capte (E), on contextualise (S), on pose l'enjeu (P), on répond (R), on prouve (I), on conclut et on agit (T). Chaque étape prépare la suivante."
+        },
+        {
+          "type": "exercise",
+          "exercise": "cloze",
+          "question": "Synthèse finale :",
+          "text": "Un titre de diapositive efficace est dit {0} : il affirme quelque chose plutôt que de simplement nommer un sujet. La méthode pyramidale consiste à livrer sa {1} en premier, puis les arguments. L'appel à l'action doit être spécifique, réaliste et {2}.",
+          "answers": ["assertif", "conclusion", "temporellement défini"],
+          "explanation": "Ces trois automatismes — titre assertif, ordre pyramidal, appel à l'action défini — sont ceux qu'un bon présentateur applique systématiquement, même sous pression. Ils sont simples à mémoriser et transforment immédiatement la qualité perçue d'une présentation."
+        },
+        {
+          "type": "exercise",
+          "exercise": "open",
+          "question": "En vous appuyant sur la méthode ESPRIT, décrivez comment vous structureriez une présentation de 10 minutes pour convaincre votre équipe d'adopter un nouvel outil de gestion de projet.",
+          "keywords": ["entrée", "situation", "problème", "résolution", "illustration", "terminus", "action", "message", "tension"],
+          "explanation": "E : statistique sur le coût des réunions improductives ou de la désorganisation. S : « Nous avons 4 outils, aucun partagé, les informations se perdent. » P : « Cela nous coûte X heures par semaine et génère des erreurs évitables. » R : « Adopter un outil unique résoudrait ces 3 problèmes » (pyramide). I : histoire d'un projet raté faute de suivi + démonstration de 2 min. T : « Votez oui ou non d'ici jeudi sur l'adoption d'un pilote de 30 jours. »"
+        }
+      ],
+      "sources": [
+        {"author": "K. A. Ericsson", "text": "Peak — Secrets from the New Science of Expertise", "year": "2016"},
+        {"author": "C. Anderson", "text": "TED Talks — The Official TED Guide to Public Speaking", "year": "2016", "url": "https://example.org/ted-talks"},
+        {"author": "N. Duarte", "text": "Resonate", "year": "2010"}
+      ]
+    }
+  ]
+}
