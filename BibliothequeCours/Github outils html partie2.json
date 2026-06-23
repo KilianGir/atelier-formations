@@ -1,0 +1,200 @@
+{
+  "title": "Gérer ses outils HTML avec GitHub — Partie 2 : en local avec Claude Code",
+  "category": "Outils & Méthode",
+  "color": "#16877a",
+  "description": "Suite du cours navigateur. Sur un poste où l'on peut installer des logiciels : dépôt local, synchronisation, GitHub Desktop sans terminal, et le workflow où Claude écrit et versionne le code directement.",
+  "lead": "Plus de copier-coller : Claude modifie les fichiers de votre projet et les enregistre tout seul. Vous validez, c'est en ligne.",
+
+  "terms": [
+    {"key":"git","label":"Git","color":"#c0392b","summary":"Le logiciel de gestion de versions qui tourne sur votre machine. GitHub est le service en ligne qui héberge les dépôts Git."},
+    {"key":"local","label":"dépôt local","color":"#2052bb","summary":"La copie du projet sur votre ordinateur. Vous y travaillez hors-ligne ; elle se synchronise avec GitHub quand vous le décidez."},
+    {"key":"remote","label":"dépôt distant","color":"#7a3fb0","summary":"La copie de référence hébergée sur GitHub (le 'remote'). C'est la version partagée et sauvegardée dans le cloud."},
+    {"key":"clone","label":"cloner","color":"#0a7d4a","summary":"Télécharger un dépôt distant pour en créer une copie locale. Opération à faire une seule fois par projet et par machine."},
+    {"key":"commit","label":"commit","color":"#0a7d4a","summary":"Enregistrer un instantané daté et nommé de l'état du projet. En local, le commit reste sur votre machine tant que vous ne l'avez pas poussé."},
+    {"key":"push","label":"push","color":"#b4540a","summary":"Envoyer vos commits locaux vers GitHub. Tant que vous n'avez pas poussé, vos changements ne sont que sur votre machine."},
+    {"key":"pull","label":"pull","color":"#16877a","summary":"Récupérer sur votre machine les commits présents sur GitHub mais pas encore en local. Indispensable quand on travaille sur plusieurs ordinateurs."},
+    {"key":"desktop","label":"GitHub Desktop","color":"#5d6d7e","summary":"Application graphique gratuite qui pilote Git par des clics, sans aucune ligne de commande. Installe Git automatiquement."},
+    {"key":"cc","label":"Claude Code","color":"#9c5a00","summary":"Claude en mode agent, lancé dans le dossier de votre projet. Il lit, écrit et modifie les fichiers, et peut faire les commits et push à votre place."},
+    {"key":"branch","label":"branche","color":"#8e44ad","summary":"Une ligne de travail parallèle. 'main' porte la version stable ; on crée une branche pour tester sans risquer de casser ce qui marche."},
+    {"key":"merge","label":"fusionner","color":"#c0392b","summary":"Intégrer les changements d'une branche dans une autre (typiquement, ramener une branche de test dans main une fois validée)."},
+    {"key":"gitignore","label":".gitignore","color":"#34495e","summary":"Un fichier listant ce que Git doit ignorer : données de test, fichiers temporaires, secrets. Ce qui y figure n'est jamais envoyé sur GitHub."},
+    {"key":"diff","label":"diff","color":"#0a7d4a","summary":"L'affichage des différences entre deux versions : lignes ajoutées en vert, supprimées en rouge. C'est ce qu'on relit avant de valider un changement."}
+  ],
+
+  "sections": [
+    {
+      "title": "1. Ce qui change : du navigateur au local",
+      "blocks": [
+        {"type":"paragraph","text":"Dans la première partie, tout passait par le navigateur : on uploadait à la main les fichiers générés. C'était parfait sur un poste verrouillé, mais ça gardait une étape manuelle à chaque itération."},
+        {"type":"paragraph","text":"Sur une machine où vous pouvez installer des logiciels, un nouveau modèle devient possible : une **copie du projet vit directement sur votre ordinateur**. Vous (ou Claude) modifiez les fichiers sur place, puis vous synchronisez avec GitHub d'un clic. L'étape « télécharger puis re-uploader » disparaît.","spaced":true},
+        {"type":"compare","title":"Partie 1 vs Partie 2",
+          "left":{"title":"Tout au navigateur","items":["Aucune installation, aucun droit admin","Upload manuel de chaque version","Édition via github.dev","Suffit pour des petits outils ponctuels"]},
+          "right":{"title":"En local","items":["Quelques logiciels à installer une fois","Synchronisation en un clic (ou automatique)","Claude écrit directement dans les fichiers","Confortable dès qu'on itère beaucoup"]}},
+        {"type":"callout","variant":"note","title":"Les deux approches restent compatibles","text":"Un même [[remote|dépôt distant]] peut être nourri tantôt depuis le navigateur, tantôt en local. Vous ne choisissez pas une fois pour toutes : selon l'endroit et la machine, vous prenez l'outil le plus pratique."}
+      ],
+      "sources":[
+        {"author":"GitHub Docs","text":"Set up Git","url":"https://docs.github.com/en/get-started/git-basics/set-up-git"}
+      ]
+    },
+
+    {
+      "title": "2. Le modèle local ↔ distant",
+      "blocks": [
+        {"type":"paragraph","text":"C'est la seule vraie nouveauté conceptuelle de cette partie. Il y a désormais **deux copies** du projet, et quatre gestes pour les faire dialoguer."},
+        {"type":"paragraph","text":"• Le [[remote|dépôt distant]] = la copie de référence, sur GitHub.\n• Le [[local|dépôt local]] = votre copie de travail, sur votre machine.","spaced":true},
+        {"type":"heading","text":"Les quatre gestes"},
+        {"type":"paragraph","text":"**[[clone|Cloner]]** : créer la copie locale à partir de GitHub. Une seule fois par projet et par ordinateur.\n**[[commit]]** : enregistrer un instantané… mais en local seulement, pour l'instant.\n**[[push]]** : envoyer vos commits locaux vers GitHub.\n**[[pull]]** : récupérer ce que GitHub a et que vous n'avez pas encore.","spaced":true},
+        {"type":"callout","variant":"tip","title":"L'image mentale","text":"Pensez à un document partagé que vous éditez hors-ligne. [[clone|Cloner]] = en télécharger une copie. [[commit]] = sauvegarder votre brouillon localement. [[push]] = renvoyer votre version au dépôt commun. [[pull]] = récupérer les modifications faites ailleurs."},
+        {"type":"callout","variant":"warn","title":"Un commit n'est pas en ligne tant qu'il n'est pas poussé","text":"L'erreur classique du débutant : faire des commits toute la soirée puis croire que GitHub est à jour. Tant que vous n'avez pas fait [[push]], vos changements ne sont **que** sur votre machine — donc ni sauvegardés, ni visibles en ligne."},
+        {"type":"exercise","exercise":"qcm","question":"Vous avez modifié votre outil et fait un commit en local. Le site GitHub Pages ne change pas. Pourquoi ?",
+          "multiple":false,
+          "options":[
+            {"text":"Il faut encore faire un push pour envoyer le commit sur GitHub","correct":true},
+            {"text":"Les commits locaux sont automatiquement en ligne","correct":false},
+            {"text":"GitHub Pages ne gère pas le HTML","correct":false}
+          ],
+          "explanation":"Un commit reste local jusqu'au push. GitHub Pages se sert de la copie distante : pas de push, pas de mise à jour en ligne."}
+      ],
+      "sources":[
+        {"author":"GitHub Docs","text":"Pushing commits to a remote repository","url":"https://docs.github.com/en/get-started/using-git/pushing-commits-to-a-remote-repository"}
+      ]
+    },
+
+    {
+      "title": "3. Installer sa boîte à outils",
+      "blocks": [
+        {"type":"paragraph","text":"Quatre logiciels, à choisir selon votre confort. Tous gratuits, tous installables en compte utilisateur standard sur la plupart des postes."},
+        {"type":"heading","text":"GitHub Desktop (recommandé pour débuter)"},
+        {"type":"paragraph","text":"L'application [[desktop|GitHub Desktop]] (desktop.github.com) pilote [[git|Git]] par des clics, **sans ligne de commande**. Elle installe Git toute seule : vous n'avez rien d'autre à configurer. C'est le point d'entrée idéal."},
+        {"type":"heading","text":"Claude Code (pour laisser Claude travailler dans le projet)"},
+        {"type":"paragraph","text":"[[cc|Claude Code]] est Claude lancé directement dans le dossier de votre projet. Deux façons de l'obtenir : l'**installeur natif** recommandé par Anthropic (rien d'autre à installer) ou via **npm** si vous avez déjà Node.js 18 ou plus {{1}}. Une **application de bureau** existe aussi pour l'utiliser sans terminal {{1}}."},
+        {"type":"callout","variant":"warn","title":"Claude Code demande un abonnement payant","text":"L'accès à [[cc|Claude Code]] n'est pas inclus dans le plan gratuit de Claude : il faut un abonnement payant (ou une clé API facturée à l'usage) {{1}}. À signaler à vos amis avant qu'ils ne s'y attellent."},
+        {"type":"heading","text":"VS Code (éditeur, optionnel)"},
+        {"type":"paragraph","text":"VS Code (code.visualstudio.com) est un éditeur de texte gratuit avec gestion de [[git|Git]] intégrée. Utile si vous aimez relire et retoucher le code à la main. Une extension Claude Code s'y greffe également."},
+        {"type":"callout","variant":"note","title":"Le minimum viable","text":"Pour commencer, **GitHub Desktop seul suffit** : il gère clone, commit, push, pull et branches. Ajoutez Claude Code quand vous voudrez que Claude écrive directement dans vos fichiers."},
+        {"type":"callout","variant":"tip","title":"Droits administrateur","text":"GitHub Desktop, VS Code et l'installeur natif de Claude Code s'installent en général dans votre dossier utilisateur, sans privilèges administrateur. Si un installeur les réclame quand même, cherchez la variante « User installer » (VS Code) ou la méthode native sans gestionnaire de paquets."}
+      ],
+      "sources":[
+        {"author":"Claude Docs","text":"Claude Code — Set up","url":"https://docs.claude.com/en/docs/claude-code/setup"}
+      ]
+    },
+
+    {
+      "title": "4. GitHub Desktop : versionner sans terminal",
+      "blocks": [
+        {"type":"paragraph","text":"Tout le cycle se fait par des clics. Voici les gestes que vous répéterez."},
+        {"type":"heading","text":"Cloner un dépôt"},
+        {"type":"paragraph","text":"**File → Clone repository**, choisissez votre dépôt dans la liste, indiquez un dossier local, **Clone**. Vous avez maintenant une copie sur votre disque."},
+        {"type":"heading","text":"Enregistrer et envoyer"},
+        {"type":"paragraph","text":"Modifiez vos fichiers (à la main, ou via Claude). GitHub Desktop liste automatiquement ce qui a changé, avec le [[diff|détail des lignes]] en vert/rouge. En bas à gauche : tapez un **message de commit** clair, cliquez **Commit to main**, puis **Push origin** pour l'envoyer sur GitHub.","spaced":true},
+        {"type":"timeline","title":"Le geste quotidien",
+          "items":[
+            {"when":"1","what":"Pull origin","desc":"Récupère ce qui a éventuellement changé en ligne. Réflexe d'ouverture."},
+            {"when":"2","what":"Travailler","desc":"Vous ou Claude modifiez les fichiers du projet."},
+            {"when":"3","what":"Commit","desc":"Message clair décrivant le changement."},
+            {"when":"4","what":"Push origin","desc":"Envoie vers GitHub. Pages se met à jour."}
+          ],
+          "caption":"Pull au début, push à la fin : la routine qui évite la majorité des problèmes."},
+        {"type":"heading","text":"Revenir en arrière"},
+        {"type":"paragraph","text":"L'onglet **History** montre tous les commits. Clic droit sur un commit → **Revert** crée un nouveau commit qui annule proprement ce changement, sans réécrire l'historique. Votre filet de sécurité."},
+        {"type":"callout","variant":"tip","title":"Ouvrir l'outil pour le tester","text":"Bouton **Show in Finder / Explorer** pour ouvrir le dossier local, puis double-cliquez le fichier HTML : il s'ouvre dans le navigateur depuis votre disque, sans rien installer ni mettre en ligne."}
+      ],
+      "sources":[
+        {"author":"GitHub Docs","text":"GitHub Desktop documentation","url":"https://docs.github.com/en/desktop"}
+      ]
+    },
+
+    {
+      "title": "5. Claude Code : Claude écrit et versionne pour vous",
+      "blocks": [
+        {"type":"paragraph","text":"C'est le saut de cette partie. Au lieu de générer un fichier que vous récupérez, [[cc|Claude Code]] travaille **dans** le dossier de votre projet : il lit le code existant, le modifie sur place, et peut même enregistrer et envoyer les versions."},
+        {"type":"heading","text":"Démarrer"},
+        {"type":"paragraph","text":"Ouvrez un terminal dans le dossier du projet (depuis GitHub Desktop : **Repository → Open in Terminal**) et lancez la commande `claude`. Au premier lancement, une page s'ouvre dans le navigateur pour vous connecter à votre compte."},
+        {"type":"heading","text":"Lui parler en langage naturel"},
+        {"type":"paragraph","text":"Vous décrivez ce que vous voulez, exactement comme dans le chat : *« ajoute un bouton d'export, et corrige l'alignement de l'en-tête »*. Claude identifie les fichiers concernés, propose ses modifications sous forme de [[diff]], et **attend votre validation** avant d'écrire quoi que ce soit."},
+        {"type":"heading","text":"Lui faire faire le versionnage"},
+        {"type":"paragraph","text":"Une fois satisfait, demandez simplement : *« fais un commit avec un message clair, puis push »*. Claude exécute les commandes [[git|Git]] pour vous. Votre [[remote|dépôt distant]] est à jour, et GitHub Pages aussi.","spaced":true},
+        {"type":"timeline","title":"Le cycle avec Claude Code",
+          "items":[
+            {"when":"1","what":"Décrire","desc":"Vous expliquez la modification voulue en une phrase."},
+            {"when":"2","what":"Relire le diff","desc":"Claude montre ce qu'il propose ; vous acceptez ou refusez."},
+            {"when":"3","what":"Commit + push","desc":"Sur demande, Claude enregistre et envoie sur GitHub."},
+            {"when":"4","what":"Tester","desc":"Vous rechargez l'outil (en local ou via l'URL Pages)."}
+          ],
+          "caption":"Zéro téléchargement, zéro copier-coller : le code ne quitte jamais le projet."},
+        {"type":"callout","variant":"tip","title":"Donner le contexte une fois pour toutes","text":"Dans Claude Code, la commande `/init` crée un fichier de notes (CLAUDE.md) où vous consignez vos conventions : « outil HTML autonome, un seul fichier, pas de dépendance externe ». Claude le relit à chaque session et s'y tient."},
+        {"type":"callout","variant":"trap","title":"Validez les diffs, ne signez pas à l'aveugle","text":"Claude attend votre accord avant d'écrire : c'est une fonctionnalité, pas une formalité. Lisez le [[diff]]. C'est aussi ce qui rend l'historique fiable — chaque commit correspond à un changement que vous avez réellement relu."},
+        {"type":"exercise","exercise":"qcm","question":"Quel est l'apport principal de Claude Code par rapport au Claude du navigateur (Partie 1) ?",
+          "multiple":false,
+          "options":[
+            {"text":"Il modifie directement les fichiers du projet et peut les committer/pousser","correct":true},
+            {"text":"Il génère du HTML de meilleure qualité","correct":false},
+            {"text":"Il rend GitHub inutile","correct":false},
+            {"text":"Il fonctionne sans aucun compte","correct":false}
+          ],
+          "explanation":"L'intérêt n'est pas la qualité du code mais le flux : Claude Code agit dans le dépôt, écrit dans les fichiers et gère le versionnage, supprimant l'étape manuelle d'upload."}
+      ],
+      "sources":[
+        {"author":"Claude Docs","text":"Claude Code overview","url":"https://docs.claude.com/en/docs/claude-code/overview"}
+      ]
+    },
+
+    {
+      "title": "6. Les branches, pour de vrai",
+      "blocks": [
+        {"type":"paragraph","text":"Au navigateur, on restait sur **main**. En local, créer une [[branch|branche]] devient si simple qu'on aurait tort de s'en priver pour les gros changements."},
+        {"type":"paragraph","text":"Le principe : **main** garde la version qui marche. Pour tenter une refonte risquée, vous créez une branche `refonte`. Vous y faites vos essais en toute tranquillité. Si le résultat est bon, vous le [[merge|fusionnez]] dans main. Si c'est raté, vous jetez la branche — et main n'a jamais bougé.","spaced":true},
+        {"type":"heading","text":"En pratique avec GitHub Desktop"},
+        {"type":"paragraph","text":"**Current branch → New branch**, nommez-la (`refonte`), travaillez et committez dessus. Quand c'est concluant : **Branch → Merge into current branch** pour ramener le tout dans main, puis [[push]]."},
+        {"type":"compare","title":"Travailler sur main / sur une branche",
+          "left":{"title":"Directement sur main","items":["Parfait pour les petites retouches","Simple, rapide","Risqué pour une grosse refonte"]},
+          "right":{"title":"Sur une branche dédiée","items":["Idéal pour expérimenter sans danger","main reste toujours fonctionnel","Un peu plus de gestes"]}},
+        {"type":"callout","variant":"tip","title":"Claude Code et les branches","text":"Vous pouvez demander à [[cc|Claude Code]] : *« crée une branche 'refonte', fais-y les changements, et n'y touche pas à main »*. Il créera la branche et y travaillera, vous laissant la version stable intacte le temps de valider."},
+        {"type":"exercise","exercise":"cloze","question":"Complétez le vocabulaire du travail en local :",
+          "text":"On {0} un dépôt pour en avoir une copie locale. On envoie ses commits avec {1} et on récupère ceux des autres machines avec {2}. Pour tester sans casser main, on crée une {3}.",
+          "answers":["clone","push","pull","branche"],
+          "explanation":"Cloner (copie initiale), push (envoyer), pull (récupérer), branche (ligne de travail isolée) : les quatre réflexes du dépôt local."}
+      ],
+      "sources":[
+        {"author":"GitHub Docs","text":"About branches","url":"https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-branches"}
+      ]
+    },
+
+    {
+      "title": "7. Plusieurs machines, .gitignore et conflits",
+      "blocks": [
+        {"type":"heading","text":"Travailler sur deux ordinateurs"},
+        {"type":"paragraph","text":"Le [[remote|dépôt distant]] sert de pont entre vos machines. La règle d'or tient en une phrase : **[[pull]] avant de commencer, [[push]] en finissant**. Vous récupérez ainsi toujours la dernière version, et vous ne laissez jamais de travail bloqué sur un seul poste."},
+        {"type":"heading","text":"Ignorer ce qui ne doit pas être versionné"},
+        {"type":"paragraph","text":"Un fichier [[gitignore|.gitignore]] à la racine du dépôt liste ce que Git doit ignorer : fichiers de test volumineux, exports temporaires, et surtout tout ce qui est sensible. Ce qui y figure n'est jamais envoyé sur GitHub, même par erreur."},
+        {"type":"callout","variant":"trap","title":"Le réflexe sécurité","text":"Ne committez jamais une clé d'API ou un mot de passe dans un fichier. Une fois poussé sur un dépôt public, on doit considérer le secret comme **compromis**, même après suppression : il reste dans l'historique. Mettez ces fichiers dans [[gitignore|.gitignore]] dès le départ."},
+        {"type":"heading","text":"Les conflits, sans paniquer"},
+        {"type":"paragraph","text":"Un conflit survient quand deux versions modifient **la même ligne** et que Git ne sait pas laquelle garder. En solo, c'est rare si vous pensez à [[pull]] avant de travailler. Si ça arrive, Git marque les zones en désaccord dans le fichier ; vous choisissez la bonne version, vous enregistrez, vous committez. [[cc|Claude Code]] peut d'ailleurs vous aider à les résoudre."},
+        {"type":"callout","variant":"note","title":"En solo, tout reste simple","text":"Branches, conflits, multi-machines : ces notions viennent du travail en équipe. Seul, avec le réflexe pull-au-début / push-à-la-fin, vous les croiserez rarement. Inutile de tout maîtriser avant de vous lancer."}
+      ],
+      "sources":[
+        {"author":"GitHub Docs","text":"Ignoring files","url":"https://docs.github.com/en/get-started/git-basics/ignoring-files"}
+      ]
+    },
+
+    {
+      "title": "8. Récapitulatif",
+      "blocks": [
+        {"type":"callout","variant":"note","title":"L'essentiel de la Partie 2","text":"1) Une copie [[local|locale]] du projet vit sur votre machine, synchronisée avec le [[remote|distant]]. 2) Quatre gestes : [[clone|cloner]], [[commit]], [[push]], [[pull]]. 3) [[desktop|GitHub Desktop]] fait tout ça par des clics, sans terminal. 4) [[cc|Claude Code]] écrit dans vos fichiers et gère le versionnage à votre place. 5) Les [[branch|branches]] permettent d'expérimenter sans casser main. 6) [[gitignore|.gitignore]] tient à l'écart données et secrets."},
+        {"type":"paragraph","text":"Le fil rouge des deux parties n'a pas changé : **un seul fichier, un historique propre, une URL pour tester**. Ce qui change ici, c'est le confort — le code ne fait plus l'aller-retour par votre dossier Téléchargements.","spaced":true},
+        {"type":"exercise","exercise":"open","question":"Décrivez votre flux idéal sur votre poste personnel, depuis l'idée d'une modification jusqu'à sa mise en ligne.",
+          "keywords":["pull","claude code","diff","commit","push","branche","tester","pages","valider"],
+          "explanation":"Flux modèle : pull pour partir à jour → (au besoin) créer une branche → décrire la modif à Claude Code → relire le diff et valider → commit + push → recharger l'outil en local ou via l'URL Pages pour tester. Une fois la version stable, fusion dans main."},
+        {"type":"exercise","exercise":"qcm","question":"Vous travaillez le matin sur un ordinateur, le soir sur un autre. Quel réflexe évite de perdre ou dupliquer du travail ?",
+          "multiple":false,
+          "options":[
+            {"text":"Pull avant de commencer, push en finissant","correct":true},
+            {"text":"Garder une copie du fichier sur une clé USB","correct":false},
+            {"text":"Travailler toujours sur une nouvelle branche par jour","correct":false},
+            {"text":"Ne jamais committer tant que tout n'est pas fini","correct":false}
+          ],
+          "explanation":"Pull au début aligne votre copie locale sur la dernière version ; push à la fin renvoie votre travail. C'est le réflexe qui rend le multi-machines indolore."}
+      ]
+    }
+  ]
+}
