@@ -3,1033 +3,1934 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lightable — Tri de photos</title>
-<script src="https://cdn.jsdelivr.net/npm/exifr@7.1.3/dist/full.umd.js"></script>
+<title>Atelier — Lecteur de formations</title>
 <style>
-  :root {
-    --bg: #0d0e12;
-    --panel: #16181f;
-    --panel-2: #1d2029;
-    --line: #2a2e3a;
-    --ink: #e8e9ee;
-    --ink-dim: #8c8f9c;
-    --keep: #5ad19a;
-    --reject: #e0586a;
-    --accent: #f2b441;
-    --shadow: 0 8px 30px rgba(0,0,0,.45);
-  }
-  * { box-sizing: border-box; }
-  html, body { height: 100%; }
-  body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--ink);
-    font-family: ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    overflow: hidden;
-  }
-  /* ---------- Top bar ---------- */
-  header {
-    height: 56px;
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    padding: 0 20px;
-    border-bottom: 1px solid var(--line);
-    background: var(--panel);
-    position: relative;
-    z-index: 20;
-  }
-  .brand {
-    font-weight: 700;
-    letter-spacing: -.01em;
-    font-size: 15px;
-    display: flex; align-items: center; gap: 9px;
-    white-space: nowrap;
-  }
-  .brand .dot {
-    width: 11px; height: 11px; border-radius: 50%;
-    background: var(--accent);
-    box-shadow: 0 0 12px var(--accent);
-  }
-  .progress-wrap { flex: 1; min-width: 0; display: flex; align-items: center; gap: 12px; }
-  .bar {
-    flex: 1; height: 6px; border-radius: 99px; background: var(--panel-2);
-    overflow: hidden; min-width: 60px;
-  }
-  .bar > i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--accent), #f2d488); transition: width .25s; }
-  .counts { font-size: 12.5px; color: var(--ink-dim); white-space: nowrap; font-variant-numeric: tabular-nums; }
-  .counts b { color: var(--ink); }
-  .counts .k { color: var(--keep); }
-  .counts .r { color: var(--reject); }
+/* ============================================================
+   POLICES & VARIABLES
+   ============================================================ */
+:root{
+  --bg:#fbfaf7;
+  --paper:#ffffff;
+  --ink:#1c1b18;
+  --ink-soft:#4a4843;
+  --ink-faint:#8a877f;
+  --line:#e7e3da;
+  --line-strong:#d6d0c4;
+  --accent:#2052bb;
+  --accent-soft:#eaf0fb;
+  --shadow:0 1px 2px rgba(28,27,24,.04),0 8px 28px rgba(28,27,24,.06);
+  --shadow-lg:0 4px 12px rgba(28,27,24,.08),0 24px 60px rgba(28,27,24,.12);
+  --radius:14px;
+  --radius-sm:9px;
+  --maxw:720px;
+  --sidebar-w:300px;
+  --serif:'Iowan Old Style','Palatino Linotype','URW Palladio L',Palatino,'Book Antiqua',Georgia,serif;
+  --sans:ui-sans-serif,-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,sans-serif;
+  --mono:ui-monospace,'SF Mono','Cascadia Code','JetBrains Mono',Menlo,monospace;
+  /* tons des callouts */
+  --note:#2052bb;       --note-bg:#eef3fc;
+  --tip:#1f7a4d;        --tip-bg:#eafaf1;
+  --warn:#b4540a;       --warn-bg:#fdf2e6;
+  --trap:#a31d3a;       --trap-bg:#fcecef;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:var(--serif);font-size:18px;line-height:1.68;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+}
+::selection{background:var(--accent-soft);}
 
-  button, .btn {
-    font: inherit; cursor: pointer; border: 1px solid var(--line);
-    background: var(--panel-2); color: var(--ink);
-    padding: 8px 14px; border-radius: 9px; font-size: 13px; font-weight: 600;
-    transition: background .15s, border-color .15s, transform .05s;
-    white-space: nowrap;
-  }
-  button:hover, .btn:hover { background: #262a36; border-color: #3a3f4d; }
-  button:active { transform: translateY(1px); }
-  button:disabled { opacity: .4; cursor: not-allowed; }
-  .btn-accent { background: var(--accent); color: #1a1408; border-color: transparent; }
-  .btn-accent:hover { background: #f5c45f; }
+/* ============================================================
+   STRUCTURE GÉNÉRALE
+   ============================================================ */
+.app{min-height:100vh;}
+.topbar{
+  position:sticky;top:0;z-index:50;
+  display:flex;align-items:center;gap:14px;
+  height:56px;padding:0 18px;
+  background:rgba(251,250,247,.86);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);
+}
+.topbar .brand{
+  font-family:var(--sans);font-weight:700;font-size:15px;letter-spacing:.02em;
+  display:flex;align-items:center;gap:9px;cursor:pointer;color:var(--ink);
+}
+.brand .logo{
+  width:24px;height:24px;border-radius:7px;display:grid;place-items:center;
+  background:var(--ink);color:#fff;font-size:13px;font-weight:800;
+  font-family:var(--sans);
+}
+.topbar .spacer{flex:1;}
+.iconbtn{
+  border:1px solid var(--line-strong);background:var(--paper);
+  width:38px;height:38px;border-radius:10px;cursor:pointer;
+  display:grid;place-items:center;color:var(--ink-soft);
+  font-family:var(--sans);font-size:16px;transition:.15s;
+}
+.iconbtn:hover{border-color:var(--ink-faint);color:var(--ink);}
+.topbar .crumb{
+  font-family:var(--sans);font-size:13.5px;color:var(--ink-faint);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:40vw;
+}
 
-  /* ---------- Layout ---------- */
-  main { height: calc(100% - 56px); display: flex; }
-  .stage { flex: 1; position: relative; display: flex; flex-direction: column; min-width: 0; }
+/* ---- Mode plein écran : topbar auto-masquée ---- */
+.topbar{transition:transform .28s ease;}
+/* en immersif la topbar passe en fixed pour sortir réellement du flux */
+body.immersive .topbar{position:fixed;top:0;left:0;right:0;transform:translateY(-100%);}
+body.immersive .content,body.immersive .library{padding-top:0;}
+/* la topbar réapparaît uniquement tant que la classe peek est active (pilotée en JS) */
+body.immersive.peek .topbar{transform:translateY(0);}
+/* zone-capteur invisible en haut : au-dessus de la topbar masquée pour rester survolable */
+.peek-zone{position:fixed;top:0;left:0;right:0;height:16px;z-index:55;display:none;}
+body.immersive .peek-zone{display:block;}
+body.immersive.peek .peek-zone{pointer-events:none;}
+/* en immersif, readbar et sidebar remontent puisque la topbar disparaît */
+body.immersive .readbar{top:0;}
+body.immersive .sidebar{top:0;height:100vh;}
+.iconbtn.on{background:var(--accent);color:#fff;border-color:var(--accent);}
 
-  /* ---------- Welcome ---------- */
-  .welcome {
-    margin: auto; max-width: 540px; text-align: center; padding: 40px;
-  }
-  .welcome h1 {
-    font-size: 30px; font-weight: 750; letter-spacing: -.025em; margin: 0 0 10px;
-    line-height: 1.1;
-  }
-  .welcome p { color: var(--ink-dim); font-size: 15px; line-height: 1.6; margin: 0 0 26px; }
-  .welcome .hint { font-size: 12.5px; margin-top: 22px; }
-  kbd {
-    font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 11px;
-    background: var(--panel-2); border: 1px solid var(--line); border-bottom-width: 2px;
-    border-radius: 5px; padding: 2px 7px; color: var(--ink);
-  }
-  .unsupported {
-    margin-top: 28px; padding: 14px 16px; border-radius: 10px;
-    background: rgba(224,88,106,.1); border: 1px solid rgba(224,88,106,.3);
-    color: #f3a4ae; font-size: 13px; line-height: 1.5; display: none;
-  }
+/* lecture progression en haut */
+.readbar{position:fixed;top:56px;left:0;height:3px;background:var(--accent);width:0;z-index:49;transition:width .1s linear;}
 
-  /* ---------- Viewer (solo) ---------- */
-  .viewer { flex: 1; display: none; flex-direction: column; min-height: 0; }
-  .canvas {
-    flex: 1; display: flex; align-items: center; justify-content: center;
-    padding: 20px; min-height: 0; position: relative;
-  }
-  .canvas img {
-    max-width: 100%; max-height: 100%; object-fit: contain;
-    border-radius: 6px; box-shadow: var(--shadow);
-    image-orientation: from-image;
-    border: 3px solid var(--line);
-    transition: border-color .15s;
-  }
-  .canvas img.keep   { border-color: var(--keep); }
-  .canvas img.reject { border-color: var(--reject); }
+/* ============================================================
+   ÉCRAN BIBLIOTHÈQUE
+   ============================================================ */
+.library{max-width:1040px;margin:0 auto;padding:46px 26px 100px;}
+.lib-head{margin-bottom:34px;}
+.lib-head h1{
+  font-family:var(--sans);font-weight:800;font-size:34px;letter-spacing:-.02em;
+  margin:0 0 8px;
+}
+.lib-head p{color:var(--ink-soft);font-family:var(--sans);font-size:15px;margin:0;max-width:60ch;}
+.lib-actions{display:flex;gap:12px;flex-wrap:wrap;margin:26px 0 38px;}
+.btn{
+  font-family:var(--sans);font-weight:600;font-size:14.5px;
+  border:1px solid var(--ink);background:var(--ink);color:#fff;
+  padding:11px 20px;border-radius:11px;cursor:pointer;transition:.15s;
+  display:inline-flex;align-items:center;gap:8px;
+}
+.btn:hover{transform:translateY(-1px);box-shadow:var(--shadow);}
+.btn.ghost{background:var(--paper);color:var(--ink);border-color:var(--line-strong);}
+.btn.ghost:hover{border-color:var(--ink-faint);}
+.btn.sm{padding:8px 14px;font-size:13px;}
+.btn.danger{background:var(--paper);color:var(--trap);border-color:#e9c4cd;}
 
-  /* on-canvas tools (full-res + loupe) */
-  .canvas-tools {
-    position: absolute; top: 14px; right: 14px; z-index: 5;
-    display: flex; gap: 8px;
-  }
-  .ctool {
-    background: rgba(22,24,31,.82); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
-    border: 1px solid var(--line); color: var(--ink);
-    padding: 7px 12px; border-radius: 8px; font-size: 12px; font-weight: 600;
-    cursor: pointer; white-space: nowrap; transition: background .15s, border-color .15s;
-  }
-  .ctool:hover { background: rgba(38,42,54,.92); border-color: #3a3f4d; }
-  .ctool.active { background: var(--accent); color: #1a1408; border-color: transparent; }
-  .ctool:disabled { opacity: .55; cursor: default; }
-  .canvas.loupe-on { cursor: none; }
-  .loupe {
-    position: absolute; width: 240px; height: 240px; border-radius: 50%;
-    border: 3px solid var(--accent);
-    box-shadow: 0 8px 28px rgba(0,0,0,.55), inset 0 0 0 1px rgba(0,0,0,.45);
-    background-color: var(--bg); background-repeat: no-repeat;
-    pointer-events: none; display: none; z-index: 6;
-  }
-  .raw-placeholder {
-    display: flex; flex-direction: column; align-items: center; gap: 16px;
-    color: var(--ink-dim);
-  }
-  .raw-placeholder .badge {
-    font-size: 13px; font-weight: 800; letter-spacing: .15em;
-    border: 2px solid var(--ink-dim); border-radius: 10px; padding: 22px 34px;
-    color: var(--ink);
-  }
-  /* decision flash */
-  .flash {
-    position: absolute; inset: 0; pointer-events: none; opacity: 0;
-    display: flex; align-items: flex-start; justify-content: center; padding-top: 40px;
-  }
-  .flash.show { animation: flash .5s ease; }
-  .flash span {
-    font-size: 15px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase;
-    padding: 8px 20px; border-radius: 99px;
-  }
-  @keyframes flash { 0%{opacity:0; transform:translateY(-8px);} 25%{opacity:1; transform:none;} 100%{opacity:0;} }
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:20px;}
+.card{
+  background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);
+  overflow:hidden;cursor:pointer;transition:.18s;display:flex;flex-direction:column;
+  box-shadow:var(--shadow);position:relative;
+}
+.card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);border-color:var(--line-strong);}
+.card .cover{
+  height:104px;background:linear-gradient(135deg,var(--c1,#2052bb),var(--c2,#3a7bd5));
+  position:relative;display:flex;align-items:flex-end;padding:14px;
+}
+.card .cover .tag{
+  font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:.08em;
+  text-transform:uppercase;color:#fff;background:rgba(0,0,0,.22);
+  padding:4px 9px;border-radius:20px;backdrop-filter:blur(4px);
+}
+.card .body{padding:16px 18px 18px;flex:1;display:flex;flex-direction:column;}
+.card .body h3{font-family:var(--sans);font-weight:700;font-size:17px;margin:0 0 6px;line-height:1.3;}
+.card .body .desc{font-family:var(--sans);font-size:13px;color:var(--ink-faint);margin:0 0 16px;flex:1;line-height:1.5;}
+.card .meta{display:flex;align-items:center;gap:10px;font-family:var(--sans);font-size:12px;color:var(--ink-faint);}
+.progress-track{flex:1;height:6px;background:var(--line);border-radius:6px;overflow:hidden;}
+.progress-fill{height:100%;background:var(--accent);border-radius:6px;transition:width .4s;}
+.card .del{
+  position:absolute;top:10px;right:10px;width:28px;height:28px;border-radius:8px;
+  border:none;background:rgba(0,0,0,.45);color:#fff;cursor:pointer;display:grid;place-items:center;
+  opacity:0;transition:.15s;font-size:13px;font-weight:700;backdrop-filter:blur(4px);
+  z-index:5;line-height:1;
+}
+.card:hover .del{opacity:1;}
+.card .del:hover{background:var(--trap);transform:scale(1.08);}
 
-  .meta-strip {
-    display: flex; align-items: center; gap: 18px; padding: 13px 24px;
-    border-top: 1px solid var(--line); background: var(--panel);
-    font-size: 14.5px; color: var(--ink-dim); min-height: 56px;
-  }
-  .meta-strip .fname { color: var(--ink); font-weight: 700; font-family: ui-monospace, Menlo, monospace; font-size: 14px; }
-  .meta-strip .when { font-size: 13.5px; }
-  .meta-strip .pos { color: var(--ink-dim); font-size: 13.5px; font-variant-numeric: tabular-nums; }
-  .chip {
-    font-size: 12.5px; font-weight: 800; padding: 5px 12px; border-radius: 7px;
-    text-transform: uppercase; letter-spacing: .05em;
-  }
-  .chip.raw { background: rgba(242,180,65,.16); color: var(--accent); }
-  .chip.pair { background: rgba(90,209,154,.14); color: var(--keep); }
-  /* burst indicator — the standout */
-  .chip.burst {
-    font-size: 14px; padding: 6px 14px; letter-spacing: .04em;
-    background: rgba(120,150,255,.30); color: #cdd6ff;
-    border: 1px solid rgba(157,176,255,.55);
-    animation: burstPulse 1.5s ease-in-out infinite;
-  }
-  @keyframes burstPulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(157,176,255,0); }
-    50%      { box-shadow: 0 0 16px 1px rgba(157,176,255,.65); }
-  }
-  .status-tag { margin-left: auto; font-weight: 800; font-size: 14.5px; }
-  .status-tag.keep { color: var(--keep); }
-  .status-tag.reject { color: var(--reject); }
+.empty{
+  text-align:center;padding:70px 20px;color:var(--ink-faint);font-family:var(--sans);
+  border:2px dashed var(--line-strong);border-radius:var(--radius);background:var(--paper);
+}
+.empty .big{font-size:42px;margin-bottom:14px;opacity:.5;}
 
-  /* decision toolbar */
-  .toolbar {
-    display: flex; align-items: center; gap: 12px; padding: 14px 22px;
-    border-top: 1px solid var(--line); background: var(--panel);
-  }
-  .big-btn {
-    flex: 1; padding: 13px; font-size: 14px; font-weight: 700;
-    display: flex; align-items: center; justify-content: center; gap: 10px;
-  }
-  .big-btn .k { font-size: 11px; opacity: .7; font-weight: 600; }
-  .big-btn.keep { background: rgba(90,209,154,.12); border-color: rgba(90,209,154,.4); color: var(--keep); }
-  .big-btn.keep:hover { background: rgba(90,209,154,.2); }
-  .big-btn.reject { background: rgba(224,88,106,.1); border-color: rgba(224,88,106,.4); color: var(--reject); }
-  .big-btn.reject:hover { background: rgba(224,88,106,.18); }
-  .nav-btn { padding: 13px 16px; }
+/* ============================================================
+   LECTEUR — MISE EN PAGE
+   ============================================================ */
+.reader{display:none;}
+.reader.active{display:block;}
+.reader-wrap{display:flex;}
+.sidebar{
+  width:var(--sidebar-w);flex:0 0 var(--sidebar-w);
+  position:sticky;top:56px;height:calc(100vh - 56px);overflow-y:auto;
+  border-right:1px solid var(--line);padding:24px 18px 60px;
+  background:var(--bg);transition:margin-left .25s,opacity .2s;
+}
+.sidebar.collapsed{margin-left:calc(-1 * var(--sidebar-w));opacity:0;pointer-events:none;}
+.toc-title{
+  font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-faint);margin:0 0 14px;padding-left:10px;
+}
+.toc-prog{margin:0 10px 18px;}
+.toc-prog .pct{font-family:var(--sans);font-size:12px;color:var(--ink-faint);margin-bottom:6px;display:flex;justify-content:space-between;}
+.toc a{
+  display:block;font-family:var(--sans);font-size:14px;color:var(--ink-soft);
+  text-decoration:none;padding:8px 10px;border-radius:8px;line-height:1.4;
+  border-left:2px solid transparent;transition:.12s;margin-bottom:2px;
+}
+.toc a:hover{background:var(--paper);color:var(--ink);}
+.toc a.active{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);font-weight:600;}
+.toc a .done{color:var(--tip);margin-right:6px;font-weight:700;}
 
-  /* ---------- Compare (groupe) ---------- */
-  .compare { flex: 1; display: none; flex-direction: column; min-height: 0; }
-  .compare-head {
-    padding: 12px 22px; border-bottom: 1px solid var(--line); background: var(--panel);
-    display: flex; align-items: center; gap: 14px; font-size: 13px;
-  }
-  .compare-head .gtitle { font-weight: 700; }
-  .compare-head .gsub { color: var(--ink-dim); font-size: 12px; }
-  .grid {
-    flex: 1; overflow: auto; padding: 18px;
-    display: grid; gap: 16px; align-content: start;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  }
-  .card {
-    background: var(--panel); border: 2px solid var(--line); border-radius: 12px;
-    overflow: hidden; display: flex; flex-direction: column; transition: border-color .15s;
-  }
-  .card.keep { border-color: var(--keep); }
-  .card.reject { border-color: var(--reject); opacity: .55; }
-  .card .thumb {
-    aspect-ratio: 3/2; background: var(--bg); display: flex; align-items: center; justify-content: center;
-    overflow: hidden; position: relative;
-  }
-  .card .thumb img { width: 100%; height: 100%; object-fit: contain; }
-  .card .idx {
-    position: absolute; top: 8px; left: 8px; width: 24px; height: 24px;
-    background: rgba(0,0,0,.6); border-radius: 6px; display: flex; align-items: center; justify-content: center;
-    font-size: 12px; font-weight: 800; color: var(--ink); backdrop-filter: blur(4px);
-  }
-  .card .cfoot { padding: 9px 11px; display: flex; align-items: center; gap: 8px; }
-  .card .cfoot .cn { font-family: ui-monospace, Menlo, monospace; font-size: 11px; color: var(--ink-dim); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; }
-  .card .cfoot button { padding: 5px 9px; font-size: 11px; }
-  .mini-keep { color: var(--keep); }
-  .mini-reject { color: var(--reject); }
+.content{flex:1;min-width:0;}
+.article{max-width:var(--maxw);margin:0 auto;padding:48px 26px 140px;}
+.article .lead{font-size:20px;color:var(--ink-soft);line-height:1.6;margin:0 0 8px;font-style:italic;}
+.doc-title{font-family:var(--sans);font-weight:800;font-size:38px;letter-spacing:-.025em;line-height:1.1;margin:6px 0 6px;}
+.doc-sub{font-family:var(--sans);font-size:15px;color:var(--ink-faint);margin:0 0 40px;}
 
-  /* ---------- Sidebar ---------- */
-  aside {
-    width: 270px; border-left: 1px solid var(--line); background: var(--panel);
-    display: none; flex-direction: column; flex-shrink: 0;
-  }
-  aside h3 { font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-dim); margin: 0; padding: 16px 18px 10px; }
-  .filmstrip { flex: 1; overflow-y: auto; padding: 0 12px 12px; }
-  .strip-item {
-    display: flex; align-items: center; gap: 10px; padding: 7px 8px; border-radius: 8px;
-    cursor: pointer; font-size: 12px; margin-bottom: 2px;
-  }
-  .strip-item:hover { background: var(--panel-2); }
-  .strip-item.active { background: var(--panel-2); outline: 1px solid var(--accent); }
-  .strip-item .tn { width: 46px; height: 32px; border-radius: 4px; background: var(--bg); object-fit: cover; flex-shrink: 0; display:flex; align-items:center; justify-content:center; font-size:8px; font-weight:800; color:var(--accent); }
-  .strip-item .nm { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; color: var(--ink-dim); }
-  .strip-item .st { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; background: var(--line); }
-  .strip-item .st.keep { background: var(--keep); }
-  .strip-item .st.reject { background: var(--reject); }
-  /* burst frame: groups consecutive shots of a single burst */
-  .burst-group {
-    border: 1.5px solid rgba(157,176,255,.5);
-    background: rgba(120,150,255,.07);
-    border-radius: 10px;
-    padding: 3px 4px 4px;
-    margin: 5px 0 7px;
-  }
-  .burst-head {
-    display: flex; align-items: center; gap: 5px;
-    font-size: 9.5px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase;
-    color: #9db0ff; padding: 3px 6px 5px;
-  }
-  .burst-head b { color: #cdd6ff; }
-  .burst-head .burst-ico { font-size: 11px; }
+section.chap{scroll-margin-top:78px;margin-bottom:18px;padding-top:26px;}
+section.chap > h2{
+  font-family:var(--sans);font-weight:800;font-size:27px;letter-spacing:-.02em;
+  margin:28px 0 18px;padding-bottom:0;
+}
+section.chap h3{font-family:var(--sans);font-weight:700;font-size:20px;margin:30px 0 12px;}
+.article p{margin:0 0 19px;}
+.article p.spaced{margin-bottom:24px;}
 
-  .controls { border-top: 1px solid var(--line); padding: 16px 18px; }
-  .controls label { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-dim); display: block; margin-bottom: 8px; }
-  .slider-row { display: flex; align-items: center; gap: 10px; }
-  input[type=range] { flex: 1; accent-color: var(--accent); }
-  .slider-val { font-size: 12px; font-variant-numeric: tabular-nums; min-width: 42px; text-align: right; color: var(--ink); font-weight: 600; }
+/* ============================================================
+   TERMES COLORÉS + TOOLTIP
+   ============================================================ */
+.term{
+  cursor:help;font-weight:600;padding:0 1px;border-radius:3px;
+  text-decoration:none;color:var(--term-color,var(--accent));
+  border-bottom:2px solid var(--term-color,var(--accent));
+  transition:background .12s;position:relative;
+}
+.term:hover{background:color-mix(in srgb,var(--term-color,var(--accent)) 14%,transparent);}
+.tooltip{
+  position:fixed;z-index:200;max-width:300px;
+  background:var(--ink);color:#fff;padding:11px 14px;border-radius:10px;
+  font-family:var(--sans);font-size:13.5px;line-height:1.5;
+  box-shadow:var(--shadow-lg);pointer-events:none;opacity:0;transform:translateY(4px);
+  transition:opacity .14s,transform .14s;
+}
+.tooltip.show{opacity:1;transform:translateY(0);}
+.tooltip .t-label{font-weight:700;display:block;margin-bottom:3px;color:var(--tt-color,#fff);}
+.tooltip::after{content:"";position:absolute;left:var(--arrow-x,20px);bottom:-6px;width:12px;height:12px;background:var(--ink);transform:rotate(45deg);}
+.tooltip.above::after{bottom:auto;top:-6px;}
 
-  /* loading */
-  .loader { margin: auto; text-align: center; color: var(--ink-dim); display: none; }
-  .spin { width: 30px; height: 30px; border: 3px solid var(--line); border-top-color: var(--accent); border-radius: 50%; margin: 0 auto 16px; animation: spin .8s linear infinite; }
-  @keyframes spin { to { transform: rotate(360deg); } }
+/* ============================================================
+   CALLOUTS
+   ============================================================ */
+.callout{
+  border-radius:var(--radius-sm);padding:15px 17px 15px 16px;margin:24px 0;
+  border-left:4px solid var(--cc,var(--note));background:var(--ccbg,var(--note-bg));
+  font-family:var(--sans);font-size:15px;line-height:1.58;color:var(--ink);
+  display:flex;gap:13px;
+}
+.callout .ico{font-size:18px;flex:0 0 auto;line-height:1.5;}
+.callout .cc-body{flex:1;}
+.callout .cc-title{font-weight:700;font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--cc,var(--note));margin-bottom:4px;}
+.callout p{margin:0;}
+.callout.note{--cc:var(--note);--ccbg:var(--note-bg);}
+.callout.tip{--cc:var(--tip);--ccbg:var(--tip-bg);}
+.callout.warn{--cc:var(--warn);--ccbg:var(--warn-bg);}
+.callout.trap{--cc:var(--trap);--ccbg:var(--trap-bg);}
 
-  .toast {
-    position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%) translateY(20px);
-    background: var(--panel-2); border: 1px solid var(--line); box-shadow: var(--shadow);
-    padding: 12px 20px; border-radius: 10px; font-size: 13px; opacity: 0; pointer-events: none;
-    transition: opacity .25s, transform .25s; z-index: 50;
-  }
-  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+/* ============================================================
+   FIGURES / GRAPHIQUES
+   ============================================================ */
+figure.viz{margin:30px 0;background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:22px 20px 16px;box-shadow:var(--shadow);}
+figure.viz .viz-title{font-family:var(--sans);font-weight:700;font-size:15px;margin-bottom:4px;}
+figure.viz .viz-cap{font-family:var(--sans);font-size:13px;color:var(--ink-faint);margin-top:12px;}
+figure.viz svg{display:block;width:100%;height:auto;overflow:visible;font-family:var(--sans);}
+.viz .axis line,.viz .axis path{stroke:var(--line-strong);}
+.viz text{fill:var(--ink-soft);font-size:12px;}
+.viz .gridline{stroke:var(--line);stroke-dasharray:3 4;}
+.viz-legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:14px;font-family:var(--sans);font-size:13px;color:var(--ink-soft);}
+.viz-legend .lg{display:flex;align-items:center;gap:6px;}
+.viz-legend .sw{width:13px;height:13px;border-radius:4px;}
 
-  @media (max-width: 820px) {
-    aside { display: none !important; }
-    .brand span.full { display: none; }
-  }
+/* bloc image */
+figure.img-block{padding:14px;}
+figure.img-block img{display:block;width:100%;height:auto;border-radius:8px;background:var(--bg);}
+.img-credit{font-family:var(--sans);font-size:12px;color:var(--ink-faint);margin-top:9px;line-height:1.4;}
+.img-credit a{color:var(--ink-faint);text-decoration:underline;text-underline-offset:2px;}
+.img-credit a:hover{color:var(--accent);}
+.img-credit.missing{color:var(--warn);font-weight:600;background:var(--warn-bg);padding:7px 10px;border-radius:7px;}
+.img-missing{font-family:var(--sans);font-size:14px;color:var(--warn);background:var(--warn-bg);padding:16px;border-radius:8px;text-align:center;}
+/* repli affiché seulement si l'image web ne charge pas */
+.img-fallback{display:none;font-family:var(--sans);font-size:13px;color:var(--warn);background:var(--warn-bg);padding:14px 16px;border-radius:8px;text-align:center;line-height:1.5;}
+.img-fallback-url{font-family:var(--mono);font-size:11px;color:var(--ink-faint);word-break:break-all;}
+.img-block.img-broken img{display:none;}
+.img-block.img-broken .img-fallback{display:block;}
+
+/* timeline */
+.timeline{position:relative;margin:8px 0;padding-left:6px;}
+.tl-item{position:relative;padding:0 0 22px 30px;border-left:2px solid var(--line-strong);}
+.tl-item:last-child{border-left-color:transparent;padding-bottom:0;}
+.tl-dot{position:absolute;left:-7px;top:2px;width:12px;height:12px;border-radius:50%;background:var(--accent);border:2px solid var(--paper);}
+.tl-when{font-family:var(--sans);font-size:12px;font-weight:700;color:var(--accent);letter-spacing:.03em;}
+.tl-what{font-family:var(--sans);font-size:14.5px;color:var(--ink);margin-top:2px;}
+.tl-desc{font-family:var(--sans);font-size:13px;color:var(--ink-faint);margin-top:3px;}
+
+/* comparaison */
+.compare{display:grid;gap:14px;grid-template-columns:1fr 1fr;}
+.compare .col{border:1px solid var(--line);border-radius:var(--radius-sm);padding:14px 16px;background:var(--bg);}
+.compare .col h4{font-family:var(--sans);font-size:15px;margin:0 0 10px;font-weight:700;}
+.compare .col.pos h4{color:var(--tip);} .compare .col.neg h4{color:var(--trap);}
+.compare ul{margin:0;padding-left:18px;font-family:var(--sans);font-size:14px;color:var(--ink-soft);}
+.compare li{margin-bottom:7px;}
+@media(max-width:560px){.compare{grid-template-columns:1fr;}}
+
+/* ============================================================
+   EXERCICES
+   ============================================================ */
+.exo{
+  background:var(--paper);border:1px solid var(--line-strong);border-radius:var(--radius);
+  padding:22px 22px 20px;margin:30px 0;box-shadow:var(--shadow);position:relative;
+}
+.exo .exo-kind{
+  font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--accent);background:var(--accent-soft);display:inline-block;padding:3px 10px;border-radius:20px;margin-bottom:12px;
+}
+.exo .q{font-family:var(--sans);font-weight:700;font-size:16.5px;margin:0 0 16px;line-height:1.45;}
+.opts{display:flex;flex-direction:column;gap:9px;margin-bottom:16px;}
+.opt{
+  display:flex;align-items:center;gap:11px;font-family:var(--sans);font-size:15px;
+  border:1.5px solid var(--line-strong);border-radius:10px;padding:11px 14px;cursor:pointer;transition:.13s;
+}
+.opt:hover{border-color:var(--ink-faint);background:var(--bg);}
+.opt.sel{border-color:var(--accent);background:var(--accent-soft);}
+.opt.correct{border-color:var(--tip);background:var(--tip-bg);}
+.opt.wrong{border-color:var(--trap);background:var(--trap-bg);}
+.opt .box{width:20px;height:20px;border:2px solid var(--line-strong);border-radius:6px;flex:0 0 auto;display:grid;place-items:center;font-size:12px;color:#fff;}
+.opt.radio .box{border-radius:50%;}
+.opt.sel .box{background:var(--accent);border-color:var(--accent);}
+.opt.correct .box{background:var(--tip);border-color:var(--tip);}
+.opt.wrong .box{background:var(--trap);border-color:var(--trap);}
+
+.exo textarea{
+  width:100%;font-family:var(--sans);font-size:15px;border:1.5px solid var(--line-strong);
+  border-radius:10px;padding:12px 14px;resize:vertical;min-height:90px;color:var(--ink);background:var(--bg);
+}
+.exo textarea:focus{outline:none;border-color:var(--accent);}
+
+/* texte à trous */
+.cloze{font-family:var(--sans);font-size:16px;line-height:2.1;margin-bottom:16px;}
+.cloze .blank{
+  display:inline-block;min-width:90px;border:none;border-bottom:2px solid var(--accent);
+  background:var(--accent-soft);font-family:var(--sans);font-size:15px;text-align:center;
+  padding:2px 8px;border-radius:5px 5px 0 0;color:var(--ink);
+}
+.cloze .blank:focus{outline:none;background:#dfe9fb;}
+.cloze .blank.correct{border-color:var(--tip);background:var(--tip-bg);}
+.cloze .blank.wrong{border-color:var(--trap);background:var(--trap-bg);}
+
+.exo-foot{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.feedback{font-family:var(--sans);font-size:14px;font-weight:600;display:none;}
+.feedback.ok{color:var(--tip);} .feedback.ko{color:var(--trap);}
+.model-answer{
+  display:none;font-family:var(--sans);font-size:14.5px;line-height:1.6;color:var(--ink-soft);
+  background:var(--tip-bg);border-left:3px solid var(--tip);padding:12px 15px;border-radius:0 8px 8px 0;margin-top:14px;width:100%;
+}
+.model-answer .mt{font-weight:700;color:var(--tip);font-size:12px;letter-spacing:.05em;text-transform:uppercase;margin-bottom:5px;}
+
+/* ============================================================
+   SOURCES
+   ============================================================ */
+sup.cite{font-family:var(--sans);font-size:11px;color:var(--accent);font-weight:700;cursor:pointer;padding:0 1px;vertical-align:super;}
+sup.cite:hover{text-decoration:underline;}
+.sources{
+  margin:30px 0 8px;border-top:1px solid var(--line);padding-top:16px;
+  font-family:var(--sans);font-size:13.5px;color:var(--ink-soft);
+}
+.sources .s-title{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:10px;}
+.sources ol{margin:0;padding-left:22px;}
+.sources li{margin-bottom:7px;line-height:1.5;scroll-margin-top:80px;}
+.sources li.flash{animation:flash 1.4s;}
+@keyframes flash{0%,40%{background:var(--accent-soft);}100%{background:transparent;}}
+/* surlignage d'un bloc ciblé depuis l'éditeur JSON */
+.jump-flash{animation:jumpflash 1.8s ease;border-radius:9px;scroll-margin-top:90px;position:relative;z-index:1;}
+@keyframes jumpflash{
+  0%,18%{box-shadow:0 0 0 3px var(--accent),0 0 0 10px var(--accent-soft);}
+  100%{box-shadow:0 0 0 3px transparent,0 0 0 10px transparent;}
+}
+.sources a{color:var(--accent);text-decoration:none;}
+.sources a:hover{text-decoration:underline;}
+.src-box{
+  background:var(--bg);border:1px solid var(--line);border-radius:var(--radius-sm);
+  padding:13px 16px;margin:20px 0;font-family:var(--sans);font-size:13px;color:var(--ink-soft);
+}
+.src-box .sb-t{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:7px;}
+
+/* ============================================================
+   TABLEAU DE BORD
+   ============================================================ */
+.dash{display:none;position:fixed;inset:0;z-index:120;background:rgba(28,27,24,.4);backdrop-filter:blur(4px);}
+.dash.active{display:flex;align-items:center;justify-content:center;padding:20px;}
+.dash-panel{background:var(--paper);border-radius:18px;max-width:560px;width:100%;max-height:88vh;overflow-y:auto;box-shadow:var(--shadow-lg);padding:30px 30px 26px;}
+.dash-panel h2{font-family:var(--sans);font-weight:800;font-size:23px;margin:0 0 4px;}
+.dash-panel .sub{font-family:var(--sans);font-size:14px;color:var(--ink-faint);margin:0 0 24px;}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px;}
+.stat{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:16px;text-align:center;}
+.stat .n{font-family:var(--sans);font-weight:800;font-size:28px;color:var(--accent);}
+.stat .l{font-family:var(--sans);font-size:12px;color:var(--ink-faint);margin-top:2px;}
+.ring-wrap{display:flex;align-items:center;gap:20px;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin-bottom:20px;}
+.ring-wrap .info{font-family:var(--sans);}
+.ring-wrap .info .big{font-weight:800;font-size:20px;}
+.ring-wrap .info .small{font-size:13px;color:var(--ink-faint);}
+.badges{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:8px;}
+.badge{display:flex;align-items:center;gap:8px;font-family:var(--sans);font-size:13px;font-weight:600;border-radius:30px;padding:7px 14px;border:1.5px solid var(--line-strong);color:var(--ink-faint);background:var(--bg);}
+.badge.got{border-color:var(--accent);color:var(--accent);background:var(--accent-soft);}
+.badge .e{font-size:15px;}
+.dash-x{position:absolute;top:18px;right:18px;}
+.complete-banner{display:none;background:linear-gradient(135deg,#1f7a4d,#2bbd6e);color:#fff;border-radius:12px;padding:16px 18px;font-family:var(--sans);margin-bottom:20px;}
+.complete-banner.show{display:block;}
+.complete-banner .ct{font-weight:800;font-size:16px;}
+.complete-banner .cs{font-size:13px;opacity:.9;margin-top:2px;}
+
+/* toast */
+.toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;font-family:var(--sans);font-size:14px;padding:12px 20px;border-radius:30px;box-shadow:var(--shadow-lg);opacity:0;transition:.25s;z-index:300;pointer-events:none;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* import overlay */
+.drop{position:fixed;inset:0;z-index:400;background:rgba(32,82,187,.12);backdrop-filter:blur(3px);border:4px dashed var(--accent);display:none;align-items:center;justify-content:center;}
+.drop.active{display:flex;}
+.drop .msg{font-family:var(--sans);font-size:22px;font-weight:700;color:var(--accent);background:var(--paper);padding:24px 40px;border-radius:16px;box-shadow:var(--shadow-lg);}
+
+@media(max-width:880px){
+  .sidebar{position:fixed;z-index:60;box-shadow:var(--shadow-lg);}
+  .sidebar.collapsed{margin-left:calc(-1 * var(--sidebar-w));}
+  .article{padding:34px 20px 120px;}
+  .doc-title{font-size:30px;}
+}
+
+/* ============================================================
+   ÉDITEUR JSON (volet droit) — mode créateur
+   ============================================================ */
+:root{--editor-w:560px;}
+.editor{
+  position:fixed;top:56px;right:0;bottom:0;width:var(--editor-w);max-width:92vw;
+  background:var(--paper);border-left:1px solid var(--line-strong);
+  box-shadow:-10px 0 40px rgba(28,27,24,.10);
+  display:flex;flex-direction:column;z-index:70;
+  transform:translateX(100%);transition:transform .26s cubic-bezier(.4,0,.2,1);
+}
+body.editing .editor{transform:translateX(0);}
+body.editing .reader-wrap{margin-right:var(--editor-w);transition:margin-right .26s cubic-bezier(.4,0,.2,1);}
+.reader-wrap{transition:margin-right .26s cubic-bezier(.4,0,.2,1);}
+.ed-head{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--line);flex:0 0 auto;}
+.ed-title{font-family:var(--sans);font-weight:800;font-size:14px;letter-spacing:-.01em;display:flex;align-items:center;gap:8px;}
+.ed-title .dot{width:9px;height:9px;border-radius:50%;background:var(--accent);}
+.ed-status{font-family:var(--sans);font-size:11.5px;font-weight:600;padding:3px 10px;border-radius:20px;margin-left:auto;white-space:nowrap;}
+.ed-status.ok{background:var(--tip-bg);color:var(--tip);}
+.ed-status.err{background:var(--trap-bg);color:var(--trap);}
+.ed-hint{font-family:var(--sans);font-size:11.5px;color:var(--ink-faint);padding:8px 14px 0;line-height:1.45;flex:0 0 auto;}
+.editor textarea{
+  flex:1;width:100%;border:none;outline:none;resize:none;
+  padding:12px 14px 16px;margin-top:6px;
+  font-family:var(--mono);font-size:12.5px;line-height:1.55;color:var(--ink);
+  background:var(--paper);white-space:pre;overflow:auto;tab-size:2;-moz-tab-size:2;
+}
+.editor textarea.err{background:linear-gradient(var(--trap-bg),var(--trap-bg));background-size:100% 3px;background-repeat:no-repeat;}
+.ed-foot{display:flex;gap:8px;flex-wrap:wrap;padding:12px 14px;border-top:1px solid var(--line);flex:0 0 auto;}
+.ed-foot .btn{flex:1 1 30%;min-width:104px;justify-content:center;}
+.ed-foot .btn.sm{padding:10px 12px;}
+body.standalone .editor{display:none !important;}
+body.editing.immersive .editor{display:none;}
+/* en mode édition, les blocs de l'aperçu sont cliquables (saut vers le JSON) */
+body.editing .content [data-si]{cursor:pointer;}
+body.editing .content [data-si]:hover{box-shadow:0 0 0 2px var(--accent-soft);border-radius:7px;}
+body.editing section.chap > h2{cursor:pointer;}
+/* poignée de redimensionnement de la colonne d'édition */
+.ed-resize{position:absolute;left:-4px;top:0;bottom:0;width:11px;cursor:col-resize;z-index:6;touch-action:none;}
+.ed-resize::before{content:"";position:absolute;left:4px;top:0;bottom:0;width:2px;background:transparent;transition:background .12s;}
+.ed-resize:hover::before,body.resizing-ed .ed-resize::before{background:var(--accent);}
+.ed-resize::after{content:"⋮";position:absolute;left:-1px;top:50%;transform:translateY(-50%);color:var(--ink-faint);font-size:15px;line-height:1;}
+.ed-resize:hover::after{color:var(--accent);}
+body.resizing-ed{cursor:col-resize;user-select:none;}
+body.resizing-ed .editor,body.resizing-ed .reader-wrap{transition:none;}
+body.resizing-ed .editor textarea{pointer-events:none;}
+@media(max-width:880px){
+  body.editing .reader-wrap{margin-right:0;}
+  .editor{width:100%;top:56px;}
+  .ed-resize{display:none;}
+}
 </style>
 </head>
 <body>
-<header>
-  <div class="brand"><span class="dot"></span><span class="full">Lightable</span></div>
-  <div class="progress-wrap" id="progressWrap" style="visibility:hidden">
-    <div class="bar"><i id="barFill"></i></div>
-    <div class="counts" id="counts"></div>
+<div class="app">
+  <div class="topbar">
+    <button class="iconbtn" id="toggleSidebar" title="Sommaire" style="display:none;">☰</button>
+    <div class="brand" id="homeBtn"><span class="logo">A</span><span>Atelier</span></div>
+    <span class="crumb" id="crumb"></span>
+    <span class="spacer"></span>
+    <button class="iconbtn" id="editBtn" title="Éditer le JSON du cours" style="display:none;">✎</button>
+    <button class="iconbtn" id="dashBtn" title="Progression" style="display:none;">📊</button>
+    <button class="iconbtn" id="fsBtn" title="Plein écran">⛶</button>
+    <button class="iconbtn" id="importBtn" title="Importer une formation">＋</button>
   </div>
-  <button id="btnOpen" class="btn-accent">Choisir un dossier source</button>
-  <button id="btnExport" disabled>Exporter la sélection</button>
-</header>
+  <div class="readbar" id="readbar"></div>
+  <div class="peek-zone" id="peekZone"></div>
 
-<main>
-  <div class="stage">
-    <!-- Welcome -->
-    <div class="welcome" id="welcome">
-      <h1>Triez vite. Gardez le meilleur.</h1>
-      <p>Choisissez un dossier : les photos sont regroupées par prise, les couples RAW + JPEG restent liés. Décidez d'un coup d'œil, puis exportez ce que vous gardez.</p>
-      <button id="btnOpen2" class="btn-accent" style="padding:11px 22px; font-size:14px;">Choisir un dossier source</button>
-      <div class="hint" style="color:var(--ink-dim)">
-        <kbd>→</kbd> garder &nbsp; <kbd>←</kbd> rejeter &nbsp; <kbd>↑</kbd> <kbd>↓</kbd> naviguer
-      </div>
-      <div class="unsupported" id="unsupported">
-        Ce navigateur ne permet pas l'accès direct aux dossiers. Ouvrez cet outil dans Chrome ou Edge pour pouvoir lire et exporter vos photos.
-      </div>
+  <!-- BIBLIOTHÈQUE -->
+  <div class="library" id="library">
+    <div class="lib-head">
+      <h1>Ma bibliothèque</h1>
+      <p>Importez une formation au format <code>.json</code> générée par IA, puis lisez-la avec schémas interactifs, termes annotés et exercices. Votre progression est sauvegardée localement.</p>
     </div>
-
-    <!-- Loader -->
-    <div class="loader" id="loader">
-      <div class="spin"></div>
-      <div id="loaderText">Lecture du dossier…</div>
+    <div class="lib-actions">
+      <button class="btn" id="importBtn2">＋ Importer une formation</button>
+      <button class="btn" id="newCourseBtn">✎ Créer un cours vierge</button>
+      <button class="btn ghost" id="demoBtn">Charger la formation de démo</button>
+      <button class="btn ghost" id="schemaBtn">Voir le format de fichier</button>
     </div>
+    <div class="grid" id="libGrid"></div>
+  </div>
 
-    <!-- Solo viewer -->
-    <div class="viewer" id="viewer">
-      <div class="canvas" id="canvas">
-        <img id="mainImg" style="display:none" alt="">
-        <div class="raw-placeholder" id="rawPlaceholder" style="display:none">
-          <div class="badge">RAW</div>
-          <div class="rp-name"></div>
-          <div style="font-size:12px">Aperçu indisponible — fichier RAW sans JPEG</div>
+  <!-- LECTEUR -->
+  <div class="reader" id="reader">
+    <div class="reader-wrap">
+      <aside class="sidebar" id="sidebar">
+        <div class="toc-prog">
+          <div class="pct"><span>Progression</span><span id="tocPct">0%</span></div>
+          <div class="progress-track"><div class="progress-fill" id="tocFill"></div></div>
         </div>
-        <div class="flash" id="flash"><span></span></div>
-        <div class="canvas-tools" id="canvasTools" style="display:none">
-          <button class="ctool" id="btnFullRes" title="Charger la photo en pleine résolution (F)">⤢ Pleine résolution</button>
-          <button class="ctool" id="btnLoupe" title="Loupe — survolez la photo (L)">🔍 Loupe</button>
-        </div>
-        <div class="loupe" id="loupe"></div>
-      </div>
-      <div class="meta-strip" id="metaStrip"></div>
-      <div class="toolbar">
-        <button class="nav-btn" id="btnPrev" title="Précédent (↑)">↑ Précédent</button>
-        <button class="big-btn reject" id="btnReject">Rejeter <span class="k">←</span></button>
-        <button class="big-btn keep" id="btnKeep">Garder <span class="k">→</span></button>
-        <button class="nav-btn" id="btnNext" title="Suivant (↓)">Suivant ↓</button>
+        <div class="toc-title">Sommaire</div>
+        <nav class="toc" id="toc"></nav>
+      </aside>
+      <div class="content">
+        <article class="article" id="article"></article>
       </div>
     </div>
   </div>
+</div>
 
-  <aside id="sidebar">
-    <h3>Pellicule</h3>
-    <div class="filmstrip" id="filmstrip"></div>
-    <div class="controls">
-      <label for="slider">Écart max. entre rafales</label>
-      <div class="slider-row">
-        <input type="range" id="slider" min="0.5" max="10" step="0.5" value="1">
-        <span class="slider-val" id="sliderVal">1.0 s</span>
+<!-- ÉDITEUR JSON (volet droit) -->
+<aside class="editor" id="editorPanel">
+  <div class="ed-resize" id="edResize" title="Glisser pour redimensionner · double-clic pour réinitialiser"></div>
+  <div class="ed-head">
+    <span class="ed-title"><span class="dot"></span>Éditeur du cours</span>
+    <span class="ed-status ok" id="editorStatus">Synchronisé</span>
+    <button class="iconbtn" id="editClose" title="Fermer l'éditeur">✕</button>
+  </div>
+  <div class="ed-hint">Modifiez le JSON : l'aperçu de gauche se met à jour en direct. Les changements sont sauvegardés dans votre bibliothèque.</div>
+  <textarea id="editorText" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off"></textarea>
+  <div class="ed-foot">
+    <button class="btn ghost sm" id="editFormat" title="Ré-indenter proprement le JSON">Reformater</button>
+    <button class="btn ghost sm" id="editExportJson" title="Enregistrer le cours en .json (sauvegarde / versionnage)">⬇ JSON source</button>
+    <button class="btn sm" id="editExport" title="Générer le .html autonome à distribuer aux élèves">⬇ HTML élèves</button>
+  </div>
+</aside>
+
+<!-- TABLEAU DE BORD -->
+<div class="dash" id="dash">
+  <div class="dash-panel">
+    <button class="iconbtn dash-x" id="dashClose">✕</button>
+    <h2 id="dashTitle">Progression</h2>
+    <p class="sub" id="dashSub"></p>
+    <div class="complete-banner" id="completeBanner">
+      <div class="ct">🎉 Formation terminée !</div>
+      <div class="cs" id="completeSub"></div>
+    </div>
+    <div class="ring-wrap">
+      <svg width="76" height="76" viewBox="0 0 76 76">
+        <circle cx="38" cy="38" r="32" fill="none" stroke="var(--line)" stroke-width="8"/>
+        <circle id="ring" cx="38" cy="38" r="32" fill="none" stroke="var(--accent)" stroke-width="8"
+          stroke-linecap="round" stroke-dasharray="201" stroke-dashoffset="201" transform="rotate(-90 38 38)"/>
+        <text id="ringTxt" x="38" y="43" text-anchor="middle" font-size="17" font-weight="800" fill="var(--ink)" font-family="var(--sans)">0%</text>
+      </svg>
+      <div class="info">
+        <div class="big" id="ringLabel">Lecture en cours</div>
+        <div class="small" id="ringDetail">Continuez votre lecture</div>
       </div>
     </div>
-  </aside>
-</main>
+    <div class="stats">
+      <div class="stat"><div class="n" id="stScore">0</div><div class="l">Score exercices</div></div>
+      <div class="stat"><div class="n" id="stDone">0</div><div class="l">Réussis</div></div>
+      <div class="stat"><div class="n" id="stTotal">0</div><div class="l">Total exercices</div></div>
+    </div>
+    <div class="badges" id="badges"></div>
+  </div>
+</div>
 
+<div class="tooltip" id="tooltip"></div>
 <div class="toast" id="toast"></div>
+<div class="drop" id="drop"><div class="msg">Déposez le fichier .json ici</div></div>
+<input type="file" id="fileInput" accept=".json,application/json" style="display:none;">
 
 <script>
+/* Démo + documentation du format, exposées en global AVANT app.js */
+window.DEMO_DATA = {
+  "title": "Comprendre l'échappement à ancre",
+  "category": "Horlogerie",
+  "author": "Formation de démonstration",
+  "color": "#2052bb",
+  "description": "Une mini-formation interactive qui illustre toutes les fonctionnalités du lecteur : termes annotés, graphiques, frise, comparaison, encadrés et exercices.",
+  "lead": "Le cœur battant d'une montre mécanique tient dans trois petites pièces. Voyons comment elles transforment l'énergie d'un ressort en un tic-tac régulier.",
+  "terms": [
+    {"key":"echappement","label":"échappement","color":"#2052bb","summary":"Mécanisme qui libère l'énergie du barillet par à-coups réguliers et entretient l'oscillation du balancier."},
+    {"key":"ancre","label":"ancre","color":"#b4540a","summary":"Pièce en forme d'ancre dont les deux palettes bloquent et libèrent alternativement la roue d'échappement."},
+    {"key":"balancier","label":"balancier","color":"#1f7a4d","summary":"Volant d'inertie associé à un spiral ; il oscille à une fréquence propre et sert de référence de temps."},
+    {"key":"roue","label":"roue d'échappement","color":"#a31d3a","summary":"Dernière roue du rouage ; ses dents poussent les palettes de l'ancre à chaque alternance."},
+    {"key":"spiral","label":"spiral","color":"#6b3fa0","summary":"Fin ressort enroulé qui rappelle le balancier vers sa position d'équilibre et fixe sa période."}
+  ],
+  "sections": [
+    {
+      "title": "Le problème : maîtriser l'énergie",
+      "blocks": [
+        {"type":"paragraph","text":"Un ressort moteur libère son énergie d'un coup s'il n'est pas freiné. Pour mesurer le temps, il faut au contraire la distribuer en intervalles strictement égaux. C'est le rôle de l'[[echappement]]."},
+        {"type":"paragraph","text":"L'[[echappement]] remplit deux fonctions à la fois : il **compte** les oscillations et il **entretient** le mouvement en donnant une petite impulsion au [[balancier]] à chaque passage{{1}}."},
+        {"type":"callout","variant":"note","text":"Le terme « échappement » vient de l'idée que la roue *s'échappe* d'une dent à la fois, au lieu de tourner librement."},
+        {"type":"callout","variant":"trap","title":"Erreur fréquente","text":"On croit souvent que c'est le ressort qui « donne le rythme ». Faux : le rythme vient uniquement de la fréquence propre du [[balancier]]. Le ressort ne fait que fournir l'énergie."}
+      ],
+      "sources":[
+        {"author":"G. Daniels","text":"Watchmaking","year":"2011","url":"https://example.org/watchmaking"}
+      ]
+    },
+    {
+      "title": "Les trois pièces et leur danse",
+      "blocks": [
+        {"type":"paragraph","text":"Trois pièces suffisent : la [[roue]], l'[[ancre]] et le [[balancier]] relié à son [[spiral]]. Leur interaction se répète des milliers de fois par heure."},
+        {"type":"heading","text":"Le cycle en quatre temps"},
+        {"type":"image","src":"https://picsum.photos/id/175/640/360","alt":"Illustration d'un mécanisme","caption":"Une illustration référencée par lien web : la [[roue]], l'[[ancre]] et le [[balancier]] en mouvement.","width":"75%","credit":{"author":"Lorem Picsum","source":"picsum.photos","url":"https://picsum.photos","license":"libre d'usage"}},
+        {"type":"timeline","title":"Une alternance complète","items":[
+          {"when":"1","what":"Blocage","desc":"Une dent de la [[roue]] repose contre une palette de l'[[ancre]] : tout est immobile."},
+          {"when":"2","what":"Déblocage","desc":"Le [[balancier]] arrive et fait pivoter l'[[ancre]], libérant la dent."},
+          {"when":"3","what":"Impulsion","desc":"La dent glisse sur la palette et pousse l'[[ancre]], qui relance le [[balancier]]."},
+          {"when":"4","what":"Re-blocage","desc":"L'autre palette intercepte la dent suivante. Le cycle recommence en miroir."}
+        ],"caption":"Ce cycle produit le « tic » puis le « tac » : deux sons légèrement différents."},
+        {"type":"callout","variant":"tip","text":"Écoutez une montre mécanique : le tic-tac n'est pas parfaitement symétrique, car les deux palettes n'ont pas une géométrie identique."}
+      ]
+    },
+    {
+      "title": "Fréquence et précision",
+      "blocks": [
+        {"type":"paragraph","text":"La fréquence d'oscillation se mesure en alternances par heure (A/h). Plus elle est élevée, plus la montre est en théorie précise et résistante aux chocs — mais plus elle consomme d'énergie{{1}}."},
+        {"type":"chart","chart":"bar","title":"Fréquences courantes (alternances/heure)","data":[
+          {"label":"Montre de poche","value":18000},
+          {"label":"Standard","value":21600},
+          {"label":"Moderne","value":28800,"color":"#1f7a4d"},
+          {"label":"Haute fréq.","value":36000}
+        ],"caption":"28 800 A/h (4 Hz) est le standard de l'horlogerie moderne."},
+        {"type":"chart","chart":"line","title":"Amplitude du balancier sur 24 h","series":[
+          {"name":"Position horizontale","color":"#2052bb","points":[{"x":"0h","y":295},{"x":"6h","y":290},{"x":"12h","y":282},{"x":"18h","y":270},{"x":"24h","y":255}]},
+          {"name":"Position verticale","color":"#b4540a","points":[{"x":"0h","y":275},{"x":"6h","y":268},{"x":"12h","y":258},{"x":"18h","y":245},{"x":"24h","y":230}]}
+        ],"caption":"L'amplitude chute à mesure que le ressort se détend — d'où l'intérêt d'un remontage régulier."},
+        {"type":"compare","title":"Haute vs basse fréquence","left":{"title":"Haute fréquence","items":["Meilleure précision","Plus stable face aux chocs","Reprend vite après perturbation"]},"right":{"title":"Basse fréquence","items":["Moins d'usure des pièces","Réserve de marche plus longue","Lubrification moins sollicitée"]},"caption":"Aucun choix n'est universellement meilleur : tout dépend de l'usage visé."},
+        {"type":"sourcebox","title":"Pour aller plus loin","sources":[
+          {"author":"Fondation Haute Horlogerie","text":"Lexique de l'échappement","url":"https://example.org/fhh"},
+          "Norme NIHS 96-50, essais d'environnement des composants"
+        ]}
+      ],
+      "sources":[
+        {"author":"FHH","text":"L'échappement à ancre suisse","year":"2019","url":"https://example.org/echappement"}
+      ]
+    },
+    {
+      "title": "Vérifiez vos acquis",
+      "blocks": [
+        {"type":"paragraph","text":"Trois exercices pour valider la section. Vos réponses sont sauvegardées automatiquement."},
+        {"type":"exercise","exercise":"qcm","question":"Quelle pièce fixe la **fréquence** de la montre ?","multiple":false,"options":[
+          {"text":"Le barillet (ressort moteur)","correct":false},
+          {"text":"Le balancier et son spiral","correct":true},
+          {"text":"La roue d'échappement","correct":false},
+          {"text":"L'ancre","correct":false}
+        ],"explanation":"C'est la fréquence propre du **balancier + spiral** qui détermine le rythme. Les autres pièces transmettent ou entretiennent le mouvement, mais ne donnent pas la cadence."},
+        {"type":"exercise","exercise":"cloze","question":"Complétez le cycle de l'échappement :","text":"La dent de la roue est d'abord {0} contre une palette, puis le balancier la {1}, ce qui produit une {2}.","answers":["bloquée","libère","impulsion"],"explanation":"Blocage → libération → impulsion : les trois temps fondamentaux de chaque alternance."},
+        {"type":"exercise","exercise":"open","question":"Expliquez en une phrase pourquoi une fréquence plus élevée améliore la précision.","keywords":["choc","stable","perturbation","oscillation"],"explanation":"Une fréquence élevée signifie que le balancier oscille plus souvent : il revient plus vite à son rythme après une perturbation (choc, changement de position), donc l'erreur accumulée reste faible."}
+      ]
+    }
+  ]
+};
+
+window.SCHEMA_DOC = `FORMAT DE FICHIER — FORMATION ATELIER (.json)
+==============================================================
+
+Donnez ce gabarit à une IA pour générer une formation sur n'importe
+quel sujet (langue, mécanique, finance...). L'app ne lit que des
+DONNÉES : aucun code n'est exécuté depuis le fichier (sécurité).
+
+STRUCTURE RACINE
+----------------
+{
+  "title":       "Titre de la formation"        (obligatoire)
+  "category":    "Finance" | "Langue" | ...      (étiquette + couleur)
+  "author":      "optionnel"
+  "color":       "#2052bb"  (couleur de la vignette)
+  "description": "résumé court pour la bibliothèque"
+  "lead":        "phrase d'accroche en italique"
+  "terms":   [ ... dictionnaire de termes ... ]
+  "sections":[ ... liste de sections ... ]       (obligatoire)
+}
+
+TERMES COLORÉS (survol = résumé)
+--------------------------------
+"terms":[
+  {"key":"infla","label":"inflation","color":"#b4540a",
+   "summary":"Hausse générale et durable des prix."}
+]
+Dans le texte, on écrit :  [[infla]]   -> affiche "inflation"
+                            [[infla|l'inflation]] -> texte personnalisé
+
+TEXTE ENRICHI (dans tous les champs "text")
+-------------------------------------------
+[[cle]]          terme coloré + infobulle
+{{2}}            appel vers la source n°2 de la section (exposant)
+**gras**   *italique*
+
+SECTION
+-------
+{
+  "title":"Titre de la section",
+  "blocks":[ ... ],
+  "sources":[                       (numérotées, affichées en fin de section)
+     {"author":"Nom","text":"Titre","year":"2020","url":"https://..."},
+     "ou simplement une chaîne de texte"
+  ]
+}
+
+TYPES DE BLOCS
+--------------
+paragraph : {"type":"paragraph","text":"...","spaced":true?}
+heading   : {"type":"heading","text":"Sous-titre"}
+
+callout   : {"type":"callout","variant":"note|tip|warn|trap",
+             "title":"optionnel","text":"..."}
+            note=info  tip=astuce  warn=attention  trap=piège
+
+chart (barres) :
+  {"type":"chart","chart":"bar","title":"...",
+   "data":[{"label":"A","value":12,"color":"#..?"}],"caption":"..."}
+chart (courbe) :
+  {"type":"chart","chart":"line","title":"...",
+   "series":[{"name":"S1","color":"#..","points":[{"x":"2020","y":3}]}],
+   "caption":"..."}
+chart (camembert) :
+  {"type":"chart","chart":"pie","title":"...",
+   "data":[{"label":"A","value":40}],"caption":"..."}
+
+image     : {"type":"image",
+   "src":"https://...",     (URL WEB uniquement)
+   "alt":"texte alternatif (accessibilité)",
+   "caption":"légende affichée sous l'image",
+   "width":"60%"?            (largeur max optionnelle)
+   "credit":{               (OBLIGATOIRE - provenance de l'image)
+      "author":"Nom de l'auteur",
+      "source":"Wikimedia Commons / Unsplash / ...",
+      "url":"https://lien-vers-l-original",
+      "license":"CC BY 4.0 / domaine public / ..."}}
+   -> le crédit peut aussi être une simple chaîne :
+      "credit":"© Auteur, source, licence"
+   -> si le crédit manque, l'app affiche un avertissement visible.
+   -> src acceptée : UNIQUEMENT une URL web https:// (ou http://).
+      L'image n'est pas stockée dans le fichier : seul le lien l'est,
+      ce qui garde la formation légère. Le lien doit rester accessible.
+      Si le lien est mort, un message de repli s'affiche.
+
+timeline  : {"type":"timeline","title":"...",
+   "items":[{"when":"1850","what":"...","desc":"..."}],"caption":"..."}
+
+compare   : {"type":"compare","title":"...",
+   "left":{"title":"Avantages","items":["...","..."]},
+   "right":{"title":"Limites","items":["..."]},"caption":"..."}
+
+sourcebox : {"type":"sourcebox","title":"Sources",
+   "sources":[{"author":"...","text":"...","url":"..."}]}
+
+EXERCICES
+---------
+QCM :
+  {"type":"exercise","exercise":"qcm","question":"...",
+   "multiple":false,            (true = plusieurs bonnes réponses)
+   "options":[{"text":"...","correct":true}],
+   "explanation":"correction affichée après vérification"}
+
+Texte à trous :
+  {"type":"exercise","exercise":"cloze","question":"...",
+   "text":"Le {0} fait monter le {1}.",   (les {n} deviennent des champs)
+   "answers":["taux","prix"],
+   "explanation":"..."}
+
+Question ouverte (corrigée par mots-clés) :
+  {"type":"exercise","exercise":"open","question":"...",
+   "keywords":["mot1","mot2"],   (réussite si ~60% des mots-clés présents)
+   "explanation":"correction-modèle révélée après envoi"}
+
+CONSEILS DE GÉNÉRATION
+----------------------
+- Découpez en 4 à 8 sections digestes.
+- Déclarez chaque terme important UNE fois dans "terms", réutilisez [[..]].
+- Donnez une couleur unique par terme (codes hex).
+- Mettez les exercices en fin de section ou en section dédiée.
+- Citez les sources avec {{n}} dans le texte et la liste "sources".
+`;
+
+</script>
+<script id="engine">
+/* =====================================================================
+   ATELIER — Lecteur de formations  (moteur)
+   Tout l'état est sauvegardé dans localStorage (durable, hors-ligne).
+   ===================================================================== */
+(function(){
 "use strict";
 
-const RAW_EXT = ["nef","cr2","cr3","arw","raf","rw2","orf","dng","pef","srw","raw","3fr","nrw"];
-const JPG_EXT = ["jpg","jpeg"];
+/* Instantané du squelette HTML (avant tout rendu) : sert à l'export autonome.
+   On retire les <script> pour ne réinjecter que le moteur dans le fichier élève. */
+const BODY_SNAPSHOT=(function(){
+  try{
+    const clone=document.body.cloneNode(true);
+    clone.querySelectorAll('script').forEach(s=>s.remove());
+    return clone.innerHTML;
+  }catch(e){ return ''; }
+})();
 
-const els = {
-  welcome: document.getElementById("welcome"),
-  loader: document.getElementById("loader"),
-  loaderText: document.getElementById("loaderText"),
-  viewer: document.getElementById("viewer"),
-  canvas: document.getElementById("canvas"),
-  mainImg: document.getElementById("mainImg"),
-  rawPlaceholder: document.getElementById("rawPlaceholder"),
-  flash: document.getElementById("flash"),
-  canvasTools: document.getElementById("canvasTools"),
-  btnFullRes: document.getElementById("btnFullRes"),
-  btnLoupe: document.getElementById("btnLoupe"),
-  loupe: document.getElementById("loupe"),
-  metaStrip: document.getElementById("metaStrip"),
-  sidebar: document.getElementById("sidebar"),
-  filmstrip: document.getElementById("filmstrip"),
-  progressWrap: document.getElementById("progressWrap"),
-  barFill: document.getElementById("barFill"),
-  counts: document.getElementById("counts"),
-  btnExport: document.getElementById("btnExport"),
-  slider: document.getElementById("slider"),
-  sliderVal: document.getElementById("sliderVal"),
-  toast: document.getElementById("toast"),
-  unsupported: document.getElementById("unsupported"),
+const LS_LIB="atelier_library_v1";       // {id:{meta, file}}
+const LS_PROG="atelier_progress_v1";      // {id:{lastSection, answers:{}, scroll}}
+
+/* ---------- utilitaires stockage ---------- */
+const store={
+  lib(){ try{return JSON.parse(localStorage.getItem(LS_LIB))||{};}catch(e){return {};} },
+  saveLib(o){ localStorage.setItem(LS_LIB,JSON.stringify(o)); },
+  prog(){ try{return JSON.parse(localStorage.getItem(LS_PROG))||{};}catch(e){return {};} },
+  saveProg(o){ localStorage.setItem(LS_PROG,JSON.stringify(o)); }
 };
+function uid(){return 'f'+Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
-const supported = "showDirectoryPicker" in window;
-if (!supported) els.unsupported.style.display = "block";
+/* ---------- éléments ---------- */
+const $=id=>document.getElementById(id);
+const library=$('library'), reader=$('reader'), libGrid=$('libGrid'),
+      article=$('article'), toc=$('toc'), sidebar=$('sidebar'),
+      tooltip=$('tooltip'), toast=$('toast'), drop=$('drop'),
+      fileInput=$('fileInput'), readbar=$('readbar'), crumb=$('crumb');
 
-// ---------- State ----------
-let sourceHandle = null;
-let units = [];      // each: {base, jpg, raw, time, status, url, isRawOnly, burst}
-let cursor = 0;      // index into units (current photo)
-const stripThumbUrls = new Map(); // unitIdx -> objectURL for filmstrip thumbnails
+let current=null;        // formation chargée
+let currentId=null;
+let termMap={};          // clé -> {label,color,summary}
+let srcMap={};           // section -> liste sources (pour appels)
 
-// ---------- Open folder ----------
-async function openFolder() {
-  if (!supported) { toast("Ouvrez cet outil dans Chrome ou Edge."); return; }
-  try {
-    sourceHandle = await window.showDirectoryPicker({ id: "tri-photos", mode: "readwrite" });
-  } catch (e) { return; /* cancelled */ }
-  els.welcome.style.display = "none";
-  els.loader.style.display = "block";
-  els.loaderText.textContent = "Lecture du dossier…";
-  await scanFolder();
+/* =====================================================================
+   NAVIGATION D'ÉCRAN
+   ===================================================================== */
+function showLibrary(){
+  if(window.STANDALONE_COURSE){ window.scrollTo({top:0,behavior:'smooth'}); return; }
+  clearTimeout(scrollTimer);
+  closeEditor();
+  reader.classList.remove('active');
+  library.style.display='block';
+  $('toggleSidebar').style.display='none';
+  $('dashBtn').style.display='none';
+  $('editBtn').style.display='none';
+  crumb.textContent='';
+  readbar.style.width='0';
+  currentId=null;current=null;
+  renderLibrary();
+}
+function showReader(){
+  library.style.display='none';
+  reader.classList.add('active');
+  $('toggleSidebar').style.display='grid';
+  $('dashBtn').style.display='grid';
+  $('editBtn').style.display='grid';
 }
 
-document.getElementById("btnOpen").onclick = openFolder;
-document.getElementById("btnOpen2").onclick = openFolder;
-
-async function scanFolder() {
-  // revoke any previously created object URLs (full-size cache + strip thumbs)
-  for (const u of units) freeUnit(u);
-  for (const url of stripThumbUrls.values()) URL.revokeObjectURL(url);
-  stripThumbUrls.clear();
-  const files = [];
-  await walk(sourceHandle, files);
-
-  // group by base name (without extension), case-insensitive
-  const map = new Map();
-  for (const f of files) {
-    const dot = f.name.lastIndexOf(".");
-    const ext = dot >= 0 ? f.name.slice(dot + 1).toLowerCase() : "";
-    const base = (dot >= 0 ? f.name.slice(0, dot) : f.name).toLowerCase();
-    const isJpg = JPG_EXT.includes(ext);
-    const isRaw = RAW_EXT.includes(ext);
-    if (!isJpg && !isRaw) continue;
-    if (!map.has(base)) map.set(base, {});
-    const slot = map.get(base);
-    if (isJpg) slot.jpg = f;
-    else slot.raw = f;
-  }
-
-  units = [];
-  for (const [base, slot] of map) {
-    units.push({
-      base, jpg: slot.jpg || null, raw: slot.raw || null,
-      time: null, status: null, url: null,
-      isRawOnly: !slot.jpg && !!slot.raw,
-      name: (slot.jpg || slot.raw).name,
-    });
-  }
-
-  if (units.length === 0) {
-    els.loader.style.display = "none";
-    els.welcome.style.display = "block";
-    toast("Aucune photo JPEG ou RAW trouvée dans ce dossier.");
+/* =====================================================================
+   BIBLIOTHÈQUE
+   ===================================================================== */
+function renderLibrary(){
+  const lib=store.lib(), prog=store.prog();
+  const ids=Object.keys(lib);
+  if(!ids.length){
+    libGrid.innerHTML=`<div class="empty"><div class="big">📚</div>
+      <div style="font-weight:700;font-size:17px;color:var(--ink-soft);margin-bottom:6px;">Aucune formation</div>
+      Importez un fichier <code>.json</code> ou chargez la démo pour commencer.</div>`;
     return;
   }
-
-  // read EXIF time from jpg where available
-  els.loaderText.textContent = "Lecture des dates de prise…";
-  let done = 0;
-  for (const u of units) {
-    if (u.jpg) {
-      try {
-        const file = await u.jpg.getFile();
-        const exif = await exifr.parse(file, ["DateTimeOriginal","CreateDate"]).catch(() => null);
-        if (exif) u.time = (exif.DateTimeOriginal || exif.CreateDate || null);
-        if (u.time) u.time = new Date(u.time).getTime();
-        if (!u.time) u.time = file.lastModified;
-      } catch { u.time = Date.now(); }
-    } else {
-      try { const file = await u.raw.getFile(); u.time = file.lastModified; }
-      catch { u.time = Date.now(); }
-    }
-    done++;
-    if (done % 10 === 0) els.loaderText.textContent = `Lecture des dates… ${done}/${units.length}`;
-  }
-
-  // sort chronologically
-  units.sort((a, b) => a.time - b.time);
-
-  buildGroups();
-  loadSavedSession();
-
-  els.loader.style.display = "none";
-  els.viewer.style.display = "flex";
-  els.sidebar.style.display = "flex";
-  els.progressWrap.style.visibility = "visible";
-  els.btnExport.disabled = false;
-  cursor = 0;
-  render();
-  renderFilmstrip();
-  updateProgress();
-}
-
-async function walk(dirHandle, out) {
-  for await (const entry of dirHandle.values()) {
-    if (entry.kind === "file") out.push(entry);
-    else if (entry.kind === "directory") await walk(entry, out);
-  }
-}
-
-// ---------- Burst tagging by EXIF time ----------
-// Photos taken within the threshold of each other are tagged as belonging
-// to the same burst. This only drives an on-screen indicator — every photo
-// is still sorted one at a time in the normal solo flow.
-function buildGroups() {
-  const thresholdMs = parseFloat(els.slider.value) * 1000;
-  let i = 0, burstId = 0;
-  while (i < units.length) {
-    let j = i + 1;
-    while (j < units.length && (units[j].time - units[j - 1].time) <= thresholdMs) j++;
-    const size = j - i;
-    if (size > 1) {
-      burstId++;
-      for (let k = i; k < j; k++) {
-        units[k].burst = { id: burstId, size, pos: k - i + 1 };
-      }
-    } else {
-      units[i].burst = null;
-    }
-    i = j;
-  }
-}
-
-els.slider.oninput = () => {
-  els.sliderVal.textContent = parseFloat(els.slider.value).toFixed(1) + " s";
-  if (units.length) {
-    buildGroups();
-    render(); renderFilmstrip(); updateProgress();
-    saveSession();
-  }
-};
-
-// ---------- Image loading (EXIF thumbnail + downscale fallback) ----------
-// Full 26 Mpx JPEGs are far too heavy to decode per photo (~100 MB of
-// pixels each, hundreds of ms). For keep/reject triage we only need a
-// ~1600px preview, so we use the thumbnail the camera already embedded in
-// the JPEG (instant), and only fall back to downscaling the full file when
-// no usable embedded preview exists.
-const AHEAD = 4;
-const BEHIND = 2;
-const PREVIEW_MAX = 1600;     // longest edge we render for triage
-const MIN_EMBEDDED = 1000;    // embedded thumb must be at least this wide to trust it
-
-// cache entry per unit: { url, ready }
-//   url   : object URL of a lightweight preview (embedded thumb or downscaled)
-//   ready : Promise resolving once the preview URL is available
-
-function loadUnit(u) {
-  if (!u.jpg) return null;          // raw-only: no preview
-  if (u.cache) return u.cache;      // already loading or loaded
-  const entry = { url: null, ready: null };
-  entry.ready = (async () => {
-    try {
-      const file = await u.jpg.getFile();
-      const blob = await makePreviewBlob(file);
-      entry.url = URL.createObjectURL(blob);
-    } catch (e) {
-      entry.url = null;
-    }
-    return entry;
-  })();
-  u.cache = entry;
-  return entry;
-}
-
-// Produce a small preview Blob from a full-size JPEG file.
-async function makePreviewBlob(file) {
-  // 1) Try the embedded EXIF thumbnail — near-instant, no full decode.
-  try {
-    const thumb = await exifr.thumbnail(file); // Uint8Array or undefined
-    if (thumb && thumb.byteLength) {
-      const tBlob = new Blob([thumb], { type: "image/jpeg" });
-      // Check it's big enough to judge sharpness; many cameras embed ~1600px.
-      const dims = await blobDimensions(tBlob);
-      if (dims && Math.max(dims.w, dims.h) >= MIN_EMBEDDED) return tBlob;
-    }
-  } catch {}
-
-  // 2) Fallback: downscale the full file once with hardware-accelerated decode.
-  //    createImageBitmap with resizeWidth avoids ever holding the full
-  //    26 Mpx bitmap in JS, and lets the browser decode at reduced size.
-  try {
-    const bmp = await createImageBitmap(file, {
-      resizeWidth: PREVIEW_MAX,
-      resizeQuality: "medium",
-    });
-    const canvas = document.createElement("canvas");
-    canvas.width = bmp.width; canvas.height = bmp.height;
-    canvas.getContext("2d").drawImage(bmp, 0, 0);
-    bmp.close && bmp.close();
-    const out = await new Promise(res => canvas.toBlob(res, "image/jpeg", 0.85));
-    return out || file;
-  } catch {
-    return file; // last resort: original (slow, but correct)
-  }
-}
-
-// Read a blob's pixel dimensions without keeping it decoded.
-function blobDimensions(blob) {
-  return new Promise(res => {
-    const url = URL.createObjectURL(blob);
-    const img = new Image();
-    img.onload = () => { res({ w: img.naturalWidth, h: img.naturalHeight }); URL.revokeObjectURL(url); };
-    img.onerror = () => { res(null); URL.revokeObjectURL(url); };
-    img.src = url;
+  libGrid.innerHTML=ids.map(id=>{
+    const f=lib[id], m=f.meta||{};
+    const p=prog[id]||{};
+    const pct=computePct(f.file,p);
+    const c1=m.color||'#2052bb', c2=shade(c1,28);
+    return `<div class="card" data-id="${id}" style="--c1:${c1};--c2:${c2}">
+      <button class="del" data-del="${id}" title="Supprimer">✕</button>
+      <div class="cover"><span class="tag">${esc(m.category||'Formation')}</span></div>
+      <div class="body">
+        <h3>${esc(m.title||'Sans titre')}</h3>
+        <div class="desc">${esc(m.description||'')}</div>
+        <div class="meta">
+          <div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div>
+          <span>${pct}%</span>
+        </div>
+      </div></div>`;
+  }).join('');
+  libGrid.querySelectorAll('.card').forEach(c=>{
+    c.addEventListener('click',e=>{ if(e.target.closest('.del'))return; openFormation(c.dataset.id); });
+  });
+  libGrid.querySelectorAll('[data-del]').forEach(b=>{
+    b.addEventListener('click',e=>{ e.stopPropagation(); deleteFormation(b.dataset.del); });
   });
 }
-
-function freeUnit(u) {
-  if (u.fullUrl) { URL.revokeObjectURL(u.fullUrl); u.fullUrl = null; }
-  if (!u.cache) return;
-  if (u.cache.url) URL.revokeObjectURL(u.cache.url);
-  u.cache = null;
+function deleteFormation(id){
+  if(!confirm('Supprimer cette formation et sa progression ?'))return;
+  const lib=store.lib(); delete lib[id]; store.saveLib(lib);
+  const p=store.prog(); delete p[id]; store.saveProg(p);
+  renderLibrary(); showToast('Formation supprimée');
+}
+/* % global = part lecture (sections vues) + part exercices réussis */
+function computePct(file,p){
+  const secs=(file.sections||[]).length||1;
+  const seen=(p.seen||[]).length;
+  const exos=collectExos(file);
+  const total=exos.length;
+  const ok=Object.values(p.answers||{}).filter(a=>a&&a.correct).length;
+  const readPart=seen/secs;
+  const exoPart=total?ok/total:1;
+  // 60% lecture / 40% exercices
+  return Math.round((readPart*0.6+exoPart*0.4)*100);
+}
+function collectExos(file){
+  const out=[];
+  (file.sections||[]).forEach(s=>(s.blocks||[]).forEach(b=>{if(b.type==='exercise')out.push(b);}));
+  return out;
 }
 
-// Free everything outside the window, then preload everything inside it.
-function syncWindow() {
-  const keep = new Set();
-  for (let d = -BEHIND; d <= AHEAD; d++) {
-    const i = cursor + d;
-    if (i >= 0 && i < units.length) keep.add(i);
-  }
-  for (let i = 0; i < units.length; i++) {
-    if (!keep.has(i)) freeUnit(units[i]);
-  }
-  // Kick off loads for the whole window. Current one first so it wins
-  // any bandwidth race; the rest decode in the background.
-  loadUnit(units[cursor]);
-  for (const i of keep) if (i !== cursor) loadUnit(units[i]);
+/* =====================================================================
+   COULEURS
+   ===================================================================== */
+function shade(hex,amt){
+  let c=hex.replace('#','');if(c.length===3)c=c.split('').map(x=>x+x).join('');
+  let n=parseInt(c,16),r=(n>>16)+amt,g=((n>>8)&255)+amt,b=(n&255)+amt;
+  const cl=v=>Math.max(0,Math.min(255,v));
+  return '#'+(0x1000000+cl(r)*0x10000+cl(g)*0x100+cl(b)).toString(16).slice(1);
 }
 
-// ---------- Render ----------
-let renderToken = 0; // guards against out-of-order async renders
-
-function render() {
-  if (!units.length) return;
-  syncWindow();
-  resetFullResBtn();          // new photo always starts on the light preview
-  els.loupe.style.display = "none";
-  renderSolo(cursor);
-  highlightStrip();
-}
-
-async function renderSolo(unitIdx) {
-  const u = units[unitIdx];
-  const token = ++renderToken;
-
-  // --- meta strip (synchronous, instant) ---
-  let chips = "";
-  if (u.jpg && u.raw) chips += `<span class="chip pair">RAW + JPEG</span>`;
-  else if (u.isRawOnly) chips += `<span class="chip raw">RAW</span>`;
-  else chips += `<span class="chip">JPEG</span>`;
-  if (u.burst) chips += `<span class="chip burst">⊕ Rafale ${u.burst.pos}/${u.burst.size}</span>`;
-  const dt = u.time ? new Date(u.time).toLocaleString("fr-CH", {dateStyle:"medium", timeStyle:"short"}) : "";
-  let st = "";
-  if (u.status === "keep") st = `<span class="status-tag keep">✓ Gardée</span>`;
-  else if (u.status === "reject") st = `<span class="status-tag reject">✕ Rejetée</span>`;
-  els.metaStrip.innerHTML =
-    `<span class="fname">${u.name}</span>${chips}<span class="when">${dt}</span>` +
-    `<span class="pos">${cursor + 1} / ${units.length}</span>${st}`;
-
-  // --- image ---
-  const mainImg = els.mainImg;
-  const placeholder = els.rawPlaceholder;
-
-  // status-colored frame around the photo
-  mainImg.classList.remove("keep", "reject");
-  if (u.status) mainImg.classList.add(u.status);
-
-  if (!u.jpg) {
-    // RAW-only: show placeholder, hide the image + tools
-    mainImg.style.display = "none";
-    placeholder.style.display = "flex";
-    placeholder.querySelector(".rp-name").textContent = u.name;
-    els.canvasTools.style.display = "none";
-    els.loupe.style.display = "none";
-    return;
-  }
-
-  els.canvasTools.style.display = "flex";
-  const entry = loadUnit(u);
-  if (entry.url) {
-    // preview already ready — instant swap
-    placeholder.style.display = "none";
-    await swapImage(mainImg, entry.url);
-    if (token !== renderToken) return;
-    mainImg.style.display = "block";
-  } else {
-    // not ready yet (far jump): keep current frame until the preview is
-    // built, then swap — but only if the user hasn't navigated away.
-    await entry.ready;
-    if (token !== renderToken || !entry.url) return; // superseded or failed
-    placeholder.style.display = "none";
-    await swapImage(mainImg, entry.url);
-    if (token !== renderToken) return;
-    mainImg.style.display = "block";
-  }
-}
-
-// Set an image source and wait for it to be decoded before returning, so
-// the visible swap happens in one frame with no flash of blank/old content.
-async function swapImage(imgEl, url) {
-  if (imgEl.src === url) return;
-  imgEl.src = url;
-  try { await imgEl.decode(); } catch {}
-}
-
-// ---------- Full resolution (on demand) ----------
-// The viewer normally shows a light preview (embedded thumb or ~1600px
-// downscale). On request we decode the full-size original for the current
-// photo. Navigating to another photo always returns to the preview.
-let fullResToken = 0;
-
-function resetFullResBtn() {
-  els.btnFullRes.textContent = "⤢ Pleine résolution";
-  els.btnFullRes.disabled = false;
-  els.btnFullRes.classList.remove("active");
-}
-
-async function loadFullRes() {
-  const idx = cursor;
-  const u = units[idx];
-  if (!u || !u.jpg) return;
-  if (els.btnFullRes.classList.contains("active")) return; // already full-res
-  const myToken = ++fullResToken;
-  els.btnFullRes.disabled = true;
-  els.btnFullRes.textContent = "Chargement…";
-  try {
-    if (!u.fullUrl) {
-      const file = await u.jpg.getFile();
-      u.fullUrl = URL.createObjectURL(file);
-    }
-    if (myToken !== fullResToken || cursor !== idx) return; // navigated away
-    await swapImage(els.mainImg, u.fullUrl);
-    if (cursor !== idx) return;
-    els.mainImg.style.display = "block";
-    els.btnFullRes.textContent = "⤢ Pleine résolution ✓";
-    els.btnFullRes.classList.add("active");
-    els.btnFullRes.disabled = true;
-  } catch (e) {
-    resetFullResBtn();
-    toast("Impossible de charger la pleine résolution.");
-  }
-}
-
-els.btnFullRes.onclick = loadFullRes;
-
-// ---------- Magnifier (loupe) ----------
-// A circular lens that follows the cursor over the photo. It magnifies
-// whatever version is currently displayed — so once the full resolution is
-// loaded, the loupe reveals real detail; otherwise it enlarges the preview.
-const LOUPE_D = 240;     // diameter in px (matches CSS)
-const LOUPE_ZOOM = 2.5;  // magnification relative to on-screen size
-let loupeOn = false;
-
-function toggleLoupe() {
-  loupeOn = !loupeOn;
-  els.btnLoupe.classList.toggle("active", loupeOn);
-  els.canvas.classList.toggle("loupe-on", loupeOn);
-  if (!loupeOn) els.loupe.style.display = "none";
-}
-
-els.btnLoupe.onclick = toggleLoupe;
-els.canvas.addEventListener("mousemove", onLoupeMove);
-els.canvas.addEventListener("mouseleave", () => { els.loupe.style.display = "none"; });
-
-function onLoupeMove(e) {
-  if (!loupeOn) return;
-  const img = els.mainImg;
-  if (img.style.display === "none" || !img.naturalWidth) { els.loupe.style.display = "none"; return; }
-
-  // Compute the rendered image rectangle (object-fit: contain inside the
-  // element's content box, ignoring border/letterboxing).
-  const r = img.getBoundingClientRect();
-  const cs = getComputedStyle(img);
-  const bl = parseFloat(cs.borderLeftWidth) || 0;
-  const bt = parseFloat(cs.borderTopWidth) || 0;
-  const cw = img.clientWidth, ch = img.clientHeight;
-  const scale = Math.min(cw / img.naturalWidth, ch / img.naturalHeight);
-  const rW = img.naturalWidth * scale, rH = img.naturalHeight * scale;
-  const imgLeft = r.left + bl + (cw - rW) / 2;
-  const imgTop  = r.top  + bt + (ch - rH) / 2;
-
-  const cx = e.clientX, cy = e.clientY;
-  const rx = (cx - imgLeft) / rW;
-  const ry = (cy - imgTop)  / rH;
-  if (rx < 0 || rx > 1 || ry < 0 || ry > 1) { els.loupe.style.display = "none"; return; }
-
-  const src = img.currentSrc || img.src;
-  const bgW = rW * LOUPE_ZOOM, bgH = rH * LOUPE_ZOOM;
-  const cr = els.canvas.getBoundingClientRect();
-  els.loupe.style.backgroundImage = `url("${src}")`;
-  els.loupe.style.backgroundSize = `${bgW}px ${bgH}px`;
-  els.loupe.style.backgroundPosition = `${LOUPE_D / 2 - rx * bgW}px ${LOUPE_D / 2 - ry * bgH}px`;
-  els.loupe.style.left = (cx - cr.left - LOUPE_D / 2) + "px";
-  els.loupe.style.top  = (cy - cr.top  - LOUPE_D / 2) + "px";
-  els.loupe.style.display = "block";
-}
-
-// ---------- Decisions ----------
-function setStatus(unitIdx, status) {
-  const u = units[unitIdx];
-  u.status = (u.status === status) ? null : status; // toggle
-  renderSolo(unitIdx); showFlash(u.status);
-  updateProgress(); updateStripStatus(unitIdx); saveSession();
-}
-
-function decideSoloAndAdvance(status) {
-  units[cursor].status = status;
-  showFlash(status);
-  updateProgress(); updateStripStatus(cursor); saveSession();
-  // Advance immediately — the next photo is already decoded, so the swap
-  // is instant; the flash plays over the new frame.
-  if (cursor < units.length - 1) { cursor++; render(); }
-  else renderSolo(cursor);
-}
-
-function showFlash(status) {
-  if (!status) return;
-  const span = els.flash.querySelector("span");
-  if (status === "keep") { span.textContent = "✓ Gardée"; span.style.background = "rgba(90,209,154,.9)"; span.style.color = "#06301f"; }
-  else { span.textContent = "✕ Rejetée"; span.style.background = "rgba(224,88,106,.9)"; span.style.color = "#3a0810"; }
-  els.flash.classList.remove("show"); void els.flash.offsetWidth; els.flash.classList.add("show");
-}
-
-function navigate(delta) {
-  const next = cursor + delta;
-  if (next < 0 || next >= units.length) return;
-  cursor = next; render();
-}
-
-// ---------- Progress ----------
-function updateProgress() {
-  let keep = 0, reject = 0, decided = 0;
-  for (const u of units) { if (u.status === "keep") keep++; else if (u.status === "reject") reject++; }
-  decided = keep + reject;
-  els.barFill.style.width = (units.length ? (decided / units.length * 100) : 0) + "%";
-  els.counts.innerHTML = `<b>${decided}</b>/${units.length} triées · <span class="k">${keep} gardées</span> · <span class="r">${reject} rejetées</span>`;
-}
-
-// ---------- Filmstrip (lazy via IntersectionObserver) ----------
-let stripObserver = null;
-
-function renderFilmstrip() {
-  els.filmstrip.innerHTML = "";
-  if (stripObserver) stripObserver.disconnect();
-  stripObserver = new IntersectionObserver(onStripIntersect, {
-    root: els.filmstrip, rootMargin: "200px 0px",
-  });
-
-  const toObserve = [];
-  const makeItem = (idx) => {
-    const u = units[idx];
-    const item = document.createElement("div");
-    item.className = "strip-item";
-    item.dataset.unit = idx;
-    // thumbnail placeholder — real image loaded only when scrolled into view
-    const tn = u.jpg
-      ? `<div class="tn" data-thumb="${idx}"></div>`
-      : `<div class="tn">RAW</div>`;
-    item.innerHTML = `${tn}<span class="nm">${u.name}</span><span class="st ${u.status||''}"></span>`;
-    item.onclick = () => { cursor = idx; render(); };
-    if (u.jpg) toObserve.push(item);
-    return item;
+/* =====================================================================
+   IMPORT / VALIDATION
+   ===================================================================== */
+function importFile(file){
+  const reader=new FileReader();
+  reader.onload=e=>{
+    try{
+      const data=JSON.parse(e.target.result);
+      const err=validate(data);
+      if(err){showToast('Fichier invalide : '+err);return;}
+      const lib=store.lib();
+      const id=uid();
+      lib[id]={meta:{
+        title:data.title, description:data.description||'',
+        category:data.category||'Formation', color:data.color||'#2052bb'
+      }, file:data};
+      store.saveLib(lib);
+      renderLibrary();
+      showToast('« '+(data.title||'Formation')+' » importée');
+    }catch(err){ showToast('JSON illisible : '+err.message); }
   };
-
-  let idx = 0;
-  while (idx < units.length) {
-    const u = units[idx];
-    if (u.burst && u.burst.pos === 1) {
-      // wrap the whole burst in a framed group with a count header
-      const size = u.burst.size;
-      const group = document.createElement("div");
-      group.className = "burst-group";
-      const head = document.createElement("div");
-      head.className = "burst-head";
-      head.innerHTML = `<span class="burst-ico">⊕</span> Rafale · <b>${size}</b> photos`;
-      group.appendChild(head);
-      for (let k = 0; k < size; k++) group.appendChild(makeItem(idx + k));
-      els.filmstrip.appendChild(group);
-      idx += size;
-    } else {
-      els.filmstrip.appendChild(makeItem(idx));
-      idx += 1;
-    }
-  }
-
-  toObserve.forEach(el => stripObserver.observe(el));
-  highlightStrip();
+  reader.readAsText(file);
+}
+function validate(d){
+  if(typeof d!=='object'||!d) return "ce n'est pas un objet";
+  if(!d.title) return "champ 'title' manquant";
+  if(!Array.isArray(d.sections)||!d.sections.length) return "'sections' manquant ou vide";
+  return null;
 }
 
-async function onStripIntersect(entries) {
-  for (const entry of entries) {
-    if (!entry.isIntersecting) continue;
-    const el = entry.target;
-    const idx = parseInt(el.dataset.unit);
-    stripObserver.unobserve(el);
-    const u = units[idx];
-    if (!u.jpg) continue;
-    const slot = el.querySelector(".tn[data-thumb]");
-    if (!slot || slot.dataset.loaded) continue;
-    slot.dataset.loaded = "1";
-    try {
-      const file = await u.jpg.getFile();
-      // Use the embedded EXIF thumbnail for the strip too — tiny and instant,
-      // never the 17 MB original.
-      let url;
-      const thumb = await exifr.thumbnail(file).catch(() => null);
-      if (thumb && thumb.byteLength) {
-        url = URL.createObjectURL(new Blob([thumb], { type: "image/jpeg" }));
-      } else {
-        // fallback: a small downscaled bitmap
-        const bmp = await createImageBitmap(file, { resizeWidth: 200, resizeQuality: "low" });
-        const c = document.createElement("canvas");
-        c.width = bmp.width; c.height = bmp.height;
-        c.getContext("2d").drawImage(bmp, 0, 0);
-        bmp.close && bmp.close();
-        url = await new Promise(r => c.toBlob(b => r(URL.createObjectURL(b)), "image/jpeg", 0.7));
-      }
-      stripThumbUrls.set(idx, url);
-      slot.style.backgroundImage = `url("${url}")`;
-      slot.style.backgroundSize = "cover";
-      slot.style.backgroundPosition = "center";
-    } catch {}
-  }
-}
-
-function highlightStrip() {
-  els.filmstrip.querySelectorAll(".strip-item").forEach(el => {
-    el.classList.toggle("active", parseInt(el.dataset.unit) === cursor);
+/* =====================================================================
+   OUVERTURE & RENDU D'UNE FORMATION
+   ===================================================================== */
+function openFormation(id){
+  const lib=store.lib();
+  if(!lib[id]){showToast('Introuvable');return;}
+  current=lib[id].file; currentId=id;
+  buildTermMap(current);
+  showReader();
+  renderArticle(current);
+  buildTOC(current);
+  crumb.textContent=current.title||'';
+  // restaurer scroll
+  const p=store.prog()[id]||{};
+  markSeen(); // section 0 au moins
+  requestAnimationFrame(()=>{
+    if(p.scroll){ window.scrollTo(0,p.scroll); }
+    updateReadbar();
   });
-  const active = els.filmstrip.querySelector(".strip-item.active");
-  if (active) active.scrollIntoView({ block: "nearest" });
 }
 
-function updateStripStatus(unitIdx) {
-  const el = els.filmstrip.querySelector(`.strip-item[data-unit="${unitIdx}"] .st`);
-  if (el) { el.className = "st " + (units[unitIdx].status || ""); }
+function buildTermMap(file){
+  termMap={};
+  (file.terms||[]).forEach(t=>{ termMap[t.key]={label:t.label||t.key,color:t.color||'#2052bb',summary:t.summary||''}; });
 }
 
-// ---------- Export ----------
-els.btnExport.onclick = async () => {
-  const kept = units.filter(u => u.status === "keep");
-  if (!kept.length) { toast("Aucune photo gardée à exporter."); return; }
-  let destHandle;
-  try { destHandle = await window.showDirectoryPicker({ id: "tri-export", mode: "readwrite" }); }
-  catch { return; }
+/* ---- rendu de texte enrichi : [[clé|texte affiché]] + {{n}} appels de source ---- */
+function richText(str){
+  if(str==null)return '';
+  let s=esc(str);
+  // termes : [[cle|affichage]] ou [[cle]]
+  s=s.replace(/\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g,(m,key,disp)=>{
+    key=key.trim();
+    const t=termMap[key];
+    const show=disp?disp:(t?t.label:key);
+    if(!t) return show;
+    return `<span class="term" data-term="${esc(key)}" style="--term-color:${t.color}">${esc(show)}</span>`;
+  });
+  // appels de source : {{3}}  ->  exposant cliquable
+  s=s.replace(/\{\{(\d+)\}\}/g,(m,n)=>`<sup class="cite" data-cite="${n}">[${n}]</sup>`);
+  // gras **x** et italique *x*
+  s=s.replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>').replace(/(^|[^*])\*([^*]+)\*/g,'$1<em>$2</em>');
+  return s;
+}
 
-  els.btnExport.disabled = true;
-  const origLabel = els.btnExport.textContent;
-  let copied = 0, fileCount = 0;
-  kept.forEach(u => { if (u.jpg) fileCount++; if (u.raw) fileCount++; });
-
-  try {
-    for (const u of kept) {
-      for (const part of [u.jpg, u.raw]) {
-        if (!part) continue;
-        const srcFile = await part.getFile();
-        const destFile = await destHandle.getFileHandle(part.name, { create: true });
-        const writable = await destFile.createWritable();
-        await writable.write(srcFile);
-        await writable.close();
-        copied++;
-        els.btnExport.textContent = `Copie… ${copied}/${fileCount}`;
-      }
+function renderArticle(file){
+  let html=`<p class="lead">${richText(file.lead||'')}</p>
+    <h1 class="doc-title">${esc(file.title)}</h1>
+    <div class="doc-sub">${esc(file.category||'')}${file.author?' · '+esc(file.author):''}</div>`;
+  (file.sections||[]).forEach((sec,i)=>{
+    html+=`<section class="chap" id="sec-${i}" data-idx="${i}">
+      <h2>${esc(sec.title||'Section '+(i+1))}</h2>`;
+    (sec.blocks||[]).forEach((b,j)=>{ html+=renderBlock(b,i,j); });
+    // sources en fin de section
+    if(sec.sources&&sec.sources.length){
+      html+=`<div class="sources" id="src-${i}"><div class="s-title">Sources</div><ol>`+
+        sec.sources.map((src,k)=>`<li id="src-${i}-${k+1}">${renderSource(src)}</li>`).join('')+`</ol></div>`;
     }
-    toast(`${kept.length} photos (${copied} fichiers) exportées.`);
-  } catch (e) {
-    toast("Erreur pendant l'export : " + e.message);
-  } finally {
-    els.btnExport.textContent = origLabel;
-    els.btnExport.disabled = false;
+    html+=`</section>`;
+  });
+  article.innerHTML=html;
+  attachExercises();
+  attachTermEvents();
+  attachCiteEvents();
+  // restaurer réponses sauvegardées
+  restoreAnswers();
+}
+function renderSource(src){
+  if(typeof src==='string')return esc(src);
+  let s=esc(src.text||src.title||'Source');
+  if(src.author)s=esc(src.author)+'. '+s;
+  if(src.year)s+=' ('+esc(src.year)+')';
+  if(src.url)s+=` — <a href="${esc(src.url)}" target="_blank" rel="noopener">lien</a>`;
+  return s;
+}
+
+/* =====================================================================
+   RENDU DES BLOCS
+   ===================================================================== */
+function renderBlock(b,si,bi){
+  // ancre chaque bloc avec sa position (section/bloc) pour le clic depuis l'éditeur
+  const html=renderBlockInner(b,si,bi);
+  const attrs=`data-si="${si}" data-bi="${bi}"`;
+  return html.replace(/^(\s*)<([a-zA-Z][\w-]*)/, (m,ws,tag)=>`${ws}<${tag} ${attrs}`);
+}
+function renderBlockInner(b,si,bi){
+  switch(b.type){
+    case 'paragraph': return `<p${b.spaced?' class="spaced"':''}>${richText(b.text)}</p>`;
+    case 'heading':   return `<h3>${richText(b.text)}</h3>`;
+    case 'callout':   return renderCallout(b);
+    case 'chart':     return renderChart(b);
+    case 'image':     return renderImage(b);
+    case 'timeline':  return renderTimeline(b);
+    case 'compare':   return renderCompare(b);
+    case 'sourcebox': return renderSourceBox(b);
+    case 'exercise':  return renderExercise(b,si,bi);
+    default:          return `<p>${richText(b.text||'')}</p>`;
   }
-};
-
-// ---------- Session persistence ----------
-function sessionKey() { return "triphotos:" + (sourceHandle ? sourceHandle.name : "?"); }
-function saveSession() {
-  try {
-    const data = { threshold: els.slider.value, statuses: {} };
-    for (const u of units) if (u.status) data.statuses[u.base] = u.status;
-    localStorage.setItem(sessionKey(), JSON.stringify(data));
-  } catch {}
 }
-function loadSavedSession() {
-  try {
-    const raw = localStorage.getItem(sessionKey());
-    if (!raw) return;
-    const data = JSON.parse(raw);
-    if (data.threshold) { els.slider.value = data.threshold; els.sliderVal.textContent = parseFloat(data.threshold).toFixed(1) + " s"; buildGroups(); }
-    if (data.statuses) { for (const u of units) if (data.statuses[u.base]) u.status = data.statuses[u.base]; }
-    const decided = units.filter(u=>u.status).length;
-    if (decided) toast(`Session reprise : ${decided} décisions retrouvées.`);
-  } catch {}
+function renderCallout(b){
+  const kind=['note','tip','warn','trap'].includes(b.variant)?b.variant:'note';
+  const ico={note:'ℹ️',tip:'💡',warn:'⚠️',trap:'🚧'}[kind];
+  const titles={note:'Note',tip:'Astuce',warn:'Attention',trap:'Piège fréquent'};
+  return `<div class="callout ${kind}"><span class="ico">${ico}</span>
+    <div class="cc-body"><div class="cc-title">${esc(b.title||titles[kind])}</div>
+    <p>${richText(b.text)}</p></div></div>`;
+}
+function renderSourceBox(b){
+  const items=(b.sources||[]).map(s=>`<div>• ${renderSource(s)}</div>`).join('');
+  return `<div class="src-box"><div class="sb-t">${esc(b.title||'Sources')}</div>${items}</div>`;
+}
+function renderTimeline(b){
+  const cap=b.title?`<div class="viz-title">${esc(b.title)}</div>`:'';
+  const items=(b.items||[]).map(it=>`<div class="tl-item"><div class="tl-dot"></div>
+     <div class="tl-when">${esc(it.when||'')}</div>
+     <div class="tl-what">${richText(it.what||'')}</div>
+     ${it.desc?`<div class="tl-desc">${richText(it.desc)}</div>`:''}</div>`).join('');
+  return `<figure class="viz">${cap}<div class="timeline">${items}</div>
+     ${b.caption?`<figcaption class="viz-cap">${richText(b.caption)}</figcaption>`:''}</figure>`;
+}
+function renderCompare(b){
+  const col=(c,cls)=>`<div class="col ${cls}"><h4>${esc(c.title||'')}</h4>
+     <ul>${(c.items||[]).map(x=>`<li>${richText(x)}</li>`).join('')}</ul></div>`;
+  return `<figure class="viz">${b.title?`<div class="viz-title">${esc(b.title)}</div>`:''}
+     <div class="compare">${col(b.left||{},'pos')}${col(b.right||{},'neg')}</div>
+     ${b.caption?`<figcaption class="viz-cap">${richText(b.caption)}</figcaption>`:''}</figure>`;
 }
 
-// ---------- Keyboard ----------
-document.addEventListener("keydown", (e) => {
-  if (!units.length) return;
-  if (e.key === "ArrowRight") { e.preventDefault(); decideSoloAndAdvance("keep"); }
-  else if (e.key === "ArrowLeft") { e.preventDefault(); decideSoloAndAdvance("reject"); }
-  else if (e.key === "ArrowDown") { e.preventDefault(); navigate(1); }
-  else if (e.key === "ArrowUp") { e.preventDefault(); navigate(-1); }
-  else if (e.key === "l" || e.key === "L") { e.preventDefault(); toggleLoupe(); }
-  else if (e.key === "f" || e.key === "F") { e.preventDefault(); loadFullRes(); }
+/* =====================================================================
+   IMAGE  (URL web uniquement) — crédit/source OBLIGATOIRE
+   {"type":"image","src":"https://...",
+    "alt":"texte alternatif","caption":"légende",
+    "credit":{"author":"...","source":"...","url":"...","license":"CC BY 4.0"},
+    "width":"60%"?}
+   ===================================================================== */
+function renderImage(b){
+  const src=(b.src||'').trim();
+  if(!src){
+    return `<figure class="viz img-block"><div class="img-missing">⚠️ Image absente : champ « src » vide.</div></figure>`;
+  }
+  // src autorisée : uniquement une URL web http(s)
+  const isWebUrl=/^https?:\/\//i.test(src);
+  const wrapStyle=b.width?`style="max-width:${esc(b.width)};margin-inline:auto;"`:'';
+  const img=isWebUrl
+    ? `<img src="${esc(src)}" alt="${esc(b.alt||b.caption||'illustration')}" loading="lazy" referrerpolicy="no-referrer" ${wrapStyle}
+        onerror="this.closest('.img-block').classList.add('img-broken')">`
+    : `<div class="img-missing">⚠️ Source d'image refusée : seules les URL web (https://…) sont autorisées.</div>`;
+  return `<figure class="viz img-block">
+    ${img}
+    <div class="img-fallback">⚠️ Image indisponible — vérifiez le lien.<br><span class="img-fallback-url">${esc(src)}</span></div>
+    ${b.caption?`<figcaption class="viz-cap">${richText(b.caption)}</figcaption>`:''}
+    ${renderCredit(b.credit)}
+  </figure>`;
+}
+function renderCredit(c){
+  // crédit obligatoire : si manquant, on le signale clairement
+  if(!c){
+    return `<div class="img-credit missing">⚠️ Crédit image manquant — merci d'indiquer la provenance.</div>`;
+  }
+  if(typeof c==='string'){
+    return `<div class="img-credit">📷 ${richText(c)}</div>`;
+  }
+  let parts=[];
+  if(c.author)parts.push(esc(c.author));
+  if(c.source)parts.push(esc(c.source));
+  if(c.license)parts.push(esc(c.license));
+  let txt=parts.join(' · ')||'Source non précisée';
+  if(c.url)txt=`<a href="${esc(c.url)}" target="_blank" rel="noopener">${txt}</a>`;
+  return `<div class="img-credit">📷 Crédit : ${txt}</div>`;
+}
+
+/* =====================================================================
+   GRAPHIQUES  (SVG depuis données — aucun code exécuté du fichier)
+   types: bar | line | pie
+   ===================================================================== */
+const PALETTE=['#2052bb','#1f7a4d','#b4540a','#a31d3a','#6b3fa0','#0f7b8a','#9c6b1f','#3a7bd5'];
+function renderChart(b){
+  let svg='';
+  try{
+    if(b.chart==='bar')svg=barChart(b);
+    else if(b.chart==='line')svg=lineChart(b);
+    else if(b.chart==='pie')svg=pieChart(b);
+    else svg=`<p style="font-family:var(--sans);color:var(--ink-faint)">Type de graphique inconnu : ${esc(b.chart)}</p>`;
+  }catch(e){ svg=`<p style="font-family:var(--sans);color:var(--trap)">Graphique illisible</p>`; }
+  return `<figure class="viz">${b.title?`<div class="viz-title">${esc(b.title)}</div>`:''}
+     ${svg}
+     ${b.caption?`<figcaption class="viz-cap">${richText(b.caption)}</figcaption>`:''}</figure>`;
+}
+function chartScale(vals,h,pad){
+  const max=Math.max(...vals,0), min=Math.min(...vals,0);
+  const span=(max-min)||1;
+  return v=>h-pad-((v-min)/span)*(h-pad*2);
+}
+function barChart(b){
+  const data=b.data||[]; const W=640,H=300,pad=40;
+  const vals=data.map(d=>+d.value||0);
+  const y=chartScale(vals,H,pad);
+  const bw=(W-pad*2)/data.length*0.62, gap=(W-pad*2)/data.length;
+  const zero=y(0);
+  let bars=data.map((d,i)=>{
+    const x=pad+i*gap+(gap-bw)/2; const yy=y(+d.value||0);
+    const col=d.color||PALETTE[i%PALETTE.length];
+    const top=Math.min(yy,zero),hgt=Math.abs(zero-yy);
+    return `<rect x="${x.toFixed(1)}" y="${top.toFixed(1)}" width="${bw.toFixed(1)}" height="${hgt.toFixed(1)}" rx="3" fill="${col}"/>
+      <text x="${(x+bw/2).toFixed(1)}" y="${(top-6).toFixed(1)}" text-anchor="middle" font-weight="700" fill="var(--ink)">${esc(d.value)}</text>
+      <text x="${(x+bw/2).toFixed(1)}" y="${H-pad+18}" text-anchor="middle">${esc(d.label||'')}</text>`;
+  }).join('');
+  const grid=gridLines(H,pad,W,vals);
+  return `<svg viewBox="0 0 ${W} ${H}" role="img">${grid}
+    <line class="axis" x1="${pad}" y1="${zero}" x2="${W-pad}" y2="${zero}"/>${bars}</svg>`;
+}
+function gridLines(H,pad,W,vals){
+  const max=Math.max(...vals,0),min=Math.min(...vals,0),span=(max-min)||1;
+  let g='';
+  for(let i=0;i<=4;i++){
+    const v=min+span*i/4; const yy=H-pad-((v-min)/span)*(H-pad*2);
+    g+=`<line class="gridline" x1="${pad}" y1="${yy.toFixed(1)}" x2="${W-pad}" y2="${yy.toFixed(1)}"/>
+        <text x="${pad-8}" y="${(yy+4).toFixed(1)}" text-anchor="end">${(Math.round(v*100)/100)}</text>`;
+  }
+  return g;
+}
+function lineChart(b){
+  const series=b.series||[{name:b.title||'',points:b.data||[]}];
+  const W=640,H=300,pad=44;
+  const allX=[...new Set(series.flatMap(s=>s.points.map(p=>p.x)))];
+  const allY=series.flatMap(s=>s.points.map(p=>+p.y||0));
+  const y=chartScale(allY,H,pad);
+  const xs=allX.map((_,i)=>pad+(allX.length<2?0:i/(allX.length-1)*(W-pad*2)));
+  const grid=gridLines(H,pad,W,allY);
+  let paths=series.map((s,si)=>{
+    const col=s.color||PALETTE[si%PALETTE.length];
+    const pts=s.points.map(p=>{const xi=allX.indexOf(p.x);return [xs[xi],y(+p.y||0)];});
+    const d=pts.map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1)).join(' ');
+    const dots=pts.map(p=>`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="3.5" fill="${col}"/>`).join('');
+    return `<path d="${d}" fill="none" stroke="${col}" stroke-width="2.5" stroke-linejoin="round"/>${dots}`;
+  }).join('');
+  const xlab=allX.map((x,i)=>`<text x="${xs[i].toFixed(1)}" y="${H-pad+18}" text-anchor="middle">${esc(x)}</text>`).join('');
+  const legend=series.length>1?`<div class="viz-legend">`+series.map((s,si)=>`<span class="lg"><span class="sw" style="background:${s.color||PALETTE[si%PALETTE.length]}"></span>${esc(s.name||'')}</span>`).join('')+`</div>`:'';
+  return `<svg viewBox="0 0 ${W} ${H}" role="img">${grid}
+    <line class="axis" x1="${pad}" y1="${H-pad}" x2="${W-pad}" y2="${H-pad}"/>${paths}${xlab}</svg>${legend}`;
+}
+function pieChart(b){
+  const data=b.data||[]; const total=data.reduce((s,d)=>s+(+d.value||0),0)||1;
+  const cx=150,cy=150,r=110; let a0=-Math.PI/2; let paths='';
+  data.forEach((d,i)=>{
+    const frac=(+d.value||0)/total; const a1=a0+frac*2*Math.PI;
+    const x0=cx+r*Math.cos(a0),y0=cy+r*Math.sin(a0),x1=cx+r*Math.cos(a1),y1=cy+r*Math.sin(a1);
+    const large=frac>0.5?1:0; const col=d.color||PALETTE[i%PALETTE.length];
+    paths+=`<path d="M${cx} ${cy} L${x0.toFixed(1)} ${y0.toFixed(1)} A${r} ${r} 0 ${large} 1 ${x1.toFixed(1)} ${y1.toFixed(1)} Z" fill="${col}" stroke="var(--paper)" stroke-width="2"/>`;
+    a0=a1;
+  });
+  const legend=`<div class="viz-legend">`+data.map((d,i)=>`<span class="lg"><span class="sw" style="background:${d.color||PALETTE[i%PALETTE.length]}"></span>${esc(d.label||'')} — ${Math.round((+d.value||0)/total*100)}%</span>`).join('')+`</div>`;
+  return `<svg viewBox="0 0 300 300" role="img" style="max-width:300px;margin:0 auto;">${paths}</svg>${legend}`;
+}
+
+/* =====================================================================
+   EXERCICES
+   ===================================================================== */
+let exoCounter=0;
+function renderExercise(b,si,bi){
+  const eid=`exo-${si}-${bi}`;
+  const kindLabel={qcm:'QCM',open:'Question ouverte',cloze:'Texte à trous'}[b.exercise]||'Exercice';
+  let inner='';
+  if(b.exercise==='qcm')      inner=qcmBody(b,eid);
+  else if(b.exercise==='open')inner=openBody(b,eid);
+  else if(b.exercise==='cloze')inner=clozeBody(b,eid);
+  return `<div class="exo" id="${eid}" data-eid="${eid}" data-kind="${b.exercise}">
+    <span class="exo-kind">${kindLabel}</span>
+    <p class="q">${richText(b.question||'')}</p>
+    ${inner}
+    <div class="exo-foot">
+      <button class="btn sm" data-check="${eid}">Vérifier</button>
+      <span class="feedback" id="fb-${eid}"></span>
+    </div>
+    ${b.explanation?`<div class="model-answer" id="ma-${eid}"><div class="mt">Correction</div>${richText(b.explanation)}</div>`:''}
+  </div>`;
+}
+function qcmBody(b,eid){
+  const multi=b.multiple===true;
+  return `<div class="opts" data-multi="${multi}">`+(b.options||[]).map((o,i)=>
+    `<div class="opt ${multi?'check':'radio'}" data-i="${i}"><span class="box"></span><span>${richText(o.text||o)}</span></div>`
+  ).join('')+`</div>`;
+}
+function openBody(b,eid){
+  return `<textarea id="ta-${eid}" placeholder="Votre réponse…"></textarea>`;
+}
+function clozeBody(b,eid){
+  // b.text contient des {n} ; b.answers est un tableau d'indices
+  let i=0;
+  const html=esc(b.text||'').replace(/\{(\d+)\}/g,(m,n)=>{
+    const idx=i++;
+    return `<input class="blank" data-blank="${idx}" size="${(b.answers&&b.answers[idx]?b.answers[idx].length:8)}">`;
+  });
+  return `<div class="cloze">${html}</div>`;
+}
+
+function attachExercises(){
+  article.querySelectorAll('.opt').forEach(opt=>{
+    opt.addEventListener('click',()=>{
+      const wrap=opt.closest('.opts'); const multi=wrap.dataset.multi==='true';
+      if(opt.classList.contains('locked'))return;
+      if(multi){ opt.classList.toggle('sel'); }
+      else{ wrap.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel')); opt.classList.add('sel'); }
+      opt.querySelector('.box').textContent=opt.classList.contains('sel')?'✓':'';
+    });
+  });
+  article.querySelectorAll('[data-check]').forEach(btn=>{
+    btn.addEventListener('click',()=>checkExercise(btn.dataset.check));
+  });
+}
+
+function checkExercise(eid){
+  const exo=$(eid); const kind=exo.dataset.kind;
+  const file=current; const [_,si,bi]=eid.split('-').map(x=>isNaN(x)?x:+x);
+  const block=file.sections[si].blocks[bi];
+  const fb=$('fb-'+eid); let correct=false;
+  const detail={kind,done:true};
+
+  if(kind==='qcm'){
+    const opts=[...exo.querySelectorAll('.opt')];
+    const sel=opts.map((o,i)=>o.classList.contains('sel')?i:-1).filter(i=>i>=0);
+    const right=(block.options||[]).map((o,i)=>o.correct?i:-1).filter(i=>i>=0);
+    correct = sel.length===right.length && sel.every(i=>right.includes(i));
+    detail.sel=sel;
+    opts.forEach((o,i)=>{
+      o.classList.add('locked');
+      if(right.includes(i)){o.classList.add('correct');o.querySelector('.box').textContent='✓';}
+      else if(o.classList.contains('sel')){o.classList.add('wrong');o.querySelector('.box').textContent='✕';}
+    });
+  }
+  else if(kind==='cloze'){
+    const blanks=[...exo.querySelectorAll('.blank')];
+    correct=true; const vals=[],cells=[];
+    blanks.forEach((bl,i)=>{
+      const ans=(block.answers&&block.answers[i]||'').toString().trim().toLowerCase();
+      const val=bl.value.trim().toLowerCase();
+      const ok=val===ans; cells.push(ok); vals.push(bl.value);
+      if(!ok)correct=false;
+      bl.classList.toggle('correct',ok); bl.classList.toggle('wrong',!ok);
+      if(!ok)bl.value=block.answers[i]||val; bl.disabled=true;
+    });
+    detail.vals=vals; detail.cells=cells;
+  }
+  else if(kind==='open'){
+    const ta=$('ta-'+eid); ta.disabled=true;
+    const txt=ta.value.trim().toLowerCase();
+    const kw=(block.keywords||[]).map(k=>k.toLowerCase());
+    const hits=kw.filter(k=>txt.includes(k)).length;
+    correct = kw.length? hits>=Math.ceil(kw.length*0.6) : txt.length>10;
+    detail.text=ta.value;
+  }
+  detail.correct=correct;
+
+  fb.style.display='inline';
+  if(kind==='open'){
+    fb.className='feedback ok'; fb.textContent='Réponse enregistrée';
+  }else{
+    fb.className='feedback '+(correct?'ok':'ko');
+    fb.textContent=correct?'✓ Correct !':'✕ Pas tout à fait';
+  }
+  const ma=$('ma-'+eid); if(ma)ma.style.display='block';
+  exo.querySelector('[data-check]').disabled=true;
+
+  // sauver
+  saveAnswer(eid,detail);
+  updateReadbar();
+}
+
+function saveAnswer(eid,val){
+  if(!currentId)return;
+  const p=store.prog(); p[currentId]=p[currentId]||{};
+  p[currentId].answers=p[currentId].answers||{};
+  p[currentId].answers[eid]=val;
+  store.saveProg(p);
+}
+function restoreAnswers(){
+  const saved=(store.prog()[currentId]||{}).answers||{};
+  Object.keys(saved).forEach(eid=>{
+    const exo=$(eid); if(!exo)return;
+    const a=saved[eid]; if(!a||!a.done)return;
+    const fb=$('fb-'+eid);
+    // restaurer l'état visuel détaillé selon le type
+    if(a.kind==='qcm' && Array.isArray(a.sel)){
+      const opts=[...exo.querySelectorAll('.opt')];
+      const [_,si,bi]=eid.split('-').map(x=>isNaN(x)?x:+x);
+      const right=(current.sections[si].blocks[bi].options||[]).map((o,i)=>o.correct?i:-1).filter(i=>i>=0);
+      opts.forEach((o,i)=>{o.classList.add('locked');
+        if(right.includes(i)){o.classList.add('correct');o.querySelector('.box').textContent='✓';}
+        else if(a.sel.includes(i)){o.classList.add('wrong');o.classList.add('sel');o.querySelector('.box').textContent='✕';}
+      });
+    } else if(a.kind==='cloze' && Array.isArray(a.vals)){
+      const blanks=[...exo.querySelectorAll('.blank')];
+      const [_,si,bi]=eid.split('-').map(x=>isNaN(x)?x:+x);
+      const answers=current.sections[si].blocks[bi].answers||[];
+      blanks.forEach((bl,i)=>{ bl.value=answers[i]||a.vals[i]||''; bl.disabled=true;
+        bl.classList.add((a.cells&&a.cells[i])?'correct':'wrong'); });
+    } else if(a.kind==='open'){
+      const ta=$('ta-'+eid); if(ta){ta.value=a.text||'';ta.disabled=true;}
+    }
+    fb.style.display='inline';
+    fb.className='feedback '+(a.kind==='open'?'ok':(a.correct?'ok':'ko'));
+    fb.textContent=a.kind==='open'?'Réponse enregistrée':(a.correct?'✓ Correct !':'✕ Pas tout à fait');
+    const ma=$('ma-'+eid); if(ma)ma.style.display='block';
+    const btn=exo.querySelector('[data-check]'); if(btn){btn.textContent='Refait';btn.disabled=true;}
+  });
+}
+
+/* =====================================================================
+   TERMES — TOOLTIP
+   ===================================================================== */
+function attachTermEvents(){
+  article.querySelectorAll('.term').forEach(el=>{
+    el.addEventListener('mouseenter',e=>showTooltip(el));
+    el.addEventListener('mousemove',e=>positionTooltip(e,el));
+    el.addEventListener('mouseleave',hideTooltip);
+    el.addEventListener('click',e=>{showTooltip(el);positionTooltip(e,el);});
+  });
+}
+function showTooltip(el){
+  const t=termMap[el.dataset.term]; if(!t)return;
+  tooltip.innerHTML=`<span class="t-label" style="--tt-color:${shade(t.color,70)}">${esc(t.label)}</span>${esc(t.summary)}`;
+  tooltip.classList.add('show');
+}
+function positionTooltip(e,el){
+  const r=el.getBoundingClientRect();
+  const tw=Math.min(300,tooltip.offsetWidth||280);
+  const th=tooltip.offsetHeight||60;
+  // au-dessus par défaut
+  let x=r.left, y=r.top-th-10;
+  if(y<10){ // pas assez de place en haut -> bascule en dessous (flèche en haut)
+    y=r.bottom+10; tooltip.classList.add('above');
+  } else {  // au-dessus du terme (flèche en bas, comportement par défaut du CSS)
+    tooltip.classList.remove('above');
+  }
+  if(x+tw>window.innerWidth-12)x=window.innerWidth-tw-12;
+  if(x<12)x=12;
+  tooltip.style.left=x+'px'; tooltip.style.top=y+'px';
+}
+function hideTooltip(){ tooltip.classList.remove('show'); }
+
+/* =====================================================================
+   APPELS DE SOURCE
+   ===================================================================== */
+function attachCiteEvents(){
+  article.querySelectorAll('.cite').forEach(c=>{
+    c.addEventListener('click',()=>{
+      const sec=c.closest('.chap'); const idx=sec?sec.dataset.idx:0;
+      const li=$('src-'+idx+'-'+c.dataset.cite);
+      if(li){ li.scrollIntoView({behavior:'smooth',block:'center'}); li.classList.remove('flash');void li.offsetWidth;li.classList.add('flash'); }
+      else showToast('Source ['+c.dataset.cite+'] non trouvée dans cette section');
+    });
+  });
+}
+
+/* =====================================================================
+   SOMMAIRE (TOC) + PROGRESSION LECTURE
+   ===================================================================== */
+function buildTOC(file){
+  toc.innerHTML=(file.sections||[]).map((s,i)=>
+    `<a href="#sec-${i}" data-toc="${i}"><span class="done" style="display:none">✓</span>${esc(s.title||'Section '+(i+1))}</a>`
+  ).join('');
+  toc.querySelectorAll('a').forEach(a=>{
+    a.addEventListener('click',e=>{ if(window.innerWidth<880)sidebar.classList.add('collapsed'); });
+  });
+  refreshTOCdone();
+}
+function refreshTOCdone(){
+  const seen=(store.prog()[currentId]||{}).seen||[];
+  toc.querySelectorAll('a').forEach(a=>{
+    const i=+a.dataset.toc;
+    a.querySelector('.done').style.display=seen.includes(i)?'inline':'none';
+  });
+}
+function markSeen(idx){
+  if(!currentId)return;
+  const p=store.prog(); p[currentId]=p[currentId]||{};
+  p[currentId].seen=p[currentId].seen||[];
+  if(idx==null)idx=0;
+  if(!p[currentId].seen.includes(idx))p[currentId].seen.push(idx);
+  store.saveProg(p);
+}
+
+/* scroll : barre de lecture + section active + sauvegarde position */
+let scrollTimer=null;
+function onScroll(){
+  if(!current)return;
+  updateReadbar();
+  // section active
+  const secs=[...article.querySelectorAll('.chap')];
+  let active=0;
+  secs.forEach((s,i)=>{ if(s.getBoundingClientRect().top<120)active=i; });
+  toc.querySelectorAll('a').forEach(a=>a.classList.toggle('active',+a.dataset.toc===active));
+  markSeen(active);
+  refreshTOCdone();
+  // sauver scroll (throttle)
+  clearTimeout(scrollTimer);
+  scrollTimer=setTimeout(()=>{
+    const p=store.prog(); if(p[currentId]){p[currentId].scroll=window.scrollY;store.saveProg(p);}
+    updateTocPct();
+  },250);
+}
+function updateReadbar(){
+  const h=document.documentElement.scrollHeight-window.innerHeight;
+  readbar.style.width=(h>0?(window.scrollY/h*100):0)+'%';
+}
+function updateTocPct(){
+  if(!current||!currentId)return;
+  const p=store.prog()[currentId]||{};
+  const pct=computePct(current,p);
+  $('tocPct').textContent=pct+'%'; $('tocFill').style.width=pct+'%';
+}
+
+/* =====================================================================
+   ÉDITEUR JSON EN DIRECT  (mode créateur)
+   ===================================================================== */
+let editTimer=null;
+function openEditor(){
+  if(!current||window.STANDALONE_COURSE)return;
+  document.body.classList.add('editing');
+  $('editBtn').classList.add('on');
+  $('editorText').value=JSON.stringify(current,null,2);
+  $('editorText').classList.remove('err');
+  setEditorStatus('ok','Synchronisé');
+}
+function closeEditor(){
+  document.body.classList.remove('editing');
+  const eb=$('editBtn'); if(eb)eb.classList.remove('on');
+}
+function toggleEditor(){
+  if(document.body.classList.contains('editing'))closeEditor(); else openEditor();
+}
+function setEditorStatus(kind,msg){
+  const s=$('editorStatus'); if(!s)return;
+  s.className='ed-status '+(kind==='err'?'err':'ok'); s.textContent=msg;
+}
+function onEditorInput(){
+  clearTimeout(editTimer);
+  setEditorStatus('ok','…');
+  editTimer=setTimeout(applyEditorChange,450);
+}
+function applyEditorChange(){
+  const ta=$('editorText'); const txt=ta.value; let data;
+  try{ data=JSON.parse(txt); }
+  catch(e){ ta.classList.add('err'); setEditorStatus('err','Erreur JSON : '+e.message); return; }
+  const err=validate(data);
+  if(err){ ta.classList.add('err'); setEditorStatus('err','Structure invalide : '+err); return; }
+  ta.classList.remove('err');
+  // ré-appliquer en conservant la position de lecture
+  const y=window.scrollY;
+  current=data;
+  if(currentId){
+    const lib=store.lib();
+    if(lib[currentId]){
+      lib[currentId].file=data;
+      lib[currentId].meta={
+        title:data.title, description:data.description||'',
+        category:data.category||'Formation', color:data.color||'#2052bb'
+      };
+      store.saveLib(lib);
+    }
+  }
+  buildTermMap(data);
+  renderArticle(data);
+  buildTOC(data);
+  crumb.textContent=data.title||'';
+  refreshTOCdone();
+  updateTocPct();
+  requestAnimationFrame(()=>window.scrollTo(0,y));
+  setEditorStatus('ok','✓ Aperçu à jour');
+}
+function formatEditor(){
+  const ta=$('editorText');
+  try{ const d=JSON.parse(ta.value); ta.value=JSON.stringify(d,null,2); ta.classList.remove('err'); setEditorStatus('ok','Reformaté'); }
+  catch(e){ ta.classList.add('err'); setEditorStatus('err','Reformatage impossible : '+e.message); }
+}
+
+/* ---- Clic dans l'éditeur -> saut vers le bloc correspondant dans l'aperçu ---- */
+/* Trouve les bornes [début,fin] de chaque élément d'un tableau JSON,
+   en respectant les chaînes et l'imbrication. openIdx = index du '[' */
+function arrayElementRanges(text,openIdx){
+  const ranges=[]; let i=openIdx+1, depth=1, inStr=false, escp=false, start=-1;
+  const skipWs=j=>{ while(j<text.length && /\s/.test(text[j]))j++; return j; };
+  i=skipWs(i); if(text[i]!==']') start=i;
+  for(;i<text.length;i++){
+    const c=text[i];
+    if(inStr){ if(escp)escp=false; else if(c==='\\')escp=true; else if(c==='"')inStr=false; continue; }
+    if(c==='"'){ inStr=true; continue; }
+    if(c==='{'||c==='[')depth++;
+    else if(c==='}'||c===']'){ depth--; if(depth===0){ if(start>=0)ranges.push([start,i]); break; } }
+    else if(c===','&&depth===1){ if(start>=0)ranges.push([start,i]); let n=skipWs(i+1); start=n; i=n-1; }
+  }
+  return ranges;
+}
+/* index du '[' qui suit une clé "key": */
+function keyArrayBracket(text,key,from){
+  const re=new RegExp('"'+key+'"\\s*:\\s*\\[','g'); re.lastIndex=from||0;
+  const m=re.exec(text); if(!m)return -1; return m.index+m[0].length-1;
+}
+/* Donne {si,bi} pour une position de curseur dans le texte JSON.
+   si=-1 => en-tête (avant les sections) ; bi=-1 => dans la section hors bloc */
+function locateBlock(text,pos){
+  const secB=keyArrayBracket(text,'sections',0);
+  if(secB<0)return null;
+  const secs=arrayElementRanges(text,secB);
+  if(!secs.length)return null;
+  if(pos<secs[0][0])return {si:-1,bi:-1};
+  let si=secs.length-1;
+  for(let k=0;k<secs.length;k++){ if(pos>=secs[k][0]&&pos<=secs[k][1]){ si=k; break; } }
+  const [s0,s1]=secs[si];
+  const secText=text.slice(s0,s1);
+  const blkB=keyArrayBracket(secText,'blocks',0);
+  if(blkB<0)return {si,bi:-1};
+  const blks=arrayElementRanges(secText,blkB);
+  const rel=pos-s0;
+  let bi=-1;
+  for(let k=0;k<blks.length;k++){ if(rel>=blks[k][0]&&rel<=blks[k][1]){ bi=k; break; } }
+  return {si,bi};
+}
+function jumpToBlock(loc){
+  if(!loc)return;
+  let el=null;
+  if(loc.si>=0&&loc.bi>=0) el=article.querySelector('[data-si="'+loc.si+'"][data-bi="'+loc.bi+'"]');
+  if(!el&&loc.si>=0) el=document.getElementById('sec-'+loc.si);
+  if(!el) el=article.querySelector('.doc-title')||article; // en-tête
+  const top=el.getBoundingClientRect().top+window.scrollY-90;
+  window.scrollTo({top:Math.max(0,top),behavior:'smooth'});
+  el.classList.remove('jump-flash'); void el.offsetWidth; el.classList.add('jump-flash');
+}
+let caretTimer=null;
+function onEditorCaret(){
+  if(!current||window.STANDALONE_COURSE)return;
+  clearTimeout(caretTimer);
+  caretTimer=setTimeout(()=>{
+    const ta=$('editorText');
+    try{ jumpToBlock(locateBlock(ta.value,ta.selectionStart)); }catch(e){}
+  },0);
+}
+
+/* ---- Sens inverse : clic sur un bloc de l'aperçu -> portion de JSON correspondante ---- */
+/* renvoie [début,fin] dans le texte JSON pour (si,bi). bi<0 => champ "title" de la section */
+function blockJsonRange(si,bi){
+  const text=$('editorText').value;
+  const secB=keyArrayBracket(text,'sections',0); if(secB<0)return null;
+  const secs=arrayElementRanges(text,secB); if(!secs[si])return null;
+  const [s0,s1]=secs[si];
+  const secText=text.slice(s0,s1);
+  if(bi==null||bi<0){
+    const m=/"title"\s*:\s*"(?:[^"\\]|\\.)*"/.exec(secText);
+    return m?[s0+m.index,s0+m.index+m[0].length]:[s0,s1];
+  }
+  const blkB=keyArrayBracket(secText,'blocks',0); if(blkB<0)return [s0,s1];
+  const blks=arrayElementRanges(secText,blkB); if(!blks[bi])return [s0,s1];
+  return [s0+blks[bi][0],s0+blks[bi][1]];
+}
+function revealInEditor(range){
+  if(!range)return;
+  const ta=$('editorText');
+  ta.focus();
+  try{ ta.setSelectionRange(range[0],range[1]); }catch(e){}
+  // faire défiler la zone de texte jusqu'à la ligne sélectionnée
+  const before=ta.value.slice(0,range[0]);
+  const line=(before.match(/\n/g)||[]).length;
+  const cs=window.getComputedStyle(ta);
+  let lh=parseFloat(cs.lineHeight);
+  if(!lh||isNaN(lh))lh=(parseFloat(cs.fontSize)||12.5)*1.55;
+  ta.scrollTop=Math.max(0,line*lh-ta.clientHeight/3);
+}
+function onPreviewClick(e){
+  if(!document.body.classList.contains('editing')||window.STANDALONE_COURSE)return;
+  const blk=e.target.closest('[data-si][data-bi]');
+  if(blk){
+    revealInEditor(blockJsonRange(+blk.getAttribute('data-si'),+blk.getAttribute('data-bi')));
+    blk.classList.remove('jump-flash'); void blk.offsetWidth; blk.classList.add('jump-flash');
+    return;
+  }
+  const sec=e.target.closest('.chap');
+  if(sec){
+    revealInEditor(blockJsonRange(+sec.dataset.idx,-1));
+    sec.classList.remove('jump-flash'); void sec.offsetWidth; sec.classList.add('jump-flash');
+  }
+}
+function createBlankCourse(){
+  const blank={
+    title:"Nouveau cours", category:"Brouillon", author:"", color:"#2052bb",
+    description:"Décrivez votre cours ici.",
+    lead:"Votre phrase d'accroche, affichée en italique en tête du cours.",
+    terms:[],
+    sections:[{
+      title:"1 \u00b7 Première section",
+      blocks:[
+        {type:"paragraph",text:"Commencez à rédiger ici. Ouvrez l'éditeur (\u270e) pour modifier le JSON et voir l'aperçu se mettre à jour en direct."},
+        {type:"callout",variant:"tip",text:"Astuce : consultez « Voir le format de fichier » dans la bibliothèque pour la liste complète des blocs disponibles."}
+      ]
+    }]
+  };
+  const lib=store.lib(); const id=uid();
+  lib[id]={meta:{title:blank.title,description:blank.description,category:blank.category,color:blank.color},file:blank};
+  store.saveLib(lib);
+  openFormation(id);
+  openEditor();
+}
+
+/* =====================================================================
+   EXPORT AUTONOME  (un .html à distribuer aux élèves)
+   ===================================================================== */
+function slugify(s){
+  return String(s||'cours').toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+    .replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,60)||'cours';
+}
+/* demande la version (par défaut celle déjà enregistrée) + calcule la date */
+function askVersionAndDate(){
+  let ver=prompt('Numéro de version de ce cours (ex : 1.0)', (current&&current.version)||'1.0');
+  if(ver===null)return null;
+  ver=(ver.trim()||'1.0');
+  const now=new Date();
+  const dateFr=now.toLocaleDateString('fr-FR',{year:'numeric',month:'long',day:'numeric'});
+  const iso=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');
+  return {ver,dateFr,iso};
+}
+/* récupère l'état le plus récent : ce qui est dans l'éditeur si valide, sinon le dernier état appliqué */
+function currentCourseData(){
+  try{ const d=JSON.parse($('editorText').value); if(!validate(d))return d; }catch(e){}
+  return current;
+}
+function triggerDownload(content,filename,mime){
+  const blob=new Blob([content],{type:mime});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=filename;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(a.href),1500);
+}
+
+/* ---- Export du JSON source (sauvegarde locale / versionnage) ---- */
+function exportJsonSource(){
+  if(!current){ showToast('Ouvrez d\u2019abord un cours'); return; }
+  const vd=askVersionAndDate(); if(!vd)return;
+  let data=currentCourseData();
+  // si l'éditeur contient du JSON cassé, on prévient et on exporte le dernier état valide
+  try{ JSON.parse($('editorText').value); }catch(e){ showToast('JSON invalide — export de la dernière version valide'); }
+  const course=JSON.parse(JSON.stringify(data));
+  const baseTitle=course.title||'Cours';
+  // version + date stockées comme métadonnées (titre conservé propre pour réimport)
+  course.version=vd.ver;
+  course.date=vd.iso;
+  const json=JSON.stringify(course,null,2);
+  const filename=slugify(baseTitle)+'-v'+slugify(vd.ver)+'-'+vd.iso+'.json';
+  triggerDownload(json,filename,'application/json;charset=utf-8');
+  showToast('JSON exporté : '+filename);
+}
+
+function exportStandalone(){
+  if(!current){ showToast('Ouvrez d\u2019abord un cours'); return; }
+  const vd=askVersionAndDate(); if(!vd)return;
+  const ver=vd.ver, dateFr=vd.dateFr, iso=vd.iso;
+  // clone + titre versionné (numéro de version + date) pour les élèves
+  const course=JSON.parse(JSON.stringify(currentCourseData()));
+  const baseTitle=course.title||'Cours';
+  const displayTitle=baseTitle+' \u2014 v'+ver+' \u00b7 '+dateFr;
+  course.title=displayTitle;
+  course.version=ver; course.date=iso;
+
+  const styleHTML=document.querySelector('style').outerHTML;
+  const engineJS=document.getElementById('engine').textContent;
+  const escTag=s=>String(s).replace(/<\/(script|style)/gi,'<\\/$1');
+  const boot='window.STANDALONE_COURSE='+escTag(JSON.stringify(course))+';';
+
+  const html='<!DOCTYPE html>\n<html lang="fr">\n<head>\n'
+    +'<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n'
+    +'<title>'+esc(displayTitle)+'</title>\n'
+    +styleHTML+'\n</head>\n<body>\n'
+    +BODY_SNAPSHOT+'\n'
+    +'<script>'+boot+'<\/script>\n'
+    +'<script>'+escTag(engineJS)+'<\/script>\n'
+    +'</body>\n</html>';
+
+  triggerDownload(html,slugify(baseTitle)+'-v'+slugify(ver)+'-'+iso+'.html','text/html;charset=utf-8');
+  showToast('Cours exporté : '+slugify(baseTitle)+'-v'+slugify(ver)+'-'+iso+'.html');
+}
+
+/* =====================================================================
+   MODE AUTONOME  (fichier élève : un seul cours, en lecture)
+   ===================================================================== */
+function initStandalone(){
+  document.body.classList.add('standalone');
+  ['importBtn','editBtn','newCourseBtn'].forEach(id=>{const e=$(id);if(e)e.style.display='none';});
+  const course=window.STANDALONE_COURSE;
+  current=course;
+  currentId='sc_'+slugify(course.title);
+  buildTermMap(course);
+  showReader();
+  $('editBtn').style.display='none';
+  renderArticle(course);
+  buildTOC(course);
+  crumb.textContent=course.title||'';
+  markSeen(0);
+  const p=store.prog()[currentId]||{};
+  requestAnimationFrame(()=>{ if(p.scroll)window.scrollTo(0,p.scroll); updateReadbar(); updateTocPct(); });
+}
+
+/* =====================================================================
+   TABLEAU DE BORD
+   ===================================================================== */
+function openDash(){
+  if(!current)return;
+  const p=store.prog()[currentId]||{};
+  const exos=collectExos(current);
+  const ans=p.answers||{};
+  const done=Object.values(ans).filter(a=>a&&a.correct).length;
+  const attempted=Object.keys(ans).length;
+  const total=exos.length;
+  const pct=computePct(current,p);
+
+  $('dashTitle').textContent=current.title;
+  $('dashSub').textContent=current.category||'';
+  $('stScore').textContent=attempted?Math.round(done/attempted*100)+'%':'—';
+  $('stDone').textContent=done;
+  $('stTotal').textContent=total;
+
+  const ring=$('ring'),circ=201;
+  ring.style.strokeDashoffset=circ-(circ*pct/100);
+  $('ringTxt').textContent=pct+'%';
+  $('ringLabel').textContent=pct>=100?'Terminée':'En cours';
+  $('ringDetail').textContent=(p.seen||[]).length+'/'+(current.sections||[]).length+' sections lues';
+
+  // bannière terminé
+  const cb=$('completeBanner');
+  if(pct>=100){cb.classList.add('show');$('completeSub').textContent=`Score final : ${attempted?Math.round(done/attempted*100):0}% aux exercices`;}
+  else cb.classList.remove('show');
+
+  // badges
+  const badges=[
+    {e:'🚀',t:'Premier pas',got:(p.seen||[]).length>=1},
+    {e:'📖',t:'Mi-parcours',got:(p.seen||[]).length>=Math.ceil((current.sections||[]).length/2)},
+    {e:'✅',t:'Premier exo',got:done>=1},
+    {e:'🎯',t:'Sans faute',got:total>0&&done===total&&attempted===total},
+    {e:'🏆',t:'Formation terminée',got:pct>=100},
+  ];
+  $('badges').innerHTML=badges.map(b=>`<span class="badge ${b.got?'got':''}"><span class="e">${b.e}</span>${b.t}</span>`).join('');
+
+  $('dash').classList.add('active');
+}
+
+/* =====================================================================
+   TOAST + DROP
+   ===================================================================== */
+let toastT=null;
+function showToast(msg){ toast.textContent=msg; toast.classList.add('show'); clearTimeout(toastT); toastT=setTimeout(()=>toast.classList.remove('show'),2600); }
+
+/* =====================================================================
+   ÉVÉNEMENTS GLOBAUX
+   ===================================================================== */
+$('homeBtn').addEventListener('click',showLibrary);
+$('importBtn').addEventListener('click',()=>fileInput.click());
+$('importBtn2').addEventListener('click',()=>fileInput.click());
+$('demoBtn').addEventListener('click',loadDemo);
+$('schemaBtn').addEventListener('click',showSchema);
+$('dashBtn').addEventListener('click',openDash);
+$('dashClose').addEventListener('click',()=>$('dash').classList.remove('active'));
+$('dash').addEventListener('click',e=>{if(e.target===$('dash'))$('dash').classList.remove('active');});
+$('toggleSidebar').addEventListener('click',()=>sidebar.classList.toggle('collapsed'));
+
+/* ---- Éditeur JSON + export ---- */
+$('editBtn').addEventListener('click',toggleEditor);
+$('editClose').addEventListener('click',closeEditor);
+$('editFormat').addEventListener('click',formatEditor);
+$('editExportJson').addEventListener('click',exportJsonSource);
+$('editExport').addEventListener('click',exportStandalone);
+$('editorText').addEventListener('input',onEditorInput);
+$('editorText').addEventListener('click',onEditorCaret);
+$('editorText').addEventListener('keyup',e=>{
+  if(e.key==='ArrowUp'||e.key==='ArrowDown'||e.key==='ArrowLeft'||e.key==='ArrowRight')onEditorCaret();
+});
+article.addEventListener('click',onPreviewClick);
+$('newCourseBtn').addEventListener('click',createBlankCourse);
+
+/* ---- Largeur réglable de la colonne d'édition (glisser le bord) ---- */
+const ED_W_KEY='atelier_editor_w', ED_W_DEFAULT=560;
+function setEditorWidth(px){
+  const min=360, max=Math.max(min,window.innerWidth-280);
+  px=Math.round(Math.min(max,Math.max(min,px)));
+  document.documentElement.style.setProperty('--editor-w',px+'px');
+  return px;
+}
+(function(){ const v=parseInt(localStorage.getItem(ED_W_KEY),10); if(v)setEditorWidth(v); })();
+(function(){
+  const h=$('edResize'); if(!h)return;
+  let resizing=false;
+  h.addEventListener('pointerdown',e=>{
+    resizing=true; document.body.classList.add('resizing-ed');
+    try{h.setPointerCapture(e.pointerId);}catch(_){}
+    e.preventDefault();
+  });
+  h.addEventListener('pointermove',e=>{ if(resizing)setEditorWidth(window.innerWidth-e.clientX); });
+  function end(e){
+    if(!resizing)return; resizing=false; document.body.classList.remove('resizing-ed');
+    try{h.releasePointerCapture(e.pointerId);}catch(_){}
+    const cur=parseInt(getComputedStyle(document.documentElement).getPropertyValue('--editor-w'),10);
+    if(cur)localStorage.setItem(ED_W_KEY,cur);
+  }
+  h.addEventListener('pointerup',end);
+  h.addEventListener('pointercancel',end);
+  h.addEventListener('dblclick',()=>{ setEditorWidth(ED_W_DEFAULT); localStorage.setItem(ED_W_KEY,ED_W_DEFAULT); });
+  window.addEventListener('resize',()=>{
+    const cur=parseInt(getComputedStyle(document.documentElement).getPropertyValue('--editor-w'),10);
+    if(cur)setEditorWidth(cur);
+  });
+})();
+// raccourci : tabulation dans la zone d'édition insère 2 espaces au lieu de quitter le champ
+$('editorText').addEventListener('keydown',e=>{
+  if(e.key==='Tab'){ e.preventDefault();
+    const t=e.target,s=t.selectionStart,en=t.selectionEnd;
+    t.value=t.value.slice(0,s)+'  '+t.value.slice(en);
+    t.selectionStart=t.selectionEnd=s+2;
+  }
 });
 
-document.getElementById("btnPrev").onclick = () => navigate(-1);
-document.getElementById("btnNext").onclick = () => navigate(1);
-document.getElementById("btnKeep").onclick = () => decideSoloAndAdvance("keep");
-document.getElementById("btnReject").onclick = () => decideSoloAndAdvance("reject");
-
-// ---------- Toast ----------
-let toastTimer;
-function toast(msg) {
-  els.toast.textContent = msg; els.toast.classList.add("show");
-  clearTimeout(toastTimer); toastTimer = setTimeout(() => els.toast.classList.remove("show"), 3000);
+/* ---- Plein écran + topbar auto-masquée ---- */
+const fsBtn=$('fsBtn'), peekZone=$('peekZone');
+function enterImmersive(){
+  document.body.classList.add('immersive');
+  fsBtn.classList.add('on'); fsBtn.title='Quitter le plein écran';
+  const el=document.documentElement;
+  const req=el.requestFullscreen||el.webkitRequestFullscreen||el.msRequestFullscreen;
+  if(req)req.call(el).catch(()=>{}); // l'immersif marche même si le navigateur refuse le vrai fullscreen
 }
+function exitImmersive(){
+  document.body.classList.remove('immersive','peek');
+  fsBtn.classList.remove('on'); fsBtn.title='Plein écran';
+  if(document.fullscreenElement){ (document.exitFullscreen||document.webkitExitFullscreen||document.msExitFullscreen).call(document).catch(()=>{}); }
+}
+fsBtn.addEventListener('click',()=>{
+  if(document.body.classList.contains('immersive'))exitImmersive(); else enterImmersive();
+});
+// révéler la topbar quand la souris frôle le haut de l'écran
+peekZone.addEventListener('mouseenter',()=>document.body.classList.add('peek'));
+// rester visible tant qu'on survole la topbar, se cacher quand on la quitte
+const topbarEl=document.querySelector('.topbar');
+topbarEl.addEventListener('mouseenter',()=>{ if(document.body.classList.contains('immersive'))document.body.classList.add('peek'); });
+topbarEl.addEventListener('mouseleave',()=>document.body.classList.remove('peek'));
+// filet de sécurité : si la souris est nettement sous la zone haute, on masque
+document.addEventListener('mousemove',e=>{
+  if(!document.body.classList.contains('immersive'))return;
+  const limit=topbarEl.offsetHeight+8;
+  if(e.clientY>limit && document.body.classList.contains('peek')) document.body.classList.remove('peek');
+},{passive:true});
+// si l'utilisateur quitte le vrai fullscreen via Échap, on resynchronise l'état
+document.addEventListener('fullscreenchange',()=>{
+  if(!document.fullscreenElement && document.body.classList.contains('immersive')) exitImmersive();
+});
+// Échap quitte aussi l'immersif si le navigateur n'a pas accordé le vrai fullscreen
+document.addEventListener('keydown',e=>{ if(e.key==='Escape' && document.body.classList.contains('immersive') && !document.fullscreenElement) exitImmersive(); });
+fileInput.addEventListener('change',e=>{ if(e.target.files[0])importFile(e.target.files[0]); fileInput.value=''; });
+window.addEventListener('scroll',onScroll,{passive:true});
+
+// drag & drop
+let dragDepth=0;
+window.addEventListener('dragenter',e=>{if(window.STANDALONE_COURSE)return;e.preventDefault();dragDepth++;drop.classList.add('active');});
+window.addEventListener('dragover',e=>{if(window.STANDALONE_COURSE)return;e.preventDefault();});
+window.addEventListener('dragleave',e=>{if(window.STANDALONE_COURSE)return;dragDepth--;if(dragDepth<=0)drop.classList.remove('active');});
+window.addEventListener('drop',e=>{if(window.STANDALONE_COURSE)return;e.preventDefault();dragDepth=0;drop.classList.remove('active');
+  const f=e.dataTransfer.files[0]; if(f&&f.name.endsWith('.json'))importFile(f); else showToast('Déposez un fichier .json');});
+
+function showSchema(){
+  const w=window.open('','_blank');
+  w.document.write('<pre style="font-family:monospace;padding:30px;line-height:1.5;max-width:800px;margin:auto;white-space:pre-wrap;">'+esc(SCHEMA_DOC)+'</pre>');
+  w.document.title='Format de fichier — Atelier';
+}
+
+/* =====================================================================
+   INIT
+   ===================================================================== */
+if(window.STANDALONE_COURSE){ initStandalone(); }
+else { showLibrary(); }
+
+/* la démo + le schéma sont injectés plus bas */
+window.__ATELIER_LOAD_DEMO__=function(demo){
+  const lib=store.lib();
+  // éviter doublons de démo
+  const existing=Object.keys(lib).find(k=>lib[k].meta&&lib[k].meta.title===demo.title);
+  let id=existing||uid();
+  lib[id]={meta:{title:demo.title,description:demo.description||'',category:demo.category||'Formation',color:demo.color||'#2052bb'},file:demo};
+  store.saveLib(lib); renderLibrary(); openFormation(id);
+};
+function loadDemo(){ window.__ATELIER_LOAD_DEMO__(DEMO_DATA); }
+
+/* placeholders remplis par le bloc suivant */
+var DEMO_DATA=window.DEMO_DATA||{title:'Démo',sections:[]};
+var SCHEMA_DOC=window.SCHEMA_DOC||'';
+loadDemoRef();
+function loadDemoRef(){ DEMO_DATA=window.DEMO_DATA||DEMO_DATA; SCHEMA_DOC=window.SCHEMA_DOC||SCHEMA_DOC; }
+
+})();
+
 </script>
 </body>
 </html>
