@@ -1,0 +1,84 @@
+{
+  "title": "02 — Classification des machines-outils",
+  "category": "Usinage",
+  "author": "Atelier — Technique de fabrication",
+  "color": "#2052bb",
+  "description": "Comment on range les machines-outils : selon le mouvement de coupe, la pièce ou l'outil, et la famille d'opérations. Vue d'ensemble avant d'entrer dans le détail.",
+  "lead": "Une bonne carte mentale des machines évite de chercher la mauvaise machine pour le bon travail.",
+  "terms": [
+    {"key": "mo", "label": "machine-outil", "color": "#2052bb", "summary": "Machine qui anime l'outil et/ou la pièce pour réaliser l'usinage de façon contrôlée."},
+    {"key": "rot", "label": "coupe rotative", "color": "#0a7d8c", "summary": "Le mouvement de coupe est une rotation (tour, fraiseuse, perceuse, rectifieuse)."},
+    {"key": "rect", "label": "coupe rectiligne", "color": "#b4540a", "summary": "Le mouvement de coupe est un va-et-vient en ligne droite (raboteuse, étau-limeur, mortaiseuse, brocheuse)."},
+    {"key": "porteoutil", "label": "porte-outil", "color": "#7a3fb0", "summary": "Élément de la machine qui tient et oriente l'outil de coupe."}
+  ],
+  "sections": [
+    {
+      "title": "1. Pourquoi classer les machines ?",
+      "blocks": [
+        {"type": "paragraph", "text": "Il existe des centaines de [[mo]]. Pour s'y retrouver, on les **classe** selon des critères simples. La classification n'est pas qu'académique : elle aide à choisir la bonne machine pour une opération donnée et à comprendre ses limites.", "spaced": true},
+        {"type": "paragraph", "text": "Les deux critères les plus utiles sont : **la nature du mouvement de coupe** (rotation ou translation) et **qui porte ce mouvement** (la pièce ou l'outil)."}
+      ]
+    },
+    {
+      "title": "2. Selon le mouvement de coupe",
+      "blocks": [
+        {"type": "paragraph", "text": "C'est le critère le plus parlant en atelier."},
+        {"type": "compare", "title": "Rotation contre translation",
+          "left": {"title": "[[rot|Coupe rotative]]", "items": ["Tour : la pièce tourne", "Fraiseuse : l'outil tourne", "Perceuse : le foret tourne", "Rectifieuse : la meule tourne", "Mouvement continu, productif"]},
+          "right": {"title": "[[rect|Coupe rectiligne]]", "items": ["Raboteuse / étau-limeur : va-et-vient", "Mortaiseuse : coupe verticale alternée", "Brocheuse : passe unique en translation", "Temps morts au retour (course à vide)"]},
+          "caption": "Les machines rotatives dominent car elles coupent en continu ; les machines à coupe rectiligne perdent du temps au retour."},
+        {"type": "callout", "variant": "note", "title": "Tendance", "text": "Les machines à coupe rectiligne (raboteuses, étaux-limeurs) ont été largement remplacées par le fraisage, plus rapide. On les voit surtout sur d'anciennes installations ou pour des cas particuliers."}
+      ]
+    },
+    {
+      "title": "3. Selon qui porte le mouvement",
+      "blocks": [
+        {"type": "paragraph", "text": "Le mouvement de coupe peut être donné à la **pièce** ou à **l'outil** — c'est souvent ce qui distingue deux familles proches.", "spaced": true},
+        {"type": "paragraph", "text": "Au **tour**, la pièce tourne et l'outil reste (presque) fixe sur son [[porteoutil]]. Au **fraisage** et au **perçage**, c'est l'inverse : l'outil porte la rotation, la pièce est bridée. Ce détail conditionne la forme des pièces réalisables : le tour excelle sur les pièces **de révolution** (cylindriques), la fraiseuse sur les **prismatiques**."}
+      ]
+    },
+    {
+      "title": "4. Tableau d'ensemble des grandes familles",
+      "blocks": [
+        {"type": "paragraph", "text": "Voici les familles qu'on étudiera une par une dans les modules suivants :"},
+        {"type": "timeline", "title": "Les familles de machines-outils du cours",
+          "items": [
+            {"when": "Tour", "what": "Tournage", "desc": "Pièce en rotation, outil mono-arête. Pièces de révolution."},
+            {"when": "Raboteuse / étau-limeur", "what": "Rabotage", "desc": "Coupe rectiligne alternée. Surfaces planes."},
+            {"when": "Perceuse", "what": "Perçage", "desc": "Foret en rotation. Trous et opérations associées."},
+            {"when": "Aléseuse", "what": "Alésage", "desc": "Finition précise de trous déjà ébauchés."},
+            {"when": "Fraiseuse", "what": "Fraisage", "desc": "Outil multi-dents en rotation. Surfaces planes, rainures, contours."},
+            {"when": "Rectifieuse", "what": "Rectification", "desc": "Meule abrasive. Finition de précision, pièces dures."}
+          ],
+          "caption": "Cet ordre est aussi celui des chapitres suivants."},
+        {"type": "callout", "variant": "tip", "title": "Méthode de choix", "text": "Pose-toi trois questions : la pièce est-elle de révolution ? Quelle précision/rugosité finale ? Quelle dureté du matériau ? Les réponses orientent presque toujours vers une famille."}
+      ]
+    },
+    {
+      "title": "5. Exercices",
+      "blocks": [
+        {"type": "exercise", "exercise": "qcm", "question": "Sur quelle machine la PIÈCE porte-t-elle le mouvement de coupe ?",
+          "multiple": false,
+          "options": [
+            {"text": "Le tour", "correct": true},
+            {"text": "La fraiseuse", "correct": false},
+            {"text": "La perceuse", "correct": false},
+            {"text": "La rectifieuse cylindrique", "correct": false}
+          ],
+          "explanation": "Au tour, la pièce tourne (mouvement de coupe) ; sur les autres machines citées, c'est l'outil qui porte la rotation."},
+        {"type": "exercise", "exercise": "qcm", "question": "Quelles machines utilisent une coupe RECTILIGNE ?",
+          "multiple": true,
+          "options": [
+            {"text": "L'étau-limeur", "correct": true},
+            {"text": "La raboteuse", "correct": true},
+            {"text": "La fraiseuse", "correct": false},
+            {"text": "La mortaiseuse", "correct": true}
+          ],
+          "explanation": "Étau-limeur, raboteuse et mortaiseuse travaillent par va-et-vient rectiligne ; la fraiseuse est rotative."},
+        {"type": "exercise", "exercise": "open", "question": "Pourquoi les machines à coupe rotative sont-elles généralement plus productives que celles à coupe rectiligne ?",
+          "keywords": ["continu", "retour", "course", "vide", "temps mort"],
+          "explanation": "La coupe rotative est continue, alors que la coupe rectiligne perd du temps lors de la course de retour à vide où l'outil ne coupe pas."}
+      ]
+    }
+  ]
+}

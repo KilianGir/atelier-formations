@@ -1,0 +1,96 @@
+{
+  "title": "05 — Perçage et opérations associées",
+  "category": "Usinage",
+  "author": "Atelier — Technique de fabrication",
+  "color": "#7a3fb0",
+  "description": "Réaliser et travailler des trous : perceuse, foret hélicoïdal, centrage et pointage, taraudage, alésage à l'alésoir, lamage et fraisure, brochage.",
+  "lead": "Un trou se prépare, se perce, puis se finit : chaque opération a son outil et son ordre.",
+  "terms": [
+    {"key": "percage", "label": "perçage", "color": "#7a3fb0", "summary": "Réalisation d'un trou cylindrique à l'aide d'un foret en rotation."},
+    {"key": "foret", "label": "foret hélicoïdal", "color": "#2052bb", "summary": "Outil à deux arêtes et goujures hélicoïdales évacuant le copeau hors du trou."},
+    {"key": "centrer", "label": "foret à centrer", "color": "#0a7d8c", "summary": "Petit foret rigide qui amorce un trou bien centré pour guider le foret principal."},
+    {"key": "pointage", "label": "pointage", "color": "#c08a0a", "summary": "Marquage du centre du futur trou (au pointeau ou à la machine) pour éviter que le foret dérape."},
+    {"key": "taraud", "label": "taraudage", "color": "#a01e3c", "summary": "Réalisation d'un filetage intérieur dans un trou à l'aide d'un taraud."},
+    {"key": "alesoir", "label": "alésoir", "color": "#1f6f5c", "summary": "Outil de finition qui calibre un trou déjà percé pour une cote et un fini précis."},
+    {"key": "lamer", "label": "fraise à lamer", "color": "#3a7d1f", "summary": "Outil créant un logement plat (lamage) pour une tête de vis ou un appui."},
+    {"key": "broche", "label": "brochage", "color": "#666666", "summary": "Passage d'une broche dentée en une seule course pour usiner un profil intérieur (cannelures, rainures)."}
+  ],
+  "sections": [
+    {
+      "title": "1. La perceuse et le foret",
+      "blocks": [
+        {"type": "paragraph", "text": "Le [[percage]] crée un trou avec un [[foret]] en rotation. La perceuse (sensitive d'établi, à colonne, radiale) fournit la rotation (coupe) et l'avance verticale.", "spaced": true},
+        {"type": "paragraph", "text": "Le foret hélicoïdal possède deux **arêtes principales**, deux **goujures** hélicoïdales qui évacuent le copeau, et une **âme** centrale qui le rigidifie. Ses **listels** le guident dans le trou."},
+        {"type": "callout", "variant": "trap", "title": "Évacuation du copeau", "text": "Si le copeau ne sort pas, il bourre, échauffe et casse le foret. Sur trou profond, on **débourre** : on ressort régulièrement le foret pour dégager les copeaux."}
+      ]
+    },
+    {
+      "title": "2. Commencer droit : centrer et pointer",
+      "blocks": [
+        {"type": "paragraph", "text": "Un foret long démarre rarement droit tout seul : il **glisse** et le trou part de travers. D'où deux préparations :", "spaced": true},
+        {"type": "paragraph", "text": "**Le [[pointage]]** marque le centre (pointeau à la main, ou amorce à la machine) pour donner un point d'accroche au foret."},
+        {"type": "paragraph", "text": "**Le [[centrer|foret à centrer]]**, court et rigide, perce une amorce conique parfaitement centrée qui **guide** ensuite le foret principal."},
+        {"type": "callout", "variant": "tip", "title": "Bon réflexe", "text": "Pour un trou précis : pointer/centrer → percer → finir (alésoir si nécessaire). On ne saute pas l'amorçage sur les travaux soignés."},
+        {"type": "callout", "variant": "note", "title": "Masque et canon de perçage", "text": "En série, un **gabarit (masque)** muni de **canons** guide le foret exactement au bon endroit, sans tracer chaque pièce : gain de temps et de précision."}
+      ]
+    },
+    {
+      "title": "3. Travailler le trou : les opérations associées",
+      "blocks": [
+        {"type": "paragraph", "text": "Une fois le trou percé, beaucoup d'opérations le complètent :"},
+        {"type": "timeline", "title": "Opérations autour du trou",
+          "items": [
+            {"when": "Trépanage", "what": "Découper un disque", "desc": "Au lieu de tout réduire en copeaux, on découpe une couronne et on garde le cœur."},
+            {"when": "Taraudage", "what": "Filet intérieur", "desc": "Un taraud crée le pas de vis dans le trou (avant-trou au bon diamètre indispensable)."},
+            {"when": "Filière (extérieur)", "what": "Filet extérieur", "desc": "Symétrique du taraudage, mais sur une tige : la filière taille le filetage externe."},
+            {"when": "Brochage", "what": "Profil intérieur", "desc": "Une broche dentée passe en une course et forme cannelures ou rainures."},
+            {"when": "Alésage à l'alésoir", "what": "Calibrer le trou", "desc": "L'alésoir affine cote et rugosité d'un trou déjà percé."},
+            {"when": "Lamage", "what": "Appui plat", "desc": "La fraise à lamer crée un logement plat pour une tête de vis."},
+            {"when": "Fraisure", "what": "Chanfrein conique", "desc": "Cône d'entrée pour vis à tête fraisée ou ébavurage."}
+          ],
+          "caption": "Le perçage ouvre toute une famille d'opérations : le trou n'est souvent qu'une étape."}
+      ]
+    },
+    {
+      "title": "4. Taraudage et alésoir de plus près",
+      "blocks": [
+        {"type": "paragraph", "text": "Le [[taraud]] exige un **avant-trou** au bon diamètre : trop petit, le taraud casse ; trop grand, le filet est incomplet. On lubrifie et on dégage les copeaux régulièrement.", "spaced": true},
+        {"type": "paragraph", "text": "L'[[alesoir]] ne perce pas : il **finit**. Il enlève une très faible épaisseur pour amener le trou à la cote exacte avec une belle surface — indispensable pour une portée d'ajustement précise."},
+        {"type": "compare", "title": "Percer vs aléser à l'alésoir",
+          "left": {"title": "Foret", "items": ["Enlève beaucoup de matière", "Trou approximatif", "Surface moyenne"]},
+          "right": {"title": "Alésoir", "items": ["Enlève très peu", "Cote précise et constante", "Belle rugosité"]},
+          "caption": "On perce d'abord, on alèse ensuite : chacun son rôle."}
+      ]
+    },
+    {
+      "title": "5. Exercices",
+      "blocks": [
+        {"type": "exercise", "exercise": "qcm", "question": "À quoi sert un foret à centrer ?",
+          "multiple": false,
+          "options": [
+            {"text": "Amorcer un trou bien centré qui guidera le foret principal", "correct": true},
+            {"text": "Tarauder un filetage", "correct": false},
+            {"text": "Évacuer les copeaux", "correct": false},
+            {"text": "Calibrer le trou final", "correct": false}
+          ],
+          "explanation": "Court et rigide, le foret à centrer crée une amorce centrée qui empêche le foret long de déraper."},
+        {"type": "exercise", "exercise": "qcm", "question": "Quelles opérations finissent ou complètent un trou ?",
+          "multiple": true,
+          "options": [
+            {"text": "Alésage à l'alésoir", "correct": true},
+            {"text": "Taraudage", "correct": true},
+            {"text": "Lamage", "correct": true},
+            {"text": "Dressage", "correct": false}
+          ],
+          "explanation": "Alésoir, taraud et lamage travaillent le trou ; le dressage concerne une face plane au tour."},
+        {"type": "exercise", "exercise": "cloze", "question": "Complétez sur le perçage profond.",
+          "text": "Sur un trou profond, il faut {0} régulièrement, c'est-à-dire ressortir le foret pour {1} les copeaux et éviter qu'il {2}.",
+          "answers": ["débourrer", "évacuer", "casse"],
+          "explanation": "Le débourrage évacue les copeaux qui, sinon, bourrent et finissent par casser le foret."},
+        {"type": "exercise", "exercise": "open", "question": "Pourquoi prépare-t-on un avant-trou avant de tarauder, et que se passe-t-il s'il est trop petit ou trop grand ?",
+          "keywords": ["avant-trou", "diamètre", "casse", "filet", "incomplet"],
+          "explanation": "Le taraud a besoin d'un avant-trou au bon diamètre : trop petit, le taraud force et casse ; trop grand, le filet est incomplet et tient mal."}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,120 @@
+{
+  "title": "01 — Généralités de l'usinage",
+  "category": "Usinage",
+  "author": "Atelier — Technique de fabrication",
+  "color": "#1f6f5c",
+  "description": "Premier module du cours d'usinage : ce qu'est l'enlèvement de copeaux, les mouvements de la machine, le rôle de l'outil et la notion d'état de surface.",
+  "lead": "Avant de toucher une machine, comprendre ce qui se passe vraiment quand un outil arrache un copeau à la matière.",
+  "terms": [
+    {"key": "usinage", "label": "usinage", "color": "#1f6f5c", "summary": "Mise en forme d'une pièce par enlèvement de matière sous forme de copeaux."},
+    {"key": "copeau", "label": "copeau", "color": "#b4540a", "summary": "Fragment de matière détaché de la pièce par l'outil pendant la coupe."},
+    {"key": "coupe", "label": "mouvement de coupe", "color": "#2052bb", "summary": "Mouvement principal, le plus rapide, qui génère réellement le copeau."},
+    {"key": "avance", "label": "mouvement d'avance", "color": "#7a3fb0", "summary": "Mouvement qui déplace l'outil ou la pièce pour usiner une nouvelle zone à chaque passage."},
+    {"key": "posit", "label": "positionnement", "color": "#666666", "summary": "Réglage de la position de départ (profondeur de passe) avant de couper ; pas de coupe pendant ce mouvement."},
+    {"key": "forme", "label": "outil de forme", "color": "#0a7d8c", "summary": "Outil dont le profil reproduit directement la forme finale voulue sur la pièce."},
+    {"key": "envel", "label": "outil d'enveloppe", "color": "#c08a0a", "summary": "Outil simple dont la forme finale naît de la combinaison des mouvements (l'outil 'enveloppe' la surface)."},
+    {"key": "rugo", "label": "rugosité", "color": "#a01e3c", "summary": "Mesure de la finesse d'une surface : plus elle est faible, plus la surface est lisse."},
+    {"key": "taillage", "label": "taillage", "color": "#3a7d1f", "summary": "Usinage par génération de dentures et profils (engrenages) où l'outil enveloppe la forme."}
+  ],
+  "sections": [
+    {
+      "title": "1. Qu'est-ce que l'usinage ?",
+      "blocks": [
+        {"type": "paragraph", "text": "L'[[usinage]] consiste à donner sa forme finale à une pièce en **enlevant** de la matière à l'aide d'un outil tranchant. La matière retirée part sous forme de [[copeau]]. C'est un procédé **par enlèvement de matière**, à l'opposé du moulage ou du forgeage qui mettent en forme sans rien retirer.", "spaced": true},
+        {"type": "callout", "variant": "note", "title": "L'idée de base", "text": "On part d'un brut (barre, lopin, pièce moulée) toujours plus gros que la pièce finie, et on retire le superflu jusqu'à obtenir la cote et la surface voulues."},
+        {"type": "paragraph", "text": "Pour qu'il y ait coupe, il faut trois ingrédients : une **pièce** maintenue, un **outil** plus dur que la matière, et un **mouvement relatif** entre les deux. Tout le reste du cours détaille comment on organise ces trois éléments selon les machines."}
+      ],
+      "sources": [
+        {"author": "Cours Technique de fabrication", "text": "Étude descriptive de l'usinage — Généralités", "year": "atelier"}
+      ]
+    },
+    {
+      "title": "2. Copeau coupé ou copeau gratté",
+      "blocks": [
+        {"type": "paragraph", "text": "Tout enlèvement de matière ne se vaut pas. On distingue deux mécanismes selon la géométrie de l'arête."},
+        {"type": "compare", "title": "Deux façons d'enlever la matière",
+          "left": {"title": "Copeau coupé", "items": ["L'arête pénètre la matière et la **cisaille** proprement", "Outil bien affûté, angle de coupe favorable", "Effort modéré, bon état de surface", "Cas normal : tournage, fraisage, perçage"]},
+          "right": {"title": "Copeau gratté", "items": ["La matière est **arrachée / raclée** plutôt que cisaillée", "Arête peu favorable ou très négative", "Efforts élevés, échauffement, mauvais fini", "Plutôt subi (outil usé) ou volontaire (grattage de précision)"]},
+          "caption": "Le même outil peut couper ou gratter selon son affûtage et son orientation."},
+        {"type": "callout", "variant": "trap", "title": "Piège classique", "text": "« Gratter » n'est pas toujours un défaut : le **grattage** d'ajusteur (sur marbre) est un travail volontaire de haute précision. Mais un outil de tour qui gratte au lieu de couper, c'est presque toujours un mauvais réglage."}
+      ]
+    },
+    {
+      "title": "3. Outil de forme ou outil d'enveloppe",
+      "blocks": [
+        {"type": "paragraph", "text": "La forme finale de la pièce peut venir de **l'outil lui-même** ou du **mouvement** qu'on lui donne.", "spaced": true},
+        {"type": "heading", "text": "L'outil de forme"},
+        {"type": "paragraph", "text": "Un [[forme]] porte déjà le profil voulu : on le « plonge » dans la pièce et le profil se reproduit (par exemple une gorge, un congé, une tête de vis). Avantage : rapide et répétable. Limite : un outil par forme, et les efforts sont importants car toute l'arête travaille en même temps."},
+        {"type": "heading", "text": "L'outil d'enveloppe"},
+        {"type": "paragraph", "text": "Un [[envel]] est simple (souvent une pointe ou une arête droite). C'est la **combinaison des mouvements** de coupe et d'avance qui crée la forme finale : l'outil balaie la surface et « l'enveloppe ». Exemple : un outil à charioter qui, en se déplaçant le long d'un cylindre, génère une surface lisse."},
+        {"type": "callout", "variant": "tip", "title": "Comment choisir ?", "text": "Petite série et profil compliqué → outil de forme. Grande variété de pièces → outils d'enveloppe (plus polyvalents). En pratique on combine les deux."}
+      ]
+    },
+    {
+      "title": "4. Les mouvements : coupe, avance, positionnement",
+      "blocks": [
+        {"type": "paragraph", "text": "Toute machine-outil combine trois mouvements aux rôles bien distincts :"},
+        {"type": "paragraph", "text": "**1. Le [[coupe]]** — c'est le mouvement principal, le plus énergique, celui qui détache effectivement le copeau (rotation de la pièce au tour, rotation de la fraise au fraisage).", "spaced": true},
+        {"type": "paragraph", "text": "**2. Le [[avance]]** — il présente sans cesse de la matière neuve devant l'arête, sinon l'outil ne couperait qu'une seule fois au même endroit.", "spaced": true},
+        {"type": "paragraph", "text": "**3. Le [[posit]]** — il règle la profondeur de passe (la « prise ») avant de lancer la coupe. Pendant ce mouvement, l'outil ne coupe pas."},
+        {"type": "heading", "text": "À la pièce ou à l'outil ?"},
+        {"type": "paragraph", "text": "Selon la machine, un même mouvement est porté soit par la pièce, soit par l'outil. Au **tour**, la pièce tourne (coupe) et l'outil avance. À la **fraiseuse**, l'outil tourne (coupe) et c'est souvent la table portant la pièce qui avance. Le résultat physique est le même : ce qui compte, c'est le **mouvement relatif** outil/pièce.", "spaced": true},
+        {"type": "callout", "variant": "warn", "title": "Possibilités multiples d'avance", "text": "Une même machine offre souvent plusieurs directions d'avance (longitudinale, transversale, oblique). Bien identifier laquelle est active évite les fausses manœuvres et les collisions."}
+      ]
+    },
+    {
+      "title": "5. La rugosité, premier critère d'état de surface",
+      "blocks": [
+        {"type": "paragraph", "text": "Une surface usinée n'est jamais parfaitement lisse : elle porte les traces de l'outil. La [[rugo]] chiffre cette irrégularité. On la note souvent **Ra** (en micromètres µm) : plus Ra est petit, plus la surface est fine.", "spaced": true},
+        {"type": "paragraph", "text": "La rugosité dépend surtout de **l'avance** et du **rayon de bec** de l'outil : une avance plus faible laisse des sillons plus serrés et plus petits, donc une surface plus lisse — mais l'usinage est plus lent."},
+        {"type": "chart", "chart": "bar", "title": "Ordre de grandeur de Ra selon l'opération (µm)",
+          "data": [
+            {"label": "Ébauche tour", "value": 12.5, "color": "#a01e3c"},
+            {"label": "Finition tour", "value": 1.6, "color": "#c08a0a"},
+            {"label": "Fraisage fin", "value": 0.8, "color": "#2052bb"},
+            {"label": "Rectification", "value": 0.2, "color": "#1f6f5c"}
+          ],
+          "caption": "Valeurs indicatives : l'ébauche dégrossit, la finition et la rectification soignent la surface."},
+        {"type": "callout", "variant": "tip", "title": "À retenir", "text": "On ne demande pas la meilleure rugosité partout : une surface plus fine coûte plus cher. On l'exige seulement là où la fonction l'impose (portée de roulement, étanchéité…)."}
+      ]
+    },
+    {
+      "title": "6. Le taillage",
+      "blocks": [
+        {"type": "paragraph", "text": "Le [[taillage]] est un cas particulier d'usinage par enveloppe servant à réaliser des **dentures** : roues dentées, pignons, crémaillères. L'outil (fraise-mère, couteau) et la pièce roulent l'un sur l'autre, et la denture exacte naît de cette **génération** progressive.", "spaced": true},
+        {"type": "paragraph", "text": "C'est un excellent exemple de la logique « outil d'enveloppe » : l'outil ne porte pas la forme d'une dent, mais la succession des positions crée la flanc de dent correct. Le taillage sera revu en détail plus tard ; ici, il illustre simplement le principe."},
+        {"type": "callout", "variant": "note", "title": "Pourquoi c'est malin", "text": "Avec un seul outil d'enveloppe, on taille des roues de tailles et de nombres de dents différents — impossible avec un outil de forme dédié à chaque roue."}
+      ]
+    },
+    {
+      "title": "7. Exercices",
+      "blocks": [
+        {"type": "exercise", "exercise": "qcm", "question": "Quel mouvement détache réellement le copeau ?",
+          "multiple": false,
+          "options": [
+            {"text": "Le mouvement de coupe", "correct": true},
+            {"text": "Le mouvement d'avance", "correct": false},
+            {"text": "Le mouvement de positionnement", "correct": false},
+            {"text": "Le serrage de la pièce", "correct": false}
+          ],
+          "explanation": "Le mouvement de coupe est le mouvement principal qui génère le copeau. L'avance présente la matière neuve, le positionnement règle la profondeur."},
+        {"type": "exercise", "exercise": "qcm", "question": "Quelles affirmations sur l'outil de forme sont correctes ?",
+          "multiple": true,
+          "options": [
+            {"text": "Son profil reproduit directement la forme voulue", "correct": true},
+            {"text": "Toute l'arête travaille en même temps → efforts élevés", "correct": true},
+            {"text": "Il est forcément plus lent qu'un outil d'enveloppe", "correct": false},
+            {"text": "Il convient bien aux profils répétitifs en série", "correct": true}
+          ],
+          "explanation": "L'outil de forme est rapide et répétable mais sollicite fortement la machine car toute l'arête coupe simultanément."},
+        {"type": "exercise", "exercise": "cloze", "question": "Complétez la phrase sur la rugosité.",
+          "text": "Une avance plus {0} laisse des sillons plus serrés, donc une surface plus {1}, au prix d'un usinage plus {2}.",
+          "answers": ["faible", "lisse", "lent"],
+          "explanation": "Diminuer l'avance améliore l'état de surface mais allonge le temps d'usinage."},
+        {"type": "exercise", "exercise": "open", "question": "Expliquez avec vos mots la différence entre un outil de forme et un outil d'enveloppe.",
+          "keywords": ["forme", "profil", "enveloppe", "mouvement", "combinaison"],
+          "explanation": "L'outil de forme porte déjà le profil final et le reproduit par plongée ; l'outil d'enveloppe est simple et c'est la combinaison des mouvements de coupe et d'avance qui crée la forme."}
+      ]
+    }
+  ]
+}

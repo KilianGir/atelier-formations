@@ -1,0 +1,51 @@
+{
+  "title": "06 — Alésage",
+  "category": "Usinage",
+  "author": "Atelier — Technique de fabrication",
+  "color": "#c08a0a",
+  "description": "Donner à un trou sa cote et sa position précises : aléseuse verticale, aléseuse-fraiseuse horizontale, et la différence entre percer et aléser.",
+  "lead": "Percer fait le trou ; aléser le rend juste, droit et bien placé.",
+  "terms": [
+    {"key": "alesage", "label": "alésage", "color": "#c08a0a", "summary": "Usinage de précision d'un trou existant pour atteindre cote, position et état de surface voulus."},
+    {"key": "alesverti", "label": "aléseuse verticale", "color": "#0a7d8c", "summary": "Machine à axe vertical pour aléser des trous avec un outil monté sur une barre d'alésage."},
+    {"key": "aleshoriz", "label": "aléseuse-fraiseuse horizontale", "color": "#2052bb", "summary": "Machine à broche horizontale combinant alésage et fraisage, pour grosses pièces."},
+    {"key": "barre", "label": "barre d'alésage", "color": "#a01e3c", "summary": "Outil porté par une barre rigide, dont le grain de coupe usine le diamètre intérieur."}
+  ],
+  "sections": [
+    {
+      "title": "1. Aléser : pourquoi et comment",
+      "blocks": [
+        {"type": "paragraph", "text": "L'[[alesage]] reprend un trou déjà percé pour lui donner sa **cote exacte**, sa **position précise** et un **bel état de surface**. Un foret donne un trou approximatif et parfois de travers ; l'alésage corrige cela.", "spaced": true},
+        {"type": "paragraph", "text": "L'outil, monté sur une [[barre]] rigide, enlève une faible épaisseur de matière sur le diamètre intérieur. On peut régler finement le diamètre obtenu.", "spaced": true},
+        {"type": "callout", "variant": "note", "title": "Différence avec l'alésoir", "text": "L'**alésoir** suit le trou existant et le calibre. L'**alésage à la barre** peut au contraire **redresser** et **repositionner** le trou, car l'outil ne se contente pas de suivre."}
+      ]
+    },
+    {
+      "title": "2. Les machines",
+      "blocks": [
+        {"type": "heading", "text": "Aléseuse verticale"},
+        {"type": "paragraph", "text": "L'[[alesverti]] travaille à axe vertical : l'outil tourne sur une barre descendant dans le trou. Adaptée aux pièces de taille moyenne posées sur une table."},
+        {"type": "heading", "text": "Aléseuse-fraiseuse horizontale"},
+        {"type": "paragraph", "text": "L'[[aleshoriz]] possède une broche horizontale et combine **alésage et fraisage**. C'est la machine des **grosses pièces** (carters, bâtis) où l'on doit aléser des trous précis tout en surfaçant des faces, sans démonter la pièce."},
+        {"type": "callout", "variant": "tip", "title": "Avantage clé", "text": "Faire alésage et fraisage en une seule prise de pièce garantit la bonne **position relative** des trous et des faces : pas d'erreur de remontage."}
+      ]
+    },
+    {
+      "title": "3. Exercices",
+      "blocks": [
+        {"type": "exercise", "exercise": "qcm", "question": "En quoi l'alésage à la barre se distingue-t-il de l'alésoir ?",
+          "multiple": false,
+          "options": [
+            {"text": "Il peut redresser et repositionner le trou", "correct": true},
+            {"text": "Il ne fait que suivre le trou existant", "correct": false},
+            {"text": "Il sert à percer le trou de départ", "correct": false},
+            {"text": "Il crée un filetage", "correct": false}
+          ],
+          "explanation": "Contrairement à l'alésoir qui suit le trou, l'alésage à la barre peut corriger la position et la rectitude du trou."},
+        {"type": "exercise", "exercise": "open", "question": "Pourquoi est-il intéressant d'aléser et de fraiser une grosse pièce en une seule prise sur une aléseuse-fraiseuse horizontale ?",
+          "keywords": ["position", "prise", "démontage", "précision", "relative"],
+          "explanation": "Tout faire en une prise garantit la position relative correcte entre trous et faces, en évitant les erreurs dues au démontage/remontage de la pièce."}
+      ]
+    }
+  ]
+}

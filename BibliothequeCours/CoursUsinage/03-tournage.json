@@ -1,0 +1,143 @@
+{
+  "title": "03 — Tournage",
+  "category": "Usinage",
+  "author": "Atelier — Technique de fabrication",
+  "color": "#0a7d8c",
+  "description": "La famille reine pour les pièces de révolution : tour parallèle, montages de la pièce, réalisation de cônes, perçage au tour et panorama des opérations.",
+  "lead": "Le tour fait tourner la pièce et présente un outil fixe : tout l'art consiste à bien tenir la pièce et à maîtriser ses déplacements.",
+  "terms": [
+    {"key": "tour", "label": "tour parallèle", "color": "#0a7d8c", "summary": "Machine de tournage la plus courante : la pièce tourne, l'outil se déplace le long et en travers de l'axe."},
+    {"key": "mandrin", "label": "mandrin", "color": "#2052bb", "summary": "Dispositif de serrage à mors qui entraîne la pièce en rotation, monté sur la broche."},
+    {"key": "broche", "label": "broche", "color": "#7a3fb0", "summary": "Arbre de la poupée fixe qui transmet la rotation à la pièce."},
+    {"key": "contrepointe", "label": "contre-pointe", "color": "#b4540a", "summary": "Pointe de la poupée mobile qui soutient l'extrémité libre d'une pièce longue."},
+    {"key": "chariot", "label": "chariot", "color": "#c08a0a", "summary": "Ensemble qui porte l'outil et lui donne ses mouvements longitudinal et transversal ; le chariot supérieur est orientable."},
+    {"key": "cone", "label": "cône", "color": "#a01e3c", "summary": "Surface de révolution dont le diamètre varie linéairement le long de l'axe."},
+    {"key": "irrev", "label": "cône irréversible", "color": "#3a7d1f", "summary": "Cône à faible angle qui se coince et ne se desserre pas seul (ex. cône Morse de fixation)."},
+    {"key": "revol", "label": "pièce de révolution", "color": "#666666", "summary": "Pièce obtenue par rotation d'un profil autour d'un axe : axes, bagues, vis…"}
+  ],
+  "sections": [
+    {
+      "title": "1. Le tour parallèle : généralités",
+      "blocks": [
+        {"type": "paragraph", "text": "Le [[tour]] est la machine de prédilection pour les [[revol|pièces de révolution]] : axes, bagues, douilles, vis. La pièce tourne (mouvement de coupe), l'outil se déplace le long de l'axe (chariotage) ou perpendiculairement (dressage).", "spaced": true},
+        {"type": "paragraph", "text": "Quatre grands ensembles le composent : la **poupée fixe** (qui porte la [[broche]] et le [[mandrin]]), le **banc** (rails de guidage), le **traînard / [[chariot]]** (qui porte l'outil), et la **poupée mobile** (avec la [[contrepointe]])."},
+        {"type": "callout", "variant": "note", "title": "Repère mental", "text": "Au tour, l'outil ne tourne jamais : c'est la pièce qui tourne. C'est l'inverse de la perceuse et de la fraiseuse."}
+      ]
+    },
+    {
+      "title": "2. Description plus précise",
+      "blocks": [
+        {"type": "paragraph", "text": "La **poupée fixe** abrite la boîte de vitesses qui règle la fréquence de rotation. Le **traînard** se déplace le long du banc grâce à la barre de chariotage ou à la vis-mère (pour le filetage). Le **chariot transversal** assure le dressage et la profondeur de passe ; le **chariot supérieur orientable** sert notamment à tourner des cônes courts.", "spaced": true},
+        {"type": "paragraph", "text": "La **tourelle porte-outil** permet de monter plusieurs outils et de passer rapidement de l'un à l'autre."}
+      ]
+    },
+    {
+      "title": "3. Les trois montages classiques de la pièce",
+      "blocks": [
+        {"type": "paragraph", "text": "Bien tenir la pièce est la condition de tout bon tournage. Trois montages reviennent sans cesse :", "spaced": true},
+        {"type": "heading", "text": "Montage en l'air"},
+        {"type": "paragraph", "text": "La pièce est tenue **uniquement par le mandrin**, son autre extrémité libre. Simple et rapide, mais réservé aux pièces **courtes** : une pièce longue tenue ainsi vibre et fléchit."},
+        {"type": "heading", "text": "Montage entre pointes"},
+        {"type": "paragraph", "text": "La pièce est soutenue **aux deux bouts** (pointe côté broche et [[contrepointe]]), entraînée par un toc. Très précis et concentrique, idéal pour les pièces **longues** et pour reprendre une pièce sur le même axe."},
+        {"type": "heading", "text": "Montage mixte"},
+        {"type": "paragraph", "text": "Compromis : un bout dans le **mandrin**, l'autre soutenu par la **contre-pointe**. On combine l'entraînement facile du mandrin et le soutien de la pointe."},
+        {"type": "compare", "title": "Quel montage choisir ?",
+          "left": {"title": "Pièce courte / trapue", "items": ["Montage en l'air", "Mise en place rapide", "Accès libre à la face avant"]},
+          "right": {"title": "Pièce longue / élancée", "items": ["Entre pointes ou mixte", "Évite flexion et vibrations", "Meilleure concentricité"]},
+          "caption": "Règle simple : plus la pièce est longue par rapport à son diamètre, plus il faut la soutenir."},
+        {"type": "callout", "variant": "warn", "title": "Sécurité", "text": "Une pièce mal serrée ou trop en porte-à-faux peut être éjectée. On vérifie toujours le serrage et on retire la clé de mandrin avant de lancer la broche."}
+      ]
+    },
+    {
+      "title": "4. Cônes réversibles et irréversibles",
+      "blocks": [
+        {"type": "paragraph", "text": "Un [[cone]] sert souvent à **assembler** (un foret dans la broche, une pointe dans la contre-pointe). Selon son angle, il tient seul ou non.", "spaced": true},
+        {"type": "paragraph", "text": "Le principe vient de la **théorie du coin** : un coin à faible angle se coince par frottement et ne ressort pas tout seul. Appliqué aux cônes, cela donne :"},
+        {"type": "compare", "title": "Deux comportements opposés",
+          "left": {"title": "Cône irréversible", "items": ["Faible angle (ex. cône Morse)", "Se coince et **tient seul**", "Sert à la fixation d'outils", "Démontage avec une clavette / chasse-cône"]},
+          "right": {"title": "Cône réversible", "items": ["Angle plus ouvert", "Ne se coince pas, se sépare seul", "Sert au centrage, pas à la fixation", "Souvent maintenu par un autre moyen"]},
+          "caption": "Le [[irrev|cône irréversible]] est le secret des fixations rapides et fiables sur les machines."},
+        {"type": "callout", "variant": "tip", "title": "Pourquoi ça marche", "text": "Tant que l'angle reste petit, le frottement l'emporte sur la force qui tendrait à faire glisser : le cône reste bloqué malgré les efforts de coupe."}
+      ]
+    },
+    {
+      "title": "5. Perçage au tour",
+      "blocks": [
+        {"type": "paragraph", "text": "On peut percer **dans l'axe** de la pièce sans changer de machine : le foret est monté dans la **contre-pointe** (souvent via un cône Morse), et c'est la pièce qui tourne. En avançant la poupée mobile, on enfonce le foret.", "spaced": true},
+        {"type": "callout", "variant": "tip", "title": "Avantage", "text": "Le trou est parfaitement **dans l'axe** de la pièce, car c'est l'axe de rotation qui le guide. Pour démarrer droit, on commence par un foret à centrer."}
+      ]
+    },
+    {
+      "title": "6. Tourner un cône",
+      "blocks": [
+        {"type": "paragraph", "text": "Trois méthodes selon la longueur et l'angle du cône :", "spaced": true},
+        {"type": "paragraph", "text": "**À l'aide du chariot orientable** — on incline le chariot supérieur de l'angle voulu et on avance à la main. Simple, mais limité aux **cônes courts** (course du chariot)."},
+        {"type": "paragraph", "text": "**Par excentrement de la contre-pointe** — on décale latéralement la poupée mobile : la pièce, montée entre pointes, prend une légère conicité. Réservé aux **faibles angles** sur pièces longues."},
+        {"type": "paragraph", "text": "**À l'aide du reproducteur (règle à conifier)** — un dispositif guide le chariot selon l'angle réglé, permettant des cônes **longs et précis** avec avance automatique."},
+        {"type": "chart", "chart": "bar", "title": "Méthodes de cône : aptitude selon la longueur",
+          "data": [
+            {"label": "Chariot orientable", "value": 2, "color": "#c08a0a"},
+            {"label": "Excentrement c.-p.", "value": 3, "color": "#b4540a"},
+            {"label": "Reproducteur", "value": 5, "color": "#1f6f5c"}
+          ],
+          "caption": "Note indicative de longueur de cône réalisable (1 = court, 5 = long). Le reproducteur est le plus polyvalent."}
+      ]
+    },
+    {
+      "title": "7. Tours particuliers",
+      "blocks": [
+        {"type": "heading", "text": "Le tour en l'air"},
+        {"type": "paragraph", "text": "Tour de grand diamètre où la pièce est tenue par un seul plateau (en l'air), sans contre-pointe, pour usiner de grandes pièces plates (poulies, plateaux)."},
+        {"type": "heading", "text": "Le tour vertical"},
+        {"type": "paragraph", "text": "L'axe de rotation est **vertical** et la pièce repose à plat sur un grand plateau tournant. Idéal pour les pièces **lourdes et de grand diamètre** : la gravité aide au maintien et le chargement est facilité."},
+        {"type": "callout", "variant": "note", "title": "Logique", "text": "Tour vertical = on couche la pièce lourde et on la fait tourner comme un tourne-disque géant. Plus stable que de la tenir en porte-à-faux horizontal."}
+      ]
+    },
+    {
+      "title": "8. Revue des principales opérations de tournage",
+      "blocks": [
+        {"type": "paragraph", "text": "Avec un tour, on enchaîne une grande variété d'opérations :"},
+        {"type": "timeline", "title": "Opérations courantes au tour",
+          "items": [
+            {"when": "Chariotage", "what": "Tourner un diamètre extérieur", "desc": "Outil parallèle à l'axe, réduit le diamètre."},
+            {"when": "Dressage", "what": "Surfacer une face", "desc": "Outil perpendiculaire à l'axe, met la face plane et à longueur."},
+            {"when": "Alésage", "what": "Agrandir un trou", "desc": "Outil intérieur qui usine un diamètre interne."},
+            {"when": "Filetage", "what": "Réaliser un pas de vis", "desc": "Avance synchronisée par la vis-mère."},
+            {"when": "Gorge / tronçonnage", "what": "Creuser ou séparer", "desc": "Outil étroit qui pénètre radialement."},
+            {"when": "Moletage", "what": "Strier une surface", "desc": "Pour une meilleure prise en main."}
+          ],
+          "caption": "Toutes ces opérations partagent le même principe : pièce en rotation, outil guidé par les chariots."}
+      ]
+    },
+    {
+      "title": "9. Exercices",
+      "blocks": [
+        {"type": "exercise", "exercise": "qcm", "question": "Pour usiner un axe long et fin, quel montage privilégier ?",
+          "multiple": false,
+          "options": [
+            {"text": "Montage entre pointes", "correct": true},
+            {"text": "Montage en l'air", "correct": false},
+            {"text": "Posé libre sur le banc", "correct": false},
+            {"text": "Collé sur le plateau", "correct": false}
+          ],
+          "explanation": "Une pièce longue et fine doit être soutenue à ses deux extrémités pour éviter flexion et vibrations : le montage entre pointes est indiqué."},
+        {"type": "exercise", "exercise": "qcm", "question": "Quelles méthodes permettent de tourner un cône ?",
+          "multiple": true,
+          "options": [
+            {"text": "Incliner le chariot supérieur orientable", "correct": true},
+            {"text": "Excentrer la contre-pointe", "correct": true},
+            {"text": "Utiliser un reproducteur", "correct": true},
+            {"text": "Augmenter la vitesse de broche", "correct": false}
+          ],
+          "explanation": "Chariot orientable, excentrement de la contre-pointe et reproducteur sont les trois méthodes ; la vitesse de broche ne crée aucune conicité."},
+        {"type": "exercise", "exercise": "cloze", "question": "Complétez sur les cônes de fixation.",
+          "text": "Un cône à {0} angle se {1} par frottement : il est dit {2} et tient seul, ce qui sert à fixer des outils.",
+          "answers": ["faible", "coince", "irréversible"],
+          "explanation": "Le faible angle fait que le frottement bloque le cône : c'est le cône irréversible, base des fixations type cône Morse."},
+        {"type": "exercise", "exercise": "open", "question": "Pourquoi le perçage au tour donne-t-il un trou parfaitement dans l'axe de la pièce ?",
+          "keywords": ["axe", "rotation", "contre-pointe", "centré", "broche"],
+          "explanation": "Le foret est aligné sur l'axe de rotation (via la contre-pointe) et c'est la pièce qui tourne autour de cet axe : le trou se forme donc exactement sur l'axe."}
+      ]
+    }
+  ]
+}

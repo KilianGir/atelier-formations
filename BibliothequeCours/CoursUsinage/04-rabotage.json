@@ -1,0 +1,72 @@
+{
+  "title": "04 — Rabotage",
+  "category": "Usinage",
+  "author": "Atelier — Technique de fabrication",
+  "color": "#b4540a",
+  "description": "Les machines à coupe rectiligne alternée : raboteuse, étau-limeur et mortaiseuse. Principe, usages et pourquoi elles ont reculé devant le fraisage.",
+  "lead": "Couper en va-et-vient : une mécanique simple, des surfaces planes, mais du temps perdu à chaque retour.",
+  "terms": [
+    {"key": "rabot", "label": "rabotage", "color": "#b4540a", "summary": "Usinage de surfaces planes par mouvement de coupe rectiligne alterné."},
+    {"key": "etau", "label": "étau-limeur", "color": "#c08a0a", "summary": "Petite machine où l'outil va-et-vient horizontalement au-dessus d'une pièce fixe."},
+    {"key": "raboteuse", "label": "raboteuse", "color": "#a01e3c", "summary": "Grande machine où c'est la pièce (sur une table) qui va-et-vient sous un outil fixe."},
+    {"key": "mortaise", "label": "mortaiseuse", "color": "#7a3fb0", "summary": "Machine à coupe rectiligne verticale, pour rainures et profils intérieurs."},
+    {"key": "vide", "label": "course à vide", "color": "#666666", "summary": "Phase de retour où l'outil ne coupe pas : temps perdu propre à la coupe rectiligne."}
+  ],
+  "sections": [
+    {
+      "title": "1. Le principe du rabotage",
+      "blocks": [
+        {"type": "paragraph", "text": "Le [[rabot]] enlève la matière par un **mouvement rectiligne alterné** : l'outil (ou la pièce) avance en coupant, puis revient à vide. À chaque retour, on décale l'avance d'un cran pour préparer la passe suivante.", "spaced": true},
+        {"type": "callout", "variant": "warn", "title": "Le talon d'Achille", "text": "La [[vide|course à vide]] de retour ne produit rien : c'est du temps perdu. C'est la raison principale du recul du rabotage face au fraisage, qui coupe en continu."}
+      ]
+    },
+    {
+      "title": "2. Les trois machines",
+      "blocks": [
+        {"type": "heading", "text": "La raboteuse"},
+        {"type": "paragraph", "text": "Sur la [[raboteuse]], c'est la **pièce** posée sur une grande table qui effectue le va-et-vient sous un ou plusieurs outils fixes. Réservée aux **grandes surfaces planes** (bâtis, grandes pièces)."},
+        {"type": "heading", "text": "L'étau-limeur"},
+        {"type": "paragraph", "text": "Sur l'[[etau]], c'est au contraire **l'outil** qui va-et-vient, porté par un coulisseau, au-dessus d'une pièce fixe et plus petite. Machine d'atelier polyvalente pour plans, épaulements et rainures."},
+        {"type": "heading", "text": "La mortaiseuse"},
+        {"type": "paragraph", "text": "La [[mortaise]] travaille **verticalement** : son outil descend et remonte. Elle excelle pour les **rainures de clavette intérieures** et les profils difficiles à atteindre autrement."},
+        {"type": "compare", "title": "Pièce mobile ou outil mobile ?",
+          "left": {"title": "Raboteuse", "items": ["La PIÈCE se déplace", "Grandes pièces", "Plusieurs outils possibles"]},
+          "right": {"title": "Étau-limeur", "items": ["L'OUTIL se déplace", "Petites pièces", "Souple et rapide à régler"]},
+          "caption": "Même principe de coupe rectiligne, mais ce qui bouge change selon la taille des pièces."}
+      ]
+    },
+    {
+      "title": "3. Place actuelle du rabotage",
+      "blocks": [
+        {"type": "paragraph", "text": "Le fraisage, à coupe continue, est plus rapide et plus précis pour la plupart des surfaces planes. Le rabotage subsiste pour des **cas particuliers** : très grandes surfaces, profils intérieurs (mortaiseuse), ou parc machine ancien.", "spaced": true},
+        {"type": "callout", "variant": "note", "title": "À retenir", "text": "Connaître le rabotage reste utile : on en croise sur d'anciennes installations, et la mortaiseuse garde des usages spécifiques (rainures intérieures)."}
+      ]
+    },
+    {
+      "title": "4. Exercices",
+      "blocks": [
+        {"type": "exercise", "exercise": "qcm", "question": "Sur l'étau-limeur, qu'est-ce qui effectue le mouvement de coupe ?",
+          "multiple": false,
+          "options": [
+            {"text": "L'outil", "correct": true},
+            {"text": "La pièce", "correct": false},
+            {"text": "La meule", "correct": false},
+            {"text": "Le mandrin", "correct": false}
+          ],
+          "explanation": "Sur l'étau-limeur, l'outil va-et-vient au-dessus d'une pièce fixe. Sur la raboteuse, c'est l'inverse."},
+        {"type": "exercise", "exercise": "open", "question": "Pourquoi le rabotage a-t-il largement été remplacé par le fraisage ?",
+          "keywords": ["continu", "retour", "vide", "temps", "rapide"],
+          "explanation": "Le rabotage perd du temps lors de la course de retour à vide, alors que le fraisage coupe en continu : il est donc plus productif."},
+        {"type": "exercise", "exercise": "qcm", "question": "Quelle machine est la mieux adaptée à une rainure de clavette intérieure ?",
+          "multiple": false,
+          "options": [
+            {"text": "La mortaiseuse", "correct": true},
+            {"text": "La raboteuse", "correct": false},
+            {"text": "Le tour vertical", "correct": false},
+            {"text": "La rectifieuse", "correct": false}
+          ],
+          "explanation": "La mortaiseuse, à coupe rectiligne verticale, est conçue pour les rainures et profils intérieurs."}
+      ]
+    }
+  ]
+}
